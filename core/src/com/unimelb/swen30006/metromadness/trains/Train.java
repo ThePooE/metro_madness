@@ -15,24 +15,28 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.tracks.Track;
 
 public class Train {
-	
+
 	// Logger
 	private static Logger logger = LogManager.getLogger();
-	// The state that a train can be in 
+
+	// The state that a train can be in
 	public enum State {
-		IN_STATION, READY_DEPART, ON_ROUTE, WAITING_ENTRY, FROM_DEPOT
+		IN_STATION,
+        READY_DEPART,
+        ON_ROUTE,
+        WAITING_ENTRY,
+        FROM_DEPOT
 	}
 
 	// Constants
-	public static final int MAX_TRIPS=4;
-	public static final Color FORWARD_COLOUR = Color.ORANGE;
-	public static final Color BACKWARD_COLOUR = Color.VIOLET;
-	public static final float TRAIN_WIDTH=4;
-	public static final float TRAIN_LENGTH = 6;
-	public static final float TRAIN_SPEED=50f;
-	
+	public static final int     MAX_TRIPS       = 4;
+	public static final Color   FORWARD_COLOUR  = Color.ORANGE;
+	public static final Color   BACKWARD_COLOUR = Color.VIOLET;
+	public static final float   TRAIN_WIDTH     = 4;
+	public static final float   TRAIN_LENGTH    = 6;
+	public static final float   TRAIN_SPEED     = 50f;
+
 	// The train's name
-	
 	public String name;
 
 	// The line that this is traveling on
@@ -41,9 +45,9 @@ public class Train {
 	// Passenger Information
 	public ArrayList<Passenger> passengers;
 	public float departureTimer;
-	
+
 	// Station and track and position information
-	public Station station; 
+	public Station station;
 	public Track track;
 	public Point2D.Float pos;
 
@@ -54,11 +58,13 @@ public class Train {
 	// State variables
 	public int numTrips;
 	public boolean disembarked;
-	
-	
+
+
 	public State previousState = null;
 
-	
+    /**
+     * Constructor
+     */
 	public Train(Line trainLine, Station start, boolean forward, String name){
 		this.trainLine = trainLine;
 		this.station = start;
@@ -78,19 +84,19 @@ public class Train {
 			previousState = this.state;
 			hasChanged = true;
 		}
-		
+
 		// Update the state
 		switch(this.state) {
 		case FROM_DEPOT:
 			if(hasChanged){
 				logger.info(this.name+ " is travelling from the depot: "+this.station.name+" Station...");
 			}
-			
+
 			// We have our station initialized we just need to retrieve the next track, enter the
 			// current station officially and mark as in station
 			try {
 				if(this.station.canEnter(this.trainLine)){
-					
+
 					this.station.enter(this);
 					this.pos = (Point2D.Float) this.station.position.clone();
 					this.state = State.IN_STATION;
@@ -103,19 +109,19 @@ public class Train {
 			if(hasChanged){
 				logger.info(this.name+" is in "+this.station.name+" Station.");
 			}
-			
-			// When in station we want to disembark passengers 
+
+			// When in station we want to disembark passengers
 			// and wait 10 seconds for incoming passengers
 			if(!this.disembarked){
 				this.disembark();
 				this.departureTimer = this.station.getDepartureTime();
 				this.disembarked = true;
 			} else {
-				// Count down if departure timer. 
+				// Count down if departure timer.
 				if(this.departureTimer>0){
 					this.departureTimer -= delta;
 				} else {
-					// We are ready to depart, find the next track and wait until we can enter 
+					// We are ready to depart, find the next track and wait until we can enter
 					try {
 						boolean endOfLine = this.trainLine.endOfLine(this.station);
 						if(endOfLine){
@@ -135,7 +141,7 @@ public class Train {
 			if(hasChanged){
 				logger.info(this.name+ " is ready to depart for "+this.station.name+" Station!");
 			}
-			
+
 			// When ready to depart, check that the track is clear and if
 			// so, then occupy it if possible.
 			if(this.track.canEnter(this.forward)){
@@ -151,13 +157,13 @@ public class Train {
 				}
 				this.track.enter(this);
 				this.state = State.ON_ROUTE;
-			}		
+			}
 			break;
 		case ON_ROUTE:
 			if(hasChanged){
 				logger.info(this.name+ " enroute to "+this.station.name+" Station!");
 			}
-			
+
 			// Checkout if we have reached the new station
 			if(this.pos.distance(this.station.position) < 10 ){
 				this.state = State.WAITING_ENTRY;
@@ -169,7 +175,7 @@ public class Train {
 			if(hasChanged){
 				logger.info(this.name+ " is awaiting entry "+this.station.name+" Station..!");
 			}
-			
+
 			// Waiting to enter, we need to check the station has room and if so
 			// then we need to enter, otherwise we just wait
 			try {
@@ -225,8 +231,8 @@ public class Train {
 	public boolean inStation(){
 		return (this.state == State.IN_STATION || this.state == State.READY_DEPART);
 	}
-	
-	public float angleAlongLine(float x1, float y1, float x2, float y2){	
+
+	public float angleAlongLine(float x1, float y1, float x2, float y2){
 		return (float) Math.atan2((y2-y1),(x2-x1));
 	}
 
@@ -237,5 +243,5 @@ public class Train {
 			renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH);
 		}
 	}
-	
+
 }

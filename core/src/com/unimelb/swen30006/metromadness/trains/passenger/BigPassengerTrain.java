@@ -1,12 +1,13 @@
-package com.unimelb.swen30006.metromadness.trains;
+package com.unimelb.swen30006.metromadness.trains.passenger;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
+import com.unimelb.swen30006.metromadness.trains.PassengerTrain;
 
-public class BigPassengerTrain extends Train {
+public class BigPassengerTrain extends PassengerTrain {
 
 	public BigPassengerTrain(Line trainLine, Station start, boolean forward, String name) {
 		super(trainLine, start, forward, name);
