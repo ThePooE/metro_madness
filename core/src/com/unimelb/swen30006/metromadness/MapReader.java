@@ -19,8 +19,8 @@ import com.unimelb.swen30006.metromadness.routers.SimpleRouter;
 import com.unimelb.swen30006.metromadness.stations.ActiveStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
-import com.unimelb.swen30006.metromadness.trains.BigPassengerTrain;
-import com.unimelb.swen30006.metromadness.trains.SmallPassengerTrain;
+import com.unimelb.swen30006.metromadness.trains.passenger.BigPassengerTrain;
+import com.unimelb.swen30006.metromadness.trains.passenger.SmallPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class MapReader {
