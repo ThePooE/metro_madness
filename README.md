@@ -8,8 +8,12 @@ Go to `Import Project`, navigate to your project folder and select the `build.gr
 
 ### Running
 
-- `Run -> Edit Configurations...`, click the plus (+) button and select Application. Set the `Name` to `Madness`. 
+- `Run -> Edit Configurations...`, click the plus (+) button and select Application. Set the `Name` to `Madness`.
 
-- Set the field Use classpath of module to desktop, then click on the button of the `Main` class field and select the `DesktopLauncher` class. 
+- Set the field Use classpath of module to desktop, then click on the button of the `Main` class field and select the `DesktopLauncher` class.
 
-- Set the Working directory to `madness/desktop` folder Click Apply and then OK.
+- Add `-Dlog4j.configurationFile=../core/src/log4j2.xml` argument into VM Options
+
+- Set the Working directory to `madness/desktop` folder.
+
+- Click Apply and then OK.
