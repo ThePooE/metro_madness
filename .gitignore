@@ -1,3 +1,14 @@
+#
+# SWEN30006: Group 107
+# .gitignore
+#
+
+## Project Specific
+
+desktop/log/
+
+###############################################################################
+
 ## Java
 
 *.class
@@ -59,6 +70,9 @@ nb-configuration.xml
 .gradle
 gradle-app.setting
 build/
+gradle/
 
 ## OS Specific
+
 .DS_Store
+
