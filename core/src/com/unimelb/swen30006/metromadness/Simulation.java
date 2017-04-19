@@ -45,7 +45,6 @@ public class Simulation {
         for(Line l: this.lines){
             l.render(renderer);
         }
-
         for(Train t: this.trains){
             t.render(renderer);
         }

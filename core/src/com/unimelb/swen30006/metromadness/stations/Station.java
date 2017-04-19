@@ -61,7 +61,6 @@ public class Station {
         }
     }
 
-
     public void depart(Train t) throws Exception {
         if(this.trains.contains(t)){
             this.trains.remove(t);
@@ -92,6 +91,5 @@ public class Station {
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }
-
 
 }

@@ -3,6 +3,7 @@ package com.unimelb.swen30006.metromadness.passengers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 
 public class Passenger {
@@ -20,7 +21,13 @@ public class Passenger {
         this.destination = end;
         this.reachedDestination = false;
         this.travelTime = 0;
-        this.cargo = generateCargo(random);
+
+        // Do not generate cargo if not from CargoStation
+        if (start instanceof CargoStation) {
+            this.cargo = generateCargo(random);
+        } else {
+            this.cargo = new Cargo(0);
+        }
     }
 
     public void update(float time){

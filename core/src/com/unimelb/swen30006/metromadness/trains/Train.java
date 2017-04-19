@@ -139,7 +139,7 @@ public class Train {
             break;
         case READY_DEPART:
             if(hasChanged){
-                logger.info(this.name+ " is ready to depart for "+this.station.name+" Station!");
+                logger.info(this.name+ " is ready to depart from "+this.station.name+" Station!");
             }
 
             // When ready to depart, check that the track is clear and if

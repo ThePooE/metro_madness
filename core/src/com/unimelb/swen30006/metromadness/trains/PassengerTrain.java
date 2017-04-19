@@ -1,8 +1,11 @@
 package com.unimelb.swen30006.metromadness.trains;
 
 import com.badlogic.gdx.graphics.Color;
+import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
+
+import java.util.ArrayList;
 
 /**
  * Nate Bhurinat W. (@natebwangsut | nate.bwangsut@gmail.com)
