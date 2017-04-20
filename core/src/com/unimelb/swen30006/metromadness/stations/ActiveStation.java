@@ -3,6 +3,7 @@ package com.unimelb.swen30006.metromadness.stations;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +31,11 @@ public class ActiveStation extends Station {
     }
 
     @Override
+    public boolean compatible(Train t) throws Exception {
+        return !(t instanceof CargoTrain);
+    }
+
+    @Override
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
             throw new Exception();
@@ -50,10 +56,11 @@ public class ActiveStation extends Station {
                 }
             }
 
-            //Do not add new passengers if there are too many already
+            // Do not add new passengers if there are too many already
             if (this.waiting.size() > maxVolume){
                 return;
             }
+
             // Add the new passenger
             Passenger[] ps = this.g.generatePassengers();
             for(Passenger p: ps){
@@ -68,12 +75,13 @@ public class ActiveStation extends Station {
     }
 
     public void render(ShapeRenderer renderer){
+        // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
             Line l = this.lines.get(i);
             renderer.setColor(l.lineColour);
             renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius - 1;
+            radius = radius-2;
         }
 
         // Calculate the percentage
@@ -86,5 +94,4 @@ public class ActiveStation extends Station {
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
-
 }

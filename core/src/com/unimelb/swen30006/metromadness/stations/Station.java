@@ -16,7 +16,7 @@ public class Station {
     public static final int PLATFORMS=2;
 
     public Point2D.Float position;
-    public static final float RADIUS=6;
+    public static final float RADIUS=10;
     public static final int NUM_CIRCLE_STATMENTS=100;
     public static final int MAX_LINES=3;
     public String name;
@@ -61,7 +61,6 @@ public class Station {
         }
     }
 
-
     public void depart(Train t) throws Exception {
         if(this.trains.contains(t)){
             this.trains.remove(t);
@@ -72,6 +71,10 @@ public class Station {
 
     public boolean canEnter(Line l) throws Exception {
         return trains.size() < PLATFORMS;
+    }
+
+    public boolean compatible(Train t) throws Exception {
+        return true;
     }
 
     // Returns departure time in seconds
@@ -92,6 +95,5 @@ public class Station {
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }
-
 
 }

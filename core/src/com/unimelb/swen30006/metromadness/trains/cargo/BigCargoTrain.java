@@ -9,11 +9,11 @@ import com.unimelb.swen30006.metromadness.trains.CargoTrain;
  * https://github.com/natebwangsut
  */
 
-public class LargeCargoTrain extends CargoTrain {
+public class BigCargoTrain extends CargoTrain {
 
     private static int MAX_WEIGHT = 1000;
 
-    public LargeCargoTrain(Line trainLine, Station start, boolean forward, String name) {
+    public BigCargoTrain(Line trainLine, Station start, boolean forward, String name) {
         super(trainLine, start, forward, name, MAX_WEIGHT);
     }
 }
