@@ -30,5 +30,4 @@ public class BigPassengerTrain extends PassengerTrain {
             renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH*(1+percentage));
         }
     }
-
 }

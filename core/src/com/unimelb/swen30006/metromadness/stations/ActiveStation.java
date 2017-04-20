@@ -75,12 +75,13 @@ public class ActiveStation extends Station {
     }
 
     public void render(ShapeRenderer renderer){
+        // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
             Line l = this.lines.get(i);
             renderer.setColor(l.lineColour);
             renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius - 1;
+            radius = radius-2;
         }
 
         // Calculate the percentage
@@ -93,5 +94,4 @@ public class ActiveStation extends Station {
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
-
 }

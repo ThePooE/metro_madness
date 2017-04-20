@@ -40,26 +40,27 @@ public class CargoStation extends ActiveStation {
         return true;
     }
 
+    @Override
     public void render(ShapeRenderer renderer){
+        // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
             Line l = this.lines.get(i);
             renderer.setColor(l.lineColour);
-            renderer.rect(this.position.x, this.position.y, radius*2, radius*2);
-            //renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius - 1;
+            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+            radius = radius-2;
         }
 
         // Calculate the percentage
         float t = this.trains.size()/(float)PLATFORMS;
-        Color c = Color.WHITE.cpy().lerp(Color.DARK_GRAY, t);
+        Color c = Color.ORANGE.cpy().lerp(Color.DARK_GRAY, t);
+
+        // Show RED if there is passenger in station
         if(this.waiting.size() > 0){
             c = Color.RED;
         }
 
         renderer.setColor(c);
-        renderer.rect(this.position.x+1, this.position.y+1, radius*2, radius*2);
-        //renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+        renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
-
 }

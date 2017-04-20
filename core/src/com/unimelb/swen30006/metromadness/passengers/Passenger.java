@@ -35,6 +35,7 @@ public class Passenger {
             this.travelTime += time;
         }
     }
+
     public Cargo getCargo(){
         return cargo;
     }
@@ -57,7 +58,4 @@ public class Passenger {
             this.weight = weight;
         }
     }
-
-
-
 }
