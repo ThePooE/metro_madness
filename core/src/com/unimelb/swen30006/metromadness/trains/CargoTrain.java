@@ -1,6 +1,7 @@
 package com.unimelb.swen30006.metromadness.trains;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
@@ -29,5 +30,14 @@ public class CargoTrain extends Train {
 
     public CargoTrain(Line trainLine, Station start, boolean forward, String name) {
         super(trainLine, start, forward, name);
+    }
+
+    @Override
+    public void render(ShapeRenderer renderer){
+        if(!this.inStation()){
+            Color col = this.forward ? FORWARD_COLOUR : BACKWARD_COLOUR;
+            renderer.setColor(col);
+            renderer.rect(this.pos.x, this.pos.y, TRAIN_WIDTH, TRAIN_WIDTH);
+        }
     }
 }
