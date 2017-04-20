@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import sun.rmi.runtime.Log;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 /**
  * Nate Bhurinat W. (@natebwangsut | nate.bwangsut@gmail.com)
@@ -28,8 +29,26 @@ public class CargoTrain extends Train {
 //    public static final float   TRAIN_LENGTH    = 6;
 //    public static final float   TRAIN_SPEED     = 50f;
 
-    public CargoTrain(Line trainLine, Station start, boolean forward, String name) {
+    // Cargo
+    private ArrayList<Passenger.Cargo> cargo;
+    private int maxWeight;
+
+    public CargoTrain(Line trainLine, Station start, boolean forward, String name, int weight) {
         super(trainLine, start, forward, name);
+        this.cargo = new ArrayList<>();
+        this.maxWeight = weight;
+    }
+
+    @Override
+    public void embark(Passenger p) throws Exception {
+        int weight=0;
+        for (Passenger.Cargo pc : cargo) {
+            weight += pc.getWeight();
+        }
+        if (p.getCargo().getWeight() + weight > this.maxWeight) {
+            throw new Exception();
+        }
+        this.passengers.add(p);
     }
 
     @Override

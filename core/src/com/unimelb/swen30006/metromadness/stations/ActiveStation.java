@@ -56,10 +56,11 @@ public class ActiveStation extends Station {
                 }
             }
 
-            //Do not add new passengers if there are too many already
+            // Do not add new passengers if there are too many already
             if (this.waiting.size() > maxVolume){
                 return;
             }
+
             // Add the new passenger
             Passenger[] ps = this.g.generatePassengers();
             for(Passenger p: ps){

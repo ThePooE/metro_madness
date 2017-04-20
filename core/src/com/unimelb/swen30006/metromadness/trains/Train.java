@@ -246,7 +246,6 @@ public class Train {
         throw new Exception();
     }
 
-
     public ArrayList<Passenger> disembark(){
         ArrayList<Passenger> disembarking = new ArrayList<Passenger>();
         Iterator<Passenger> iterator = this.passengers.iterator();
