@@ -73,6 +73,10 @@ public class Station {
         return trains.size() < PLATFORMS;
     }
 
+    public boolean compatible(Train t) throws Exception {
+        return true;
+    }
+
     // Returns departure time in seconds
     public float getDepartureTime() {
         return DEPARTURE_TIME;

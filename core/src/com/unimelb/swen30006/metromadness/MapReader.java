@@ -20,6 +20,8 @@ import com.unimelb.swen30006.metromadness.stations.ActiveStation;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
+import com.unimelb.swen30006.metromadness.trains.cargo.BigCargoTrain;
+import com.unimelb.swen30006.metromadness.trains.cargo.SmallCargoTrain;
 import com.unimelb.swen30006.metromadness.trains.passenger.BigPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.passenger.SmallPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
@@ -114,6 +116,10 @@ public class MapReader {
             return new BigPassengerTrain(l,s,dir,name);
         } else if (type.equals("SmallPassenger")){
             return new SmallPassengerTrain(l,s,dir,name);
+        } else if(type.equals("BigCargo")){
+            return new BigCargoTrain(l,s,dir,name);
+        } else if (type.equals("SmallCargo")){
+            return new SmallCargoTrain(l,s,dir,name);
         } else {
             return new Train(l, s, dir,name);
         }

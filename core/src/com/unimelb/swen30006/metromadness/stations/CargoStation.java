@@ -55,7 +55,7 @@ public class CargoStation extends Station {
                 }
             }
 
-            //Do not add new passengers if there are too many already
+            // Do not add new passengers if there are too many already
             if (this.waiting.size() > maxVolume){
                 return;
             }

@@ -3,6 +3,7 @@ package com.unimelb.swen30006.metromadness.stations;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,6 +28,11 @@ public class ActiveStation extends Station {
         this.waiting = new ArrayList<Passenger>();
         this.g = new PassengerGenerator(this, this.lines, maxPax);
         this.maxVolume = maxPax;
+    }
+
+    @Override
+    public boolean compatible(Train t) throws Exception {
+        return !(t instanceof CargoTrain);
     }
 
     @Override

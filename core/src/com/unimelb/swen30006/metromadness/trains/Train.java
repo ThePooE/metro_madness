@@ -22,9 +22,11 @@ public class Train {
     // The state that a train can be in
     public enum State {
         IN_STATION,
+        SEARCH_TRACK,
         READY_DEPART,
         ON_ROUTE,
         WAITING_ENTRY,
+        SKIPPING_STATION,
         FROM_DEPOT
     }
 
@@ -121,22 +123,24 @@ public class Train {
                 if(this.departureTimer>0){
                     this.departureTimer -= delta;
                 } else {
-                    // We are ready to depart, find the next track and wait until we can enter
-                    try {
-                        boolean endOfLine = this.trainLine.endOfLine(this.station);
-                        if(endOfLine){
-                            this.forward = !this.forward;
-                        }
-                        this.track = this.trainLine.nextTrack(this.station, this.forward);
-                        this.state = State.READY_DEPART;
-                        break;
-                    } catch (Exception e){
-                        // Massive error.
-                        return;
-                    }
+                    this.state = State.SEARCH_TRACK;
                 }
             }
             break;
+        case SEARCH_TRACK:
+            // We are ready to depart, find the next track and wait until we can enter
+            try {
+                boolean endOfLine = this.trainLine.endOfLine(this.station);
+                if(endOfLine){
+                    this.forward = !this.forward;
+                }
+                this.track = this.trainLine.nextTrack(this.station, this.forward);
+                this.state = State.READY_DEPART;
+                break;
+            } catch (Exception e){
+                // Massive error.
+                return;
+            }
         case READY_DEPART:
             if(hasChanged){
                 logger.info(this.name+ " is ready to depart from "+this.station.name+" Station!");
@@ -151,9 +155,8 @@ public class Train {
                     // Depart our current station
                     this.station.depart(this);
                     this.station = next;
-
                 } catch (Exception e) {
-//                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 this.track.enter(this);
                 this.state = State.ON_ROUTE;
@@ -165,7 +168,8 @@ public class Train {
             }
 
             // Checkout if we have reached the new station
-            if(this.pos.distance(this.station.position) < 10 ){
+            // Nate: Simulation smoothness
+            if(this.pos.distance(this.station.position) < 5){
                 this.state = State.WAITING_ENTRY;
             } else {
                 move(delta);
@@ -179,20 +183,21 @@ public class Train {
             // Waiting to enter, we need to check the station has room and if so
             // then we need to enter, otherwise we just wait
             try {
-                if(this.station.canEnter(this.trainLine)){
+                if(this.station.canEnter(this.trainLine) && this.station.compatible(this)){
                     this.track.leave(this);
                     this.pos = (Point2D.Float) this.station.position.clone();
                     this.station.enter(this);
                     this.state = State.IN_STATION;
                     this.disembarked = false;
+                } else if (!this.station.compatible(this)) {
+                    logger.info(this.name+ " is skipping "+this.station.name+" Station..!");
+                    this.state = State.SEARCH_TRACK;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             break;
         }
-
-
     }
 
     public void move(float delta){
@@ -243,5 +248,4 @@ public class Train {
             renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH);
         }
     }
-
 }
