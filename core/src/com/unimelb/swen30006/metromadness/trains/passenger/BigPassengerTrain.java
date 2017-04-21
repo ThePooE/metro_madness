@@ -9,16 +9,11 @@ import com.unimelb.swen30006.metromadness.trains.PassengerTrain;
 
 public class BigPassengerTrain extends PassengerTrain {
 
-    public BigPassengerTrain(Line trainLine, Station start, boolean forward, String name) {
-        super(trainLine, start, forward, name);
-    }
+    // Different between trains
+    private static int PASSENGER_CAPACITY=80;
 
-    @Override
-    public void embark(Passenger p) throws Exception {
-        if(this.passengers.size() > 80){
-            throw new Exception();
-        }
-        this.passengers.add(p);
+    public BigPassengerTrain(Line trainLine, Station start, boolean forward, String name) {
+        super(trainLine, start, forward, name, PASSENGER_CAPACITY);
     }
 
     @Override

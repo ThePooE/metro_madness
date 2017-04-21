@@ -22,7 +22,6 @@ public class Train {
     // The state that a train can be in
     public enum State {
         IN_STATION,
-        SEARCH_TRACK,
         READY_DEPART,
         ON_ROUTE,
         WAITING_ENTRY,
@@ -127,24 +126,22 @@ public class Train {
                     if (this.departureTimer > 0) {
                         this.departureTimer -= delta;
                     } else {
-                        this.state = State.SEARCH_TRACK;
+                        // We are ready to depart, find the next track and wait until we can enter
+                        try {
+                            boolean endOfLine = this.trainLine.endOfLine(this.station);
+                            if (endOfLine) {
+                                this.forward = !this.forward;
+                            }
+                            this.track = this.trainLine.nextTrack(this.station, this.forward);
+                            this.state = State.READY_DEPART;
+                            break;
+                        } catch (Exception e) {
+                            // Massive error.
+                            return;
+                        }
                     }
                 }
                 break;
-            case SEARCH_TRACK:
-                // We are ready to depart, find the next track and wait until we can enter
-                try {
-                    boolean endOfLine = this.trainLine.endOfLine(this.station);
-                    if (endOfLine) {
-                        this.forward = !this.forward;
-                    }
-                    this.track = this.trainLine.nextTrack(this.station, this.forward);
-                    this.state = State.READY_DEPART;
-                    break;
-                } catch (Exception e) {
-                    // Massive error.
-                    return;
-                }
             case READY_DEPART:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -222,21 +219,16 @@ public class Train {
                     if (endOfLine) {
                         this.forward = !this.forward;
                     }
+                    // Find the next track
                     this.track = this.trainLine.nextTrack(this.station, this.forward);
-                } catch (Exception e) {
-                    // Massive error.
-                    return;
-                }
-
-                if (this.track.canEnter(this.forward)) {
-                    try {
-                        // Find the next
-                        this.station = this.trainLine.nextStation(this.station, this.forward);;
-                    } catch (Exception e) {
-                        //e.printStackTrace();
-                    }
                     this.track.enter(this);
+
+                    // Find the next station
+                    this.station = this.trainLine.nextStation(this.station, this.forward);
                     this.state = State.ON_ROUTE;
+                } catch (Exception e) {
+                    // Error
+                    return;
                 }
                 break;
         }

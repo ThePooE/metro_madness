@@ -11,9 +11,11 @@ import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 
 public class BigCargoTrain extends CargoTrain {
 
-    private static int MAX_WEIGHT = 1000;
+    // Different between trains
+    private static int PASSENGER_CAPACITY   = 80;
+    private static int WEIGHT_CAPACITY      = 1000;
 
     public BigCargoTrain(Line trainLine, Station start, boolean forward, String name) {
-        super(trainLine, start, forward, name, MAX_WEIGHT);
+        super(trainLine, start, forward, name, PASSENGER_CAPACITY, WEIGHT_CAPACITY);
     }
 }
