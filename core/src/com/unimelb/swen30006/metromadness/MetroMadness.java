@@ -33,11 +33,12 @@ public class MetroMadness extends ApplicationAdapter {
     // Font
     BitmapFont smaller;
     BitmapFont header;
-    
+
     // Default settings
     boolean stationShow = true;
     boolean passengerShow = true;
     boolean waitingShow = false;
+    boolean trainShow = false;
 
     // Default settings for showing names in simulation
     boolean stationShow = true;
@@ -106,11 +107,8 @@ public class MetroMadness extends ApplicationAdapter {
 
         // Render all filled shapes
         shapeRenderer.begin(ShapeType.Filled);
-<<<<<<< HEAD
-        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow, trainShow);
-=======
         sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow);
->>>>>>> 1f03d74... Extra Functions
+        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow, trainShow);
         shapeRenderer.end();
 
         // Begin preparations to render text
@@ -158,7 +156,7 @@ public class MetroMadness extends ApplicationAdapter {
         	} else {
         		this.stationShow = true;
         	}
-        	
+
         }
         if(Gdx.input.isKeyPressed(Input.Keys.P)){
         	// Show/Hide passengers on train
@@ -167,7 +165,7 @@ public class MetroMadness extends ApplicationAdapter {
         	} else {
         		this.passengerShow = true;
         	}
-        		
+
         }
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
         	// Show/Hide passengers waiting at station
@@ -175,6 +173,14 @@ public class MetroMadness extends ApplicationAdapter {
         		this.waitingShow = false;
         	} else {
         		this.waitingShow = true;
+        	}
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.T)){
+        	// Show/Hide train names
+        	if(this.trainShow){
+        		this.trainShow = false;
+        	} else {
+        		this.trainShow = true;
         	}
         }
 
@@ -199,11 +205,6 @@ public class MetroMadness extends ApplicationAdapter {
 
         camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
         camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 1f03d74... Extra Functions
     }
 
 }

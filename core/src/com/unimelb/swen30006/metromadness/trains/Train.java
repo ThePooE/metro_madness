@@ -167,7 +167,7 @@ public class Train {
 
                 		Station next = null;
                 		Station destination = null;
-                		
+
                 		// Cargo Trains looking for next Cargo Station on line
                     	if(this instanceof CargoTrain){
                     		int counterCheck = 0;
@@ -180,28 +180,28 @@ public class Train {
                     			}
                     			tryStation = tryNext;
                     			counterCheck++;
-                    			
+
                     		}
-                    		
+
                     		if(destination != null){
                     			next = this.trainLine.nextStation(this.station, this.forward);
                     		}
-                    	} 
-                    	
+                    	}
+
                     	// Passenger Train looking for next station on line
                     	else {
                     		next = this.trainLine.nextStation(this.station, this.forward);
                     	}
-                    	
-                    	
-                    	
+
+
+
                     	if(next != null){
                     		this.station.depart(this);
                     		this.station = next;
                     		this.track.enter(this);
                     		this.state = State.ON_ROUTE;
                     	}
-                    	
+
                     	// If a Cargo Train could not find another Cargo Station on line, stay in station
                     	else {
                     		this.state = State.IN_STATION;
@@ -334,25 +334,22 @@ public class Train {
             renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH);
         }
     }
-    
+
     public void renderPassengers(SpriteBatch b, BitmapFont header, boolean passengerShow){
-    	if(!this.inStation() && passengerShow){
-    		b.begin();
-    		header.getData().setScale(1f);
-	        header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y-10);
-	        b.end();
-    	}
+        if(!this.inStation() && passengerShow){
+            b.begin();
+            header.getData().setScale(1f);
+            header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y-10);
+            b.end();
+        }
     }
-<<<<<<< HEAD
-    
+
     public void renderName(SpriteBatch b, BitmapFont header, boolean trainShow){
-    	if(trainShow){
-    		b.begin();
-    		header.getData().setScale(1f);
-	        header.draw(b, this.name, this.pos.x-10, this.pos.y-10);
-	        b.end();
-    	}
+        if(trainShow){
+            b.begin();
+            header.getData().setScale(1f);
+            header.draw(b, this.name, this.pos.x-10, this.pos.y-10);
+            b.end();
+        }
     }
-=======
->>>>>>> 1f03d74... Extra Functions
 }
