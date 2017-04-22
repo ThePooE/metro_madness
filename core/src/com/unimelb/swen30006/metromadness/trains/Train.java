@@ -343,6 +343,7 @@ public class Train {
 	        b.end();
     	}
     }
+<<<<<<< HEAD
     
     public void renderName(SpriteBatch b, BitmapFont header, boolean trainShow){
     	if(trainShow){
@@ -352,4 +353,6 @@ public class Train {
 	        b.end();
     	}
     }
+=======
+>>>>>>> 1f03d74... Extra Functions
 }
