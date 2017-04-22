@@ -76,4 +76,5 @@ public class CargoTrain extends Train {
             renderer.rect(this.pos.x, this.pos.y, size, size);
         }
     }
+    
 }

@@ -33,6 +33,11 @@ public class MetroMadness extends ApplicationAdapter {
     // Font
     BitmapFont smaller;
     BitmapFont header;
+    
+    // Default settings
+    boolean stationShow = true;
+    boolean passengerShow = true;
+    boolean waitingShow = false;
 
     @Override
     public void resize(int width, int height) {
@@ -95,7 +100,7 @@ public class MetroMadness extends ApplicationAdapter {
 
         // Render all filled shapes
         shapeRenderer.begin(ShapeType.Filled);
-        sim.render(shapeRenderer, b, smaller);
+        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow);
         shapeRenderer.end();
 
         // Begin preparations to render text
@@ -130,6 +135,32 @@ public class MetroMadness extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.translate(0, 3f, 0);
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.S)){
+        	// Show/Hide station names
+        	if(this.stationShow){
+        		this.stationShow = false;
+        	} else {
+        		this.stationShow = true;
+        	}
+        	
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+        	// Show/Hide passengers on train
+        	if(this.passengerShow){
+        		this.passengerShow = false;
+        	} else {
+        		this.passengerShow = true;
+        	}
+        		
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+        	// Show/Hide passengers waiting at station
+        	if(this.waitingShow){
+        		this.waitingShow = false;
+        	} else {
+        		this.waitingShow = true;
+        	}
+        }
 
 
         camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, WORLD_WIDTH/camera.viewportWidth);
@@ -138,6 +169,7 @@ public class MetroMadness extends ApplicationAdapter {
 
         camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
         camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
+        
     }
 
 }

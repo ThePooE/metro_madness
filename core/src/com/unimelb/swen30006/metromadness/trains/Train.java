@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.stations.Station;
@@ -286,5 +288,14 @@ public class Train {
             renderer.setColor(col);
             renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH);
         }
+    }
+    
+    public void renderPassengers(SpriteBatch b, BitmapFont header, boolean passengerShow){
+    	if(!this.inStation() && passengerShow){
+    		b.begin();
+    		header.getData().setScale(1f);
+	        header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y-10);
+	        b.end();
+    	}
     }
 }

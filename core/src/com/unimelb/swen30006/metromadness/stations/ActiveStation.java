@@ -76,7 +76,7 @@ public class ActiveStation extends Station {
         }
     }
 
-    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header){
+    public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
@@ -96,9 +96,16 @@ public class ActiveStation extends Station {
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
 
-        b.begin();
-        header.getData().setScale(1f);
-        header.draw(b, this.name, this.position.x+10, this.position.y-10);
-        b.end();
+        
+    }
+    
+    @Override
+    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
+    	if(waitingShow){
+    		b.begin();
+    		header.getData().setScale(1f);
+	        header.draw(b, Integer.toString(this.waiting.size()), this.position.x-10, this.position.y-10);
+	        b.end();
+    	}
     }
 }
