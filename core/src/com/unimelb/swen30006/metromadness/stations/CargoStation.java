@@ -61,5 +61,10 @@ public class CargoStation extends ActiveStation {
 
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+        
+        b.begin();
+        header.getData().setScale(1f);
+        header.draw(b, this.name, this.position.x+10, this.position.y-10);
+        b.end();
     }
 }

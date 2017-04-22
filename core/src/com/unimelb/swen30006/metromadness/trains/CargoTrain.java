@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.exceptions.TrainCargoFullException;
 import com.unimelb.swen30006.metromadness.exceptions.TrainPassengerFullException;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
+import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.rmi.runtime.Log;
+//import sun.rmi.runtime.Log;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class CargoTrain extends Train {
 
     public CargoTrain(Line trainLine, Station start, boolean forward, String name, int capacity, int weight) {
         super(trainLine, start, forward, name);
-        this.cargo = new ArrayList<>();
+        this.cargo = new ArrayList<Cargo>();
         this.passengerCapacity = capacity;
         this.weightCapacity = weight;
     }
