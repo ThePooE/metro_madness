@@ -1,6 +1,5 @@
 package com.unimelb.swen30006.metromadness;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
