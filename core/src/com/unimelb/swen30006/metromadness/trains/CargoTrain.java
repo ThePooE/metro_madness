@@ -3,11 +3,12 @@ package com.unimelb.swen30006.metromadness.trains;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
+import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.rmi.runtime.Log;
+//import sun.rmi.runtime.Log;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -32,20 +33,24 @@ public class CargoTrain extends Train {
     // Cargo
     private ArrayList<Passenger.Cargo> cargo;
     private int maxWeight;
+	private int maxPassengers;
 
-    public CargoTrain(Line trainLine, Station start, boolean forward, String name, int weight) {
+    public CargoTrain(Line trainLine, Station start, boolean forward, String name, int weight, int passenger) {
         super(trainLine, start, forward, name);
-        this.cargo = new ArrayList<>();
+        this.cargo = new ArrayList<Cargo>();
         this.maxWeight = weight;
+        this.maxPassengers = passenger;
     }
 
     @Override
     public void embark(Passenger p) throws Exception {
         int weight=0;
+        int numPassengers=this.passengers.size();
         for (Passenger.Cargo pc : cargo) {
             weight += pc.getWeight();
+            numPassengers++;
         }
-        if (p.getCargo().getWeight() + weight > this.maxWeight) {
+        if (p.getCargo().getWeight() + weight > this.maxWeight && numPassengers +1 > this.maxPassengers) {
             throw new Exception();
         }
         this.passengers.add(p);

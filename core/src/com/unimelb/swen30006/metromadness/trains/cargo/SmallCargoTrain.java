@@ -12,8 +12,9 @@ import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 public class SmallCargoTrain extends CargoTrain {
 
     private static int MAX_WEIGHT = 200;
+    private static int MAX_PASSENGER = 10;
 
     public SmallCargoTrain(Line trainLine, Station start, boolean forward, String name) {
-        super(trainLine, start, forward, name, MAX_WEIGHT);
+        super(trainLine, start, forward, name, MAX_WEIGHT, MAX_PASSENGER);
     }
 }

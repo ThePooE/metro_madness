@@ -1,8 +1,11 @@
 package com.unimelb.swen30006.metromadness;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
@@ -52,5 +55,11 @@ public class Simulation {
         for(Station s: this.stations){
             s.render(renderer);
         }
+       
+    }
+    
+    public void renderText(BitmapFont text, SpriteBatch batch){
+    	text.getData().setScale(0.5f);
+        text.draw(batch, "TESTING", 100, 100);
     }
 }

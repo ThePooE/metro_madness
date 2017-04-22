@@ -36,7 +36,7 @@ public class Train {
     public static final Color   FORWARD_COLOUR  = Color.ORANGE;
     public static final Color   BACKWARD_COLOUR = Color.VIOLET;
 
-    public static final float   TRAIN_WIDTH     = 4;
+    public static final float   TRAIN_WIDTH     = 10;
     public static final float   TRAIN_LENGTH    = 6;
     public static final float   TRAIN_SPEED     = 50f;
 

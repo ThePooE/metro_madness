@@ -34,6 +34,8 @@ public class MetroMadness extends ApplicationAdapter {
     // Font
     BitmapFont smaller;
     BitmapFont header;
+    
+    BitmapFont stationText;
 
     @Override
     public void resize(int width, int height) {
@@ -70,10 +72,18 @@ public class MetroMadness extends ApplicationAdapter {
         headlineParam.size = 40;
         header = headlineGen.generateFont(headlineParam); // font size 12 pixels
         headlineGen.dispose(); // don't forget to dispose to avoid memory leaks!
+        
+        FreeTypeFontGenerator textGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/Gotham-Book.ttf"));
+        FreeTypeFontParameter textParam = new FreeTypeFontParameter();
+        textParam.size = 20;
+        stationText = textGen.generateFont(textParam);
+        textGen.dispose();
+        
 
         // Setup fonts
          smaller.setColor(Color.GRAY);
          header.setColor(Color.BLACK);
+         stationText.setColor(Color.BLACK);
 
     }
 
@@ -105,6 +115,10 @@ public class MetroMadness extends ApplicationAdapter {
          // Render Header
          header.getData().setScale(0.5f);
          header.draw(batch, "metro madness.", 10, Gdx.graphics.getHeight()-10);
+         
+         sim.renderText(stationText, batch);
+         
+
          batch.end();
 
     }

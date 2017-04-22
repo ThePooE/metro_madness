@@ -8,19 +8,14 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.PassengerTrain;
 
 public class BigPassengerTrain extends PassengerTrain {
+	
+	private static int MAX_PASSENGER = 80;
 
     public BigPassengerTrain(Line trainLine, Station start, boolean forward, String name) {
-        super(trainLine, start, forward, name);
+        super(trainLine, start, forward, name, MAX_PASSENGER);
     }
 
-    @Override
-    public void embark(Passenger p) throws Exception {
-        if(this.passengers.size() > 80){
-            throw new Exception();
-        }
-        this.passengers.add(p);
-    }
-
+    
     @Override
     public void render(ShapeRenderer renderer){
         if(!this.inStation()){

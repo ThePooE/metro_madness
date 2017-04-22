@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class PassengerTrain extends Train {
 
     private static Logger logger = LogManager.getLogger();
+    private static int maxPassenger;
 
 //    Train Rendering Configs
 //    public static final int     MAX_TRIPS       = 4;
@@ -27,7 +28,18 @@ public class PassengerTrain extends Train {
 //    public static final float   TRAIN_LENGTH    = 6;
 //    public static final float   TRAIN_SPEED     = 50f;
 
-    public PassengerTrain(Line trainLine, Station start, boolean forward, String name) {
+    @Override
+    public void embark(Passenger p) throws Exception {
+        int numPassengers=this.passengers.size();
+        if (numPassengers +1 > this.maxPassenger) {
+            throw new Exception();
+        }
+        this.passengers.add(p);
+    }
+    
+    
+    public PassengerTrain(Line trainLine, Station start, boolean forward, String name, int passenger) {
         super(trainLine, start, forward, name);
+        this.maxPassenger = passenger;
     }
 }

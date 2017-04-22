@@ -95,5 +95,9 @@ public class Station {
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }
+    
+    public String getStationName() {
+    	return this.name;
+    }
 
 }
