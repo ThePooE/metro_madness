@@ -8,6 +8,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -157,7 +158,6 @@ public class MapReader {
             boolean twoWay = s.getBoolean("double");
             l.addStation(station, twoWay);
         }
-
         return l;
     }
 

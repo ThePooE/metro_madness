@@ -3,6 +3,8 @@ package com.unimelb.swen30006.metromadness.stations;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,7 +76,7 @@ public class ActiveStation extends Station {
         }
     }
 
-    public void render(ShapeRenderer renderer){
+    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header){
         // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
@@ -93,5 +95,10 @@ public class ActiveStation extends Station {
 
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+
+        b.begin();
+        header.getData().setScale(1f);
+        header.draw(b, this.name, this.position.x+10, this.position.y-10);
+        b.end();
     }
 }

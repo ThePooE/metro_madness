@@ -17,6 +17,7 @@ public class PassengerGenerator {
 
     // The station that passengers are getting on
     public Station s;
+
     // The line they are travelling on
     public ArrayList<Line> lines;
 
@@ -51,11 +52,13 @@ public class PassengerGenerator {
             forward = false;
         }
 
+        // Check if there is a compatible station
+        boolean found = false;
+
         // Find the station
         int index = 0;
-
-        if (forward){
-            index = random.nextInt(l.stations.size()-1-current_station) + current_station + 1;
+        if (forward) {
+            index = random.nextInt(l.stations.size() - 1 - current_station) + current_station + 1;
         } else {
             index = current_station - 1 - random.nextInt(current_station);
         }

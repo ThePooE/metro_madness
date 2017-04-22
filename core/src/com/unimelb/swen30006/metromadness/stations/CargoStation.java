@@ -1,18 +1,18 @@
 package com.unimelb.swen30006.metromadness.stations;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.tracks.Line;
-import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Nate Bhurinat W. (@natebwangsut | nate.bwangsut@gmail.com)
@@ -40,7 +40,7 @@ public class CargoStation extends ActiveStation {
     }
 
     @Override
-    public void render(ShapeRenderer renderer){
+    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header){
         // Show a station as a rings of lines
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
@@ -37,7 +39,9 @@ public class Station {
         this.lines.add(l);
     }
 
-    public void render(ShapeRenderer renderer){
+    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header){
+
+        // Render the circle
         float radius = RADIUS;
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
             Line l = this.lines.get(i);

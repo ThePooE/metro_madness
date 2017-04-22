@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -15,8 +16,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 
 public class MetroMadness extends ApplicationAdapter {
-
-
 
     // The width of the world in unitless dimensions
     static final int WORLD_WIDTH = 1200;
@@ -72,9 +71,8 @@ public class MetroMadness extends ApplicationAdapter {
         headlineGen.dispose(); // don't forget to dispose to avoid memory leaks!
 
         // Setup fonts
-         smaller.setColor(Color.GRAY);
-         header.setColor(Color.BLACK);
-
+        smaller.setColor(Color.GRAY);
+        header.setColor(Color.BLACK);
     }
 
     @Override
@@ -91,22 +89,23 @@ public class MetroMadness extends ApplicationAdapter {
         sim.update();
 
         // Render the simulation
-         shapeRenderer.setProjectionMatrix(camera.combined);
+        SpriteBatch b = new SpriteBatch();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        b.setProjectionMatrix(camera.combined);
 
-         // Render all filled shapes.
-         shapeRenderer.begin(ShapeType.Filled);
-         sim.render(shapeRenderer);
-         shapeRenderer.end();
+        // Render all filled shapes
+        shapeRenderer.begin(ShapeType.Filled);
+        sim.render(shapeRenderer, b, smaller);
+        shapeRenderer.end();
 
-         // Begin preparations to render text
-         SpriteBatch batch = new SpriteBatch();
-         batch.begin();
+        // Begin preparations to render text
+        SpriteBatch batch = new SpriteBatch();
+        batch.begin();
 
-         // Render Header
-         header.getData().setScale(0.5f);
-         header.draw(batch, "metro madness.", 10, Gdx.graphics.getHeight()-10);
-         batch.end();
-
+        // Render Header
+        header.getData().setScale(0.5f);
+        header.draw(batch, "metro madness.", 10, Gdx.graphics.getHeight()-10);
+        batch.end();
     }
 
     private void handleInput() {
