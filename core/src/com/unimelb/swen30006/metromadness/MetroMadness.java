@@ -38,6 +38,7 @@ public class MetroMadness extends ApplicationAdapter {
     boolean stationShow = true;
     boolean passengerShow = true;
     boolean waitingShow = false;
+    boolean trainShow = false;
 
     @Override
     public void resize(int width, int height) {
@@ -100,7 +101,7 @@ public class MetroMadness extends ApplicationAdapter {
 
         // Render all filled shapes
         shapeRenderer.begin(ShapeType.Filled);
-        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow);
+        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow, trainShow);
         shapeRenderer.end();
 
         // Begin preparations to render text
@@ -159,6 +160,14 @@ public class MetroMadness extends ApplicationAdapter {
         		this.waitingShow = false;
         	} else {
         		this.waitingShow = true;
+        	}
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.T)){
+        	// Show/Hide train names
+        	if(this.trainShow){
+        		this.trainShow = false;
+        	} else {
+        		this.trainShow = true;
         	}
         }
 
