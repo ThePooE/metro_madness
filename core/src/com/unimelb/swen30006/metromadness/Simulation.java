@@ -44,7 +44,7 @@ public class Simulation {
         }
     }
 
-    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header) {
+    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont font) {
         for(Line l: this.lines){
             l.render(renderer);
         }
@@ -52,8 +52,9 @@ public class Simulation {
         for(Train t: this.trains){
             t.render(renderer);
         }
+        
         for(Station s: this.stations){
-            s.render(renderer, b, header);
+            s.render(renderer, b, font);
         }
     }
 }
