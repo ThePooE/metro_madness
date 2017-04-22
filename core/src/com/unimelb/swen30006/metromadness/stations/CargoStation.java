@@ -61,10 +61,10 @@ public class CargoStation extends ActiveStation {
 
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-        
-       
+
+
     }
-    
+
     @Override
     public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
     	if(waitingShow){
