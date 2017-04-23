@@ -234,7 +234,7 @@
 			<max_passengers> 100 </max_passengers>
 		</station>
 		<station>
-			<type>Active</type>
+			<type>Cargo</type>
 			<name>Upfield</name>
 			<x_loc>2440</x_loc>
 			<y_loc>7400</y_loc>
@@ -274,7 +274,7 @@
 			<max_passengers> 100 </max_passengers>
 		</station>
 		<station>
-			<type>Active</type>
+			<type>Cargo</type>
 			<name>Williamstown</name>
 			<x_loc>1840</x_loc>
 			<y_loc>4200</y_loc>

@@ -169,30 +169,21 @@ public class Train {
 
                         // Cargo Trains looking for next Cargo Station on line
                         if(this instanceof CargoTrain){
-                            int counterCheck = 0;
-                            Station tryStation = this.station;
-                            while(destination == null && counterCheck < stationsOnLine){
-                                Station tryNext = this.trainLine.nextStation(tryStation, this.forward);
-                                if(tryNext instanceof CargoStation){
-                                    destination = tryNext;
-                                    break;
-                                }
-                                tryStation = tryNext;
-                                counterCheck++;
-
+                            
+                            if(this.trainLine.earlyEndOfCargoLine(this.station)){
+                                this.forward = !this.forward;
                             }
-
+                            
+                            destination = this.trainLine.nextCargoStation(this.station, this.forward);
+                            
                             if(destination != null){
                                 next = this.trainLine.nextStation(this.station, this.forward);
                             }
                         }
-
                         // Passenger Train looking for next station on line
                         else {
                             next = this.trainLine.nextStation(this.station, this.forward);
                         }
-
-
 
                         if(next != null){
                             this.station.depart(this);

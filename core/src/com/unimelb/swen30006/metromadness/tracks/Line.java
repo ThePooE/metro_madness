@@ -41,6 +41,7 @@ public class Line {
         this.cargoStations = new ArrayList<Station>();
         this.tracks = new ArrayList<Track>();
     }
+    
 
     /**
      * Adds the stations of this Line to the stored variable 'stations'
@@ -161,10 +162,16 @@ public class Line {
      * @throws Exception
      */
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
+        
+        if(!notSingleCargoStation()){
+            throw new StationNotFoundException();
+        }
+
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
+       
             if(forward){ curIndex+=1;}else{ curIndex -=1;}
-
+            
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
                 throw new StationNotFoundException();
@@ -174,6 +181,21 @@ public class Line {
         } else {
             throw new StationNotFoundException();
         }
+    }
+    
+    /** 
+     * Checks if the current Cargo Station is the last Cargo Station
+     * but not the last Station of the line
+     * @param s     current station
+     * @return
+     */
+    public boolean earlyEndOfCargoLine(Station s){
+        int totalStationsOnLine = this.stations.size();
+        
+        if(s != this.stations.get(totalStationsOnLine -1)){
+            return true;
+        }
+        return false;
     }
 
 
@@ -201,3 +223,5 @@ public class Line {
     }
 
 }
+
+
