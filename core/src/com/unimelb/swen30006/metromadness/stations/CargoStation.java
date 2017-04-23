@@ -40,12 +40,7 @@ public class CargoStation extends ActiveStation {
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;
-        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
-            Line l = this.lines.get(i);
-            renderer.setColor(l.lineColour);
-            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius-2;
-        }
+        radius = renderRings(renderer, radius);
 
         // Calculate the percentage
         float t = this.trains.size()/(float)PLATFORMS;
@@ -58,17 +53,5 @@ public class CargoStation extends ActiveStation {
 
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-
-
-    }
-
-    @Override
-    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
-        if(waitingShow){
-            b.begin();
-            header.getData().setScale(1f);
-            header.draw(b, Integer.toString(this.waiting.size()), this.position.x-10, this.position.y-10);
-            b.end();
-        }
     }
 }

@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
-import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class ActiveStation extends Station {
@@ -80,12 +79,7 @@ public class ActiveStation extends Station {
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;
-        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
-            Line l = this.lines.get(i);
-            renderer.setColor(l.lineColour);
-            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius-2;
-        }
+        radius = renderRings(renderer, radius);
 
         // Calculate the percentage
         float t = this.trains.size()/(float)PLATFORMS;
@@ -96,15 +90,18 @@ public class ActiveStation extends Station {
 
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-
     }
 
     @Override
-    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
-        if(waitingShow){
+    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waiting){
+        if(waiting){
             b.begin();
             header.getData().setScale(1f);
-            header.draw(b, Integer.toString(this.waiting.size()), this.position.x-10, this.position.y-10);
+            header.draw(
+                    b,
+                    Integer.toString(this.waiting.size()),
+                    this.position.x-10,
+                    this.position.y-10);
             b.end();
         }
     }

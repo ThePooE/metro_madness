@@ -164,47 +164,47 @@ public class Train {
                         this.station.depart(this);
                         this.station = next;*/
 
-                		Station next = null;
-                		Station destination = null;
+                        Station next = null;
+                        Station destination = null;
 
-                		// Cargo Trains looking for next Cargo Station on line
-                    	if(this instanceof CargoTrain){
-                    		int counterCheck = 0;
-                    		Station tryStation = this.station;
-                    		while(destination == null && counterCheck < stationsOnLine){
-                    			Station tryNext = this.trainLine.nextStation(tryStation, this.forward);
-                    			if(tryNext instanceof CargoStation){
-                    				destination = tryNext;
-                    				break;
-                    			}
-                    			tryStation = tryNext;
-                    			counterCheck++;
+                        // Cargo Trains looking for next Cargo Station on line
+                        if(this instanceof CargoTrain){
+                            int counterCheck = 0;
+                            Station tryStation = this.station;
+                            while(destination == null && counterCheck < stationsOnLine){
+                                Station tryNext = this.trainLine.nextStation(tryStation, this.forward);
+                                if(tryNext instanceof CargoStation){
+                                    destination = tryNext;
+                                    break;
+                                }
+                                tryStation = tryNext;
+                                counterCheck++;
 
-                    		}
+                            }
 
-                    		if(destination != null){
-                    			next = this.trainLine.nextStation(this.station, this.forward);
-                    		}
-                    	}
+                            if(destination != null){
+                                next = this.trainLine.nextStation(this.station, this.forward);
+                            }
+                        }
 
-                    	// Passenger Train looking for next station on line
-                    	else {
-                    		next = this.trainLine.nextStation(this.station, this.forward);
-                    	}
+                        // Passenger Train looking for next station on line
+                        else {
+                            next = this.trainLine.nextStation(this.station, this.forward);
+                        }
 
 
 
-                    	if(next != null){
-                    		this.station.depart(this);
-                    		this.station = next;
-                    		this.track.enter(this);
-                    		this.state = State.ON_ROUTE;
-                    	}
+                        if(next != null){
+                            this.station.depart(this);
+                            this.station = next;
+                            this.track.enter(this);
+                            this.state = State.ON_ROUTE;
+                        }
 
-                    	// If a Cargo Train could not find another Cargo Station on line, stay in station
-                    	else {
-                    		this.state = State.IN_STATION;
-                    	}
+                        // If a Cargo Train could not find another Cargo Station on line, stay in station
+                        else {
+                            this.state = State.IN_STATION;
+                        }
                     } catch (Exception e) {
                         //e.printStackTrace();
                     }
@@ -343,8 +343,8 @@ public class Train {
         }
     }
 
-    public void renderName(SpriteBatch b, BitmapFont header, boolean trainShow){
-        if(trainShow){
+    public void renderName(SpriteBatch b, BitmapFont header, boolean train){
+        if(train){
             b.begin();
             header.getData().setScale(1f);
             header.draw(b, this.name, this.pos.x-10, this.pos.y-10);

@@ -45,18 +45,23 @@ public class Station {
 
         // Render the circle
         float radius = RADIUS;
-        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
-            Line l = this.lines.get(i);
-            renderer.setColor(l.lineColour);
-            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius - 1;
-        }
+        radius = renderRings(renderer, radius);
 
         // Calculate the percentage
         float t = this.trains.size()/(float)PLATFORMS;
         Color c = Color.WHITE.cpy().lerp(Color.DARK_GRAY, t);
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+    }
+
+    public float renderRings(ShapeRenderer renderer, float radius) {
+        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
+            Line l = this.lines.get(i);
+            renderer.setColor(l.lineColour);
+            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+            radius = radius-2;
+        }
+        return radius;
     }
 
     public void renderName(SpriteBatch b, BitmapFont header, boolean showStation){
@@ -69,10 +74,9 @@ public class Station {
     }
 
     public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
-        // To be overwritten by stations that are in use (eg ActiveStation and CargoStation
+        // To be overwritten by stations that are in use (eg ActiveStation and CargoStation)
         // Only show passengers in those stations
     }
-
 
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
@@ -116,5 +120,4 @@ public class Station {
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }
-
 }

@@ -3,6 +3,7 @@ package com.unimelb.swen30006.metromadness.passengers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.unimelb.swen30006.metromadness.exceptions.StationNotFoundException;
 import com.unimelb.swen30006.metromadness.stations.ActiveStation;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
@@ -32,24 +33,21 @@ public class PassengerGenerator {
         this.maxVolume = max;
     }
 
-    public Passenger[] generatePassengers(){
+    public Passenger[] generatePassengers() throws Exception {
         int count = random.nextInt(4)+1;
         Passenger[] passengers = new Passenger[count];
 
         // Check is current station is a Cargo Station
         boolean atCargoStation = s instanceof CargoStation;
 
-        System.out.println("At station: " + this.s.name + " is a Cargo station?: " + Boolean.toString(atCargoStation));
+        //System.out.println("At station: " + this.s.name + " is a Cargo station?: " + Boolean.toString(atCargoStation));
         for(int i=0; i<count; i++){
-
             passengers[i] = generatePassenger(random, atCargoStation);
         }
         return passengers;
     }
 
-
-
-    public Passenger generatePassenger(Random random, boolean atCargoStation){
+    public Passenger generatePassenger(Random random, boolean atCargoStation) throws Exception {
 
         // Pick a random line that the station is part of
         // Note: a station could be part of more than one line
