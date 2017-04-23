@@ -9,8 +9,6 @@ import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -21,7 +19,6 @@ import java.util.ArrayList;
 
 public class CargoStation extends ActiveStation {
 
-    private static Logger logger = LogManager.getLogger();
 
     public PassengerGenerator g;
     public ArrayList<Passenger> waiting;

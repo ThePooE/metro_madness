@@ -339,7 +339,7 @@ public class Train {
         if(!this.inStation() && passengerShow){
             b.begin();
             header.getData().setScale(1f);
-            header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y-10);
+            header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y+10);
             b.end();
         }
     }

@@ -46,7 +46,7 @@ public class CargoTrain extends Train {
     public void embark(Passenger p) throws Exception {
 
         // Check passenger full
-        if(this.passengers.size() > this.passengerCapacity){
+        if(this.passengers.size() +1 > this.passengerCapacity){
             throw new TrainPassengerFullException();
         }
 
@@ -61,18 +61,6 @@ public class CargoTrain extends Train {
         this.passengers.add(p);
     }
 
-    /**
-     * Choose to render as rectangle rather than circle for normal trains
-     * @param renderer
-     */
-    @Override
-    public void render(ShapeRenderer renderer){
-        float size = TRAIN_WIDTH;
-        if(!this.inStation()){
-            Color col = this.forward ? FORWARD_COLOUR : BACKWARD_COLOUR;
-            renderer.setColor(col);
-            renderer.rect(this.pos.x, this.pos.y, size, size);
-        }
-    }
+    
 
 }

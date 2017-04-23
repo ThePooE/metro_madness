@@ -37,14 +37,17 @@ public class PassengerGenerator {
         Passenger[] passengers = new Passenger[count];
         for(int i=0; i<count; i++){
         	
+            // Generating passengers for Passenger Train
         	if(s.getClass().isAssignableFrom(ActiveStation.class)){
         		passengers[i] = generatePassenger(random);
 
-        	} else if (s.getClass().isAssignableFrom(CargoStation.class)){
-        		passengers[i] = generateCargoPassenger(random);
-
-        	}
+        	} 
         	
+        	// Generating passengers for Cargo Train
+        	// (needs to have a valid Cargo Station as their destination)
+        	else if (s.getClass().isAssignableFrom(CargoStation.class)){
+        		passengers[i] = generateCargoPassenger(random);
+        	}        	
         }
         return passengers;
     }
@@ -81,14 +84,10 @@ public class PassengerGenerator {
     }
     
     public Passenger generateCargoPassenger(Random random){
-    	
-    	// Pick a random line that the station is part of
+        // Pick a random line that the station is part of
     	// Note: a station could be part of more than one line
         Line l = this.lines.get(random.nextInt(this.lines.size()));
-        
-        
-        
-        
+   
         if(l.notSingleCargoStation()){
         	// Check if there is a compatible station
             int current_station = l.cargoStations.indexOf(this.s);
@@ -100,23 +99,18 @@ public class PassengerGenerator {
             } else if (current_station == l.cargoStations.size()-1){
                 forward = false;
             }
-            boolean found = false;
-         
         	
 	        // Find the station
 	        int index = 0;
-	        
 	        if (forward) {
 	            index = random.nextInt(l.cargoStations.size() - 1 - current_station) + current_station + 1;
 	        } else {
 	            index = current_station - 1 - random.nextInt(current_station);
 	        }
 	        Station s = l.cargoStations.get(index);
-	
 	        return this.s.generatePassenger(idGen++, random, s);
         }
     	
     	return null;
     }
-
 }
