@@ -25,10 +25,19 @@ public class Track {
         renderer.rectLine(startPos.x, startPos.y, endPos.x, endPos.y, LINE_WIDTH);
     }
 
+    /**
+     * Check if the track is empty and can be entered by a train
+     * @param forward   direction of train's movement on a line
+     * @return
+     */
     public boolean canEnter(boolean forward){
         return !this.occupied;
     }
 
+    /** 
+     * Train entering and occupying this track
+     * @param t     current Train
+     */
     public void enter(Train t){
         this.occupied = true;
     }
@@ -39,6 +48,10 @@ public class Track {
                 + occupied + "]";
     }
 
+    /**
+     * Train leaving this track
+     * @param t     current Train
+     */
     public void leave(Train t){
         this.occupied = false;
     }
