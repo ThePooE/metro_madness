@@ -1,6 +1,5 @@
 package com.unimelb.swen30006.metromadness.passengers;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
@@ -39,8 +38,9 @@ public class Passenger {
     public Cargo getCargo(){
         return cargo;
     }
+
     public Cargo generateCargo(Random random){
-        return new Cargo(random.nextInt(51));
+        return new Cargo(random.nextInt(50) +1);
     }
 
     public class Cargo{

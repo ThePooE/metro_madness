@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.unimelb.swen30006.metromadness.exceptions.FullPlatformException;
+import com.unimelb.swen30006.metromadness.exceptions.TrainNotFoundException;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.tracks.Line;
@@ -38,13 +42,10 @@ public class Station {
     }
 
     public void render(ShapeRenderer renderer){
+
+        // Render the circle
         float radius = RADIUS;
-        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
-            Line l = this.lines.get(i);
-            renderer.setColor(l.lineColour);
-            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
-            radius = radius - 1;
-        }
+        radius = renderRings(renderer, radius);
 
         // Calculate the percentage
         float t = this.trains.size()/(float)PLATFORMS;
@@ -53,9 +54,33 @@ public class Station {
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
+    public float renderRings(ShapeRenderer renderer, float radius) {
+        for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
+            Line l = this.lines.get(i);
+            renderer.setColor(l.lineColour);
+            renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
+            radius = radius-2;
+        }
+        return radius;
+    }
+
+    public void renderName(SpriteBatch b, BitmapFont header, boolean showStation){
+        if(showStation){
+            b.begin();
+            header.getData().setScale(1f);
+            header.draw(b, this.name, this.position.x+10, this.position.y+10);
+            b.end();
+        }
+    }
+
+    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
+        // To be overwritten by stations that are in use (eg ActiveStation and CargoStation)
+        // Only show passengers in those stations
+    }
+
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
-            throw new Exception();
+            throw new FullPlatformException();
         } else {
             this.trains.add(t);
         }
@@ -65,7 +90,7 @@ public class Station {
         if(this.trains.contains(t)){
             this.trains.remove(t);
         } else {
-            throw new Exception();
+            throw new TrainNotFoundException();
         }
     }
 
@@ -95,5 +120,4 @@ public class Station {
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }
-
 }

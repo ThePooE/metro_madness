@@ -16,8 +16,6 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class MetroMadness extends ApplicationAdapter {
 
-
-
     // The width of the world in unitless dimensions
     static final int WORLD_WIDTH = 1200;
     static final int WORLD_HEIGHT = 1200;
@@ -33,7 +31,17 @@ public class MetroMadness extends ApplicationAdapter {
 
     // Font
     BitmapFont smaller;
+    BitmapFont display;
     BitmapFont header;
+
+    // Default settings for showing names in simulation
+    boolean stationShow = true;
+    boolean passengerShow = true;
+    boolean waitingShow = false;
+    boolean trainShow = false;
+
+    double inputDelay = 0.2; // seconds
+    static float delay = 0;
 
     @Override
     public void resize(int width, int height) {
@@ -43,7 +51,7 @@ public class MetroMadness extends ApplicationAdapter {
     }
 
     @Override
-    public void create () {
+    public void create() {
         // Create the simulation
         sim = new Simulation("filename");
 
@@ -59,26 +67,25 @@ public class MetroMadness extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
         // Create our font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/Gotham-Book.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 12;
+        parameter.size = 16;
         smaller = generator.generateFont(parameter); // font size 12 pixels
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/Gotham-Bold.ttf"));
+        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter headlineParam = new FreeTypeFontParameter();
-        headlineParam.size = 40;
-        header = headlineGen.generateFont(headlineParam); // font size 12 pixels
+        headlineParam.size = 50;
+        header = headlineGen.generateFont(headlineParam); // font size 50 pixels
         headlineGen.dispose(); // don't forget to dispose to avoid memory leaks!
 
         // Setup fonts
-         smaller.setColor(Color.GRAY);
-         header.setColor(Color.BLACK);
-
+        smaller.setColor(Color.DARK_GRAY);
+        header.setColor(Color.BLACK);
     }
 
     @Override
-    public void render () {
+    public void render() {
         // Clear the graphics to white
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -91,36 +98,43 @@ public class MetroMadness extends ApplicationAdapter {
         sim.update();
 
         // Render the simulation
-         shapeRenderer.setProjectionMatrix(camera.combined);
+        SpriteBatch b = new SpriteBatch();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        b.setProjectionMatrix(camera.combined);
 
-         // Render all filled shapes.
-         shapeRenderer.begin(ShapeType.Filled);
-         sim.render(shapeRenderer);
-         shapeRenderer.end();
+        // Render all filled shapes
+        shapeRenderer.begin(ShapeType.Filled);
+        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow, trainShow);
+        shapeRenderer.end();
 
-         // Begin preparations to render text
-         SpriteBatch batch = new SpriteBatch();
-         batch.begin();
+        // Begin preparations to render text
+        SpriteBatch batch = new SpriteBatch();
+        batch.begin();
 
-         // Render Header
-         header.getData().setScale(0.5f);
-         header.draw(batch, "metro madness.", 10, Gdx.graphics.getHeight()-10);
-         batch.end();
-
+        // Render Header
+        header.getData().setScale(0.5f);
+        header.draw(batch, "metro madness.", 10, Gdx.graphics.getHeight()-10);
+        batch.end();
     }
 
     private void handleInput() {
+
+        /* Exit Program */
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            Gdx.app.exit();
+        }
+
+        /* Zoom In-Out */
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom -= 0.1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+
+        /* Camera Directions */
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-3f, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            Gdx.app.exit();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.translate(3f, 0, 0);
@@ -132,13 +146,38 @@ public class MetroMadness extends ApplicationAdapter {
             camera.translate(0, 3f, 0);
         }
 
+        /* Show or hide names */
+        delay += Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (delay >= inputDelay) {
+                this.stationShow = !this.stationShow;
+                delay = 0;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            if (delay >= inputDelay) {
+                this.passengerShow = !this.passengerShow;
+                delay = 0;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (delay >= inputDelay) {
+                this.waitingShow = !this.waitingShow;
+                delay = 0;
+            }
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.T)) {
+            if (delay >= inputDelay) {
+                this.trainShow = !this.trainShow;
+                delay = 0;
+            }
+        }
 
-        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, WORLD_WIDTH/camera.viewportWidth);
+        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, WORLD_WIDTH / camera.viewportWidth);
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
         float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
         camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
         camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
     }
-
 }
