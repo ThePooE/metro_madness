@@ -32,6 +32,7 @@ public class MetroMadness extends ApplicationAdapter {
 
     // Font
     BitmapFont smaller;
+    BitmapFont display;
     BitmapFont header;
 
     // Default settings for showing names in simulation
@@ -67,20 +68,20 @@ public class MetroMadness extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
         // Create our font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/Gotham-Book.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 12;
+        parameter.size = 16;
         smaller = generator.generateFont(parameter); // font size 12 pixels
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/Gotham-Bold.ttf"));
+        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter headlineParam = new FreeTypeFontParameter();
-        headlineParam.size = 40;
-        header = headlineGen.generateFont(headlineParam); // font size 12 pixels
+        headlineParam.size = 50;
+        header = headlineGen.generateFont(headlineParam); // font size 50 pixels
         headlineGen.dispose(); // don't forget to dispose to avoid memory leaks!
 
         // Setup fonts
-        smaller.setColor(Color.GRAY);
+        smaller.setColor(Color.DARK_GRAY);
         header.setColor(Color.BLACK);
     }
 
