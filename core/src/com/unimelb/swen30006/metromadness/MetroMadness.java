@@ -40,8 +40,8 @@ public class MetroMadness extends ApplicationAdapter {
     boolean waitingShow = false;
     boolean trainShow = false;
 
-    int inputDelay = 1000;
-    int delay = 0;
+    double inputDelay = 0.2; // seconds
+    static float delay = 0;
 
     @Override
     public void resize(int width, int height) {

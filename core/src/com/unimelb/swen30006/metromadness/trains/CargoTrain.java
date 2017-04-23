@@ -10,9 +10,7 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//import sun.rmi.runtime.Log;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -76,5 +74,5 @@ public class CargoTrain extends Train {
             renderer.rect(this.pos.x, this.pos.y, size, size);
         }
     }
-    
+
 }
