@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 
@@ -41,7 +40,13 @@ public class Line {
         this.tracks = new ArrayList<Track>();
     }
 
-
+    /**
+     * Adds the stations of this Line to the stored variable 'stations'
+     * If the station is also a Cargo Station, add those stations to
+     * the stored variable 'cargoStations' (for easier searching in other functions)
+     * @param s         current station
+     * @param two_way   true if the station has a dual track, otherwise false
+     */
     public void addStation(Station s, Boolean two_way){
         // We need to build the track if this is adding to existing stations
         if(this.stations.size() > 0){
@@ -62,7 +67,7 @@ public class Line {
         s.registerLine(this);
         this.stations.add(s);
         
-         // Check if it is a Cargo Station
+         // Check if it is a Cargo Station then store it
         if(s instanceof CargoStation){
         	this.cargoStations.add(s);
         }
@@ -74,6 +79,12 @@ public class Line {
     }
 
 
+    /**
+     * Checks if the station is at an end of the line
+     * @param s     current station to be checked
+     * @return      true if it is at an end, otherwise false 
+     * @throws Exception
+     */
     public boolean endOfLine(Station s) throws Exception{
         if(this.stations.contains(s)){
             int index = this.stations.indexOf(s);
@@ -82,13 +93,20 @@ public class Line {
             throw new Exception();
         }
     }
+    
 
-
-
+    /**
+     * Looks for the next track for the train to move into
+     * @param currentStation    current station that the train is in
+     * @param forward           the direction of train movement on its line
+     * @return                  the Track to move into
+     * @throws Exception
+     */
     public Track nextTrack(Station currentStation, boolean forward) throws Exception {
         if(this.stations.contains(currentStation)){
             // Determine the track index
             int curIndex = this.stations.lastIndexOf(currentStation);
+            
             // Increment to retrieve
             if(!forward){ curIndex -=1;}
 
@@ -104,6 +122,14 @@ public class Line {
         }
     }
 
+    
+    /**
+     * Looks for the next station for the train to travel to
+     * @param s             current station that the train is in
+     * @param forward       the direction or train movement on its line
+     * @return              the next Station to travel to
+     * @throws Exception
+     */
     public Station nextStation(Station s, boolean forward) throws Exception{
         if(this.stations.contains(s)){
             int curIndex = this.stations.lastIndexOf(s);
@@ -120,6 +146,15 @@ public class Line {
         }
     }
     
+    
+    /**
+     * Looks for the next cargo station for the train to travel to 
+     * (in the case of a Cargo Train)
+     * @param s             current (Cargo) station that the train is in
+     * @param forward       the direction or train movement on its line
+     * @return              the next (Cargo) Station to travel to
+     * @throws Exception
+     */
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
@@ -136,6 +171,11 @@ public class Line {
         }
     }
     
+    
+    /**
+     * Checks if there are more than one Cargo Stations on a particular line
+     * @return      true if true, otherwise false
+     */
     public boolean notSingleCargoStation(){
     	
     	if(this.cargoStations.size() >= MULTIPLE_STATIONS){
@@ -146,6 +186,11 @@ public class Line {
     	
     }
 
+    
+    /**
+     * Sets the colour of this train line and pass it to the Track renderer
+     * @param renderer
+     */
     public void render(ShapeRenderer renderer){
         // Set the color to our line
         renderer.setColor(trackColour);

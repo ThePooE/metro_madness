@@ -29,8 +29,7 @@ public class Train {
         ON_ROUTE,
         WAITING_ENTRY,
         SKIPPING_STATION,
-        FROM_DEPOT,
-        STATIC
+        FROM_DEPOT
     }
 
     // Constants

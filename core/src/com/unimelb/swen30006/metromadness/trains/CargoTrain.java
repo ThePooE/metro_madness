@@ -1,15 +1,11 @@
 package com.unimelb.swen30006.metromadness.trains;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.exceptions.TrainCargoFullException;
 import com.unimelb.swen30006.metromadness.exceptions.TrainPassengerFullException;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -20,7 +16,6 @@ import java.util.ArrayList;
 
 public class CargoTrain extends Train {
 
-    private static Logger logger = LogManager.getLogger();
 
 //    Train Rendering Configs
 //    public static final int     MAX_TRIPS       = 4;

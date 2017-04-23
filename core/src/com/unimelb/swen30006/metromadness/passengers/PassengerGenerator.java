@@ -35,82 +35,60 @@ public class PassengerGenerator {
     public Passenger[] generatePassengers(){
         int count = random.nextInt(4)+1;
         Passenger[] passengers = new Passenger[count];
+        
+        // Check is current station is a Cargo Station
+        boolean atCargoStation = s instanceof CargoStation;
+
+        System.out.println("At station: " + this.s.name + " is a Cargo station?: " + Boolean.toString(atCargoStation));
         for(int i=0; i<count; i++){
         	
-            // Generating passengers for Passenger Train
-        	if(s.getClass().isAssignableFrom(ActiveStation.class)){
-        		passengers[i] = generatePassenger(random);
-
-        	} 
-        	
-        	// Generating passengers for Cargo Train
-        	// (needs to have a valid Cargo Station as their destination)
-        	else if (s.getClass().isAssignableFrom(CargoStation.class)){
-        		passengers[i] = generateCargoPassenger(random);
-        	}        	
+            passengers[i] = generatePassenger(random, atCargoStation);
         }
         return passengers;
     }
 
-    public Passenger generatePassenger(Random random){
-        // Pick a random line that the station is part of
-    	// Note: a station could be part of more than one line
-        Line l = this.lines.get(random.nextInt(this.lines.size()));
+    
+    
+    public Passenger generatePassenger(Random random, boolean atCargoStation){
         
-        int current_station = l.stations.indexOf(this.s);
+        // Pick a random line that the station is part of
+        // Note: a station could be part of more than one line
+        Line l = this.lines.get(random.nextInt(this.lines.size()));
+        ArrayList<Station> stationList;
+        
+        // Check if current station is a Cargo Station or Active Station
+        if(atCargoStation){
+            if(!l.notSingleCargoStation()){
+                return null;
+            }
+            stationList = l.cargoStations;
+        } else {
+            stationList = l.stations;
+        }
+        
+        
+        int current_station = stationList.indexOf(this.s);
         boolean forward = random.nextBoolean();
 
         // If we are the end of the line then set our direction forward or backward
         if(current_station == 0){
             forward = true;
-        } else if (current_station == l.stations.size()-1){
+        } else if (current_station == stationList.size()-1){
             forward = false;
         }
-
-        // Check if there is a compatible station
-        boolean found = false;
 
         // Find the station
         int index = 0;
         
         if (forward) {
-            index = random.nextInt(l.stations.size() - 1 - current_station) + current_station + 1;
+            index = random.nextInt(stationList.size() - 1 - current_station) + current_station + 1;
         } else {
             index = current_station - 1 - random.nextInt(current_station);
         }
-        Station s = l.stations.get(index);
+        Station s = stationList.get(index);
 
         return this.s.generatePassenger(idGen++, random, s);
     }
     
-    public Passenger generateCargoPassenger(Random random){
-        // Pick a random line that the station is part of
-    	// Note: a station could be part of more than one line
-        Line l = this.lines.get(random.nextInt(this.lines.size()));
-   
-        if(l.notSingleCargoStation()){
-        	// Check if there is a compatible station
-            int current_station = l.cargoStations.indexOf(this.s);
-            boolean forward = random.nextBoolean();
-            
-            // If we are the end of the line then set our direction forward or backward
-            if(current_station == 0){
-                forward = true;
-            } else if (current_station == l.cargoStations.size()-1){
-                forward = false;
-            }
-        	
-	        // Find the station
-	        int index = 0;
-	        if (forward) {
-	            index = random.nextInt(l.cargoStations.size() - 1 - current_station) + current_station + 1;
-	        } else {
-	            index = current_station - 1 - random.nextInt(current_station);
-	        }
-	        Station s = l.cargoStations.get(index);
-	        return this.s.generatePassenger(idGen++, random, s);
-        }
-    	
-    	return null;
-    }
+    
 }
