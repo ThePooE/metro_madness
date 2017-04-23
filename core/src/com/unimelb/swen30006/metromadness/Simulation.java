@@ -45,6 +45,7 @@ public class Simulation {
     }
 
     public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont header, boolean stationShow, boolean passengerShow, boolean waitingShow, boolean trainShow) {
+
         for(Line l: this.lines){
             l.render(renderer);
         }
@@ -53,6 +54,7 @@ public class Simulation {
             t.renderName(b, header, trainShow);
             t.renderPassengers(b, header, passengerShow);
         }
+        
         for(Station s: this.stations){
             s.render(renderer);
             s.renderName(b, header, stationShow);
