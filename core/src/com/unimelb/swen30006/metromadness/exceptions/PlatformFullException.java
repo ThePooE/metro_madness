@@ -5,8 +5,8 @@ package com.unimelb.swen30006.metromadness.exceptions;
  * https://github.com/natebwangsut
  */
 
-public class FullPlatformException extends Exception {
-    public FullPlatformException() {
+public class PlatformFullException extends Exception {
+    public PlatformFullException() {
         super("Error: All platforms are occupied.");
     }
 }

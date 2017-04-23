@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.unimelb.swen30006.metromadness.exceptions.FullPlatformException;
+import com.unimelb.swen30006.metromadness.exceptions.PlatformFullException;
 import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,24 +40,12 @@ public class ActiveStation extends Station {
     @Override
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
-            throw new FullPlatformException();
+            throw new PlatformFullException();
         } else {
             // Add the train
             this.trains.add(t);
             // Add the waiting passengers
-            Iterator<Passenger> pIter = this.waiting.iterator();
-            while(pIter.hasNext()){
-                Passenger p = pIter.next();
-                try {
-                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg cargo embarking at "+this.name+" heading to "+p.destination.name);
-                    t.embark(p);
-                    pIter.remove();
-                } catch (Exception e){
-                    // Do nothing, already waiting
-                    break;
-                }
-            }
-
+            addWaitingPassengers(t);
             // Do not add new passengers if there are too many already
             if (this.waiting.size() > maxVolume){
                 return;
@@ -72,6 +60,22 @@ public class ActiveStation extends Station {
                 } catch(Exception e){
                     this.waiting.add(p);
                 }
+            }
+        }
+    }
+
+    public void addWaitingPassengers(Train t){
+        Iterator<Passenger> pIter = this.waiting.iterator();
+        while(pIter.hasNext()){
+            Passenger p = pIter.next();
+            try {
+                logger.info("Passenger " + p.id + " carrying " + p.getCargo().getWeight()
+                        + " kg cargo embarking at " + this.name + " heading to "+p.destination.name);
+                t.embark(p);
+                pIter.remove();
+            } catch (Exception e){
+                // Do nothing, already waiting
+                break;
             }
         }
     }
