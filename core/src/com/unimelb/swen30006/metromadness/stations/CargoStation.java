@@ -67,11 +67,11 @@ public class CargoStation extends ActiveStation {
 
     @Override
     public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
-    	if(waitingShow){
-    		b.begin();
-    		header.getData().setScale(1f);
-	        header.draw(b, Integer.toString(this.waiting.size()), this.position.x-10, this.position.y-10);
-	        b.end();
-    	}
+        if(waitingShow){
+            b.begin();
+            header.getData().setScale(1f);
+            header.draw(b, Integer.toString(this.waiting.size()), this.position.x-10, this.position.y-10);
+            b.end();
+        }
     }
 }

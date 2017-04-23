@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.unimelb.swen30006.metromadness.exceptions.FullPlatformException;
 import com.unimelb.swen30006.metromadness.trains.CargoTrain;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +41,7 @@ public class ActiveStation extends Station {
     @Override
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
-            throw new Exception();
+            throw new FullPlatformException();
         } else {
             // Add the train
             this.trains.add(t);

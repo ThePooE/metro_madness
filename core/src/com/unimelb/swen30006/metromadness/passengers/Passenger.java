@@ -39,10 +39,10 @@ public class Passenger {
     public Cargo getCargo(){
         return cargo;
     }
-    public Cargo generateCargo(Random random){
-    	if(this.beginning instanceof CargoStation){
-    		return new Cargo(random.nextInt(50) +1);
-    	}
+    public Cargo generateCargo(Random random) {
+        if(this.beginning instanceof CargoStation){
+            return new Cargo(random.nextInt(50) +1);
+        }
         return new Cargo(random.nextInt(51));
     }
 

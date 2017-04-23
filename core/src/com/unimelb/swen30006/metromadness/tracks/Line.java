@@ -18,13 +18,13 @@ public class Line {
     public String name;
     // The stations on this line
     public ArrayList<Station> stations;
-    
+
     // The cargo stations on this line
     public ArrayList<Station> cargoStations;
-    
+
     // The tracks on this line between stations
     public ArrayList<Track> tracks;
-    
+
     // Constant variable for checking if there is more than one station in array
     private static int MULTIPLE_STATIONS = 2;
 
@@ -61,7 +61,7 @@ public class Line {
         // Add the station
         s.registerLine(this);
         this.stations.add(s);
-        
+
          // Check if it is a Cargo Station
         if(s instanceof CargoStation){
         	this.cargoStations.add(s);
@@ -119,7 +119,7 @@ public class Line {
             throw new Exception();
         }
     }
-    
+
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
@@ -135,15 +135,9 @@ public class Line {
             throw new Exception();
         }
     }
-    
+
     public boolean notSingleCargoStation(){
-    	
-    	if(this.cargoStations.size() >= MULTIPLE_STATIONS){
-    		return true;
-    	}
-    	
-		return false;
-    	
+        return this.cargoStations.size() >= MULTIPLE_STATIONS;
     }
 
     public void render(ShapeRenderer renderer){
