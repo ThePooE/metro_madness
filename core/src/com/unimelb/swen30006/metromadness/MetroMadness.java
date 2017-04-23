@@ -40,6 +40,9 @@ public class MetroMadness extends ApplicationAdapter {
     boolean waitingShow = false;
     boolean trainShow = false;
 
+    int inputDelay = 1000;
+    int delay = 0;
+
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = viewport_width;
@@ -48,7 +51,7 @@ public class MetroMadness extends ApplicationAdapter {
     }
 
     @Override
-    public void create () {
+    public void create() {
         // Create the simulation
         sim = new Simulation("filename");
 
@@ -82,7 +85,7 @@ public class MetroMadness extends ApplicationAdapter {
     }
 
     @Override
-    public void render () {
+    public void render() {
         // Clear the graphics to white
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -144,17 +147,30 @@ public class MetroMadness extends ApplicationAdapter {
         }
 
         /* Show or hide names */
+        delay += Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            this.stationShow = !this.stationShow;
+            if (delay >= inputDelay) {
+                this.stationShow = !this.stationShow;
+                delay = 0;
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            this.passengerShow = !this.passengerShow;
+            if (delay >= inputDelay) {
+                this.passengerShow = !this.passengerShow;
+                delay = 0;
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            this.waitingShow = !this.waitingShow;
+            if (delay >= inputDelay) {
+                this.waitingShow = !this.waitingShow;
+                delay = 0;
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.T)) {
-            this.trainShow = !this.trainShow;
+            if (delay >= inputDelay) {
+                this.trainShow = !this.trainShow;
+                delay = 0;
+            }
         }
 
 
