@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.unimelb.swen30006.metromadness.exceptions.FullPlatformException;
+import com.unimelb.swen30006.metromadness.exceptions.PlatformFullException;
 import com.unimelb.swen30006.metromadness.exceptions.TrainNotFoundException;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
@@ -80,7 +80,7 @@ public class Station {
 
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
-            throw new FullPlatformException();
+            throw new PlatformFullException();
         } else {
             this.trains.add(t);
         }
@@ -113,7 +113,9 @@ public class Station {
 
     @Override
     public String toString() {
-        return "Station [position=" + position + ", name=" + name + ", trains=" + trains.size()
+        return "Station [position=" + position
+                + ", name=" + name
+                + ", trains=" + trains.size()
                 + ", router=" + router + "]";
     }
 
