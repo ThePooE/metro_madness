@@ -34,12 +34,6 @@ public class MetroMadness extends ApplicationAdapter {
     BitmapFont smaller;
     BitmapFont header;
 
-    // Default settings
-    boolean stationShow = true;
-    boolean passengerShow = true;
-    boolean waitingShow = false;
-    boolean trainShow = false;
-
     // Default settings for showing names in simulation
     boolean stationShow = true;
     boolean passengerShow = true;
@@ -107,7 +101,6 @@ public class MetroMadness extends ApplicationAdapter {
 
         // Render all filled shapes
         shapeRenderer.begin(ShapeType.Filled);
-        sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow);
         sim.render(shapeRenderer, b, smaller, stationShow, passengerShow, waitingShow, trainShow);
         shapeRenderer.end();
 
@@ -124,87 +117,53 @@ public class MetroMadness extends ApplicationAdapter {
     private void handleInput() {
 
         /* Exit Program */
-        if (Gdx.input.isKeyPressed(Input.Keys.E)){
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             Gdx.app.exit();
         }
 
         /* Zoom In-Out */
-        if (Gdx.input.isKeyPressed(Input.Keys.A)){
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)){
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom -= 0.1;
         }
 
         /* Camera Directions */
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-3f, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.translate(3f, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camera.translate(0, -3f, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.translate(0, 3f, 0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.S)){
-        	// Show/Hide station names
-        	if(this.stationShow){
-        		this.stationShow = false;
-        	} else {
-        		this.stationShow = true;
-        	}
-
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.P)){
-        	// Show/Hide passengers on train
-        	if(this.passengerShow){
-        		this.passengerShow = false;
-        	} else {
-        		this.passengerShow = true;
-        	}
-
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-        	// Show/Hide passengers waiting at station
-        	if(this.waitingShow){
-        		this.waitingShow = false;
-        	} else {
-        		this.waitingShow = true;
-        	}
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.T)){
-        	// Show/Hide train names
-        	if(this.trainShow){
-        		this.trainShow = false;
-        	} else {
-        		this.trainShow = true;
-        	}
         }
 
         /* Show or hide names */
-        if(Gdx.input.isKeyPressed(Input.Keys.S)){
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             this.stationShow = !this.stationShow;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.P)){
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             this.passengerShow = !this.passengerShow;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             this.waitingShow = !this.waitingShow;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.T)){
+        if (Gdx.input.isKeyPressed(Input.Keys.T)) {
             this.trainShow = !this.trainShow;
         }
 
 
-        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, WORLD_WIDTH/camera.viewportWidth);
+        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, WORLD_WIDTH / camera.viewportWidth);
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
         float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
         camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
         camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
-    }
 
+    }
 }

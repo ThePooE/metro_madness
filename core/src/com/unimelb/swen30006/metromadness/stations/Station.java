@@ -39,7 +39,7 @@ public class Station {
         this.lines.add(l);
     }
 
-    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont font){
+    public void render(ShapeRenderer renderer){
 
         // Render the circle
         float radius = RADIUS;
