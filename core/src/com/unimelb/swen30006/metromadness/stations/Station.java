@@ -39,7 +39,7 @@ public class Station {
         this.lines.add(l);
     }
 
-    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont font){
+    public void render(ShapeRenderer renderer){
 
         // Render the circle
         float radius = RADIUS;
@@ -56,6 +56,23 @@ public class Station {
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
+    
+    public void renderName(SpriteBatch b, BitmapFont header, boolean showStation){
+    	
+    	if(showStation){
+	    	b.begin();
+			header.getData().setScale(1f);
+	        header.draw(b, this.name, this.position.x+10, this.position.y+10);
+	        b.end();
+    	}
+    }
+    
+    
+    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
+    	// To be overwritten by stations that are in use (eg ActiveStation and CargoStation
+    	// Only show passengers in those stations
+    }
+    
 
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){

@@ -8,8 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.passengers.Passenger;
+import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.tracks.Track;
@@ -26,7 +29,8 @@ public class Train {
         ON_ROUTE,
         WAITING_ENTRY,
         SKIPPING_STATION,
-        FROM_DEPOT
+        FROM_DEPOT,
+        STATIC
     }
 
     // Constants
@@ -44,6 +48,7 @@ public class Train {
 
     // The line that this is traveling on
     public Line trainLine;
+    public int stationsOnLine;
 
     // Passenger Information
     public ArrayList<Passenger> passengers;
@@ -53,6 +58,7 @@ public class Train {
     public Station station;
     public Track track;
     public Point2D.Float pos;
+    public Station nextStation;
 
     // Direction and direction
     public boolean forward;
@@ -70,6 +76,7 @@ public class Train {
      */
     public Train(Line trainLine, Station start, boolean forward, String name){
         this.trainLine = trainLine;
+        this.stationsOnLine = trainLine.stations.size();
         this.station = start;
         this.state = State.FROM_DEPOT;
         this.forward = forward;
@@ -152,16 +159,56 @@ public class Train {
                 // so, then occupy it if possible.
                 if (this.track.canEnter(this.forward)) {
                     try {
-                        // Find the next
+                        /** // Find the next
                         Station next = this.trainLine.nextStation(this.station, this.forward);
                         // Depart our current station
                         this.station.depart(this);
-                        this.station = next;
+                        this.station = next;*/
+
+                		Station next = null;
+                		Station destination = null;
+                		
+                		// Cargo Trains looking for next Cargo Station on line
+                    	if(this instanceof CargoTrain){
+                    		int counterCheck = 0;
+                    		Station tryStation = this.station;
+                    		while(destination == null && counterCheck < stationsOnLine){
+                    			Station tryNext = this.trainLine.nextStation(tryStation, this.forward);
+                    			if(tryNext instanceof CargoStation){
+                    				destination = tryNext;
+                    				break;
+                    			}
+                    			tryStation = tryNext;
+                    			counterCheck++;
+                    			
+                    		}
+                    		
+                    		if(destination != null){
+                    			next = this.trainLine.nextStation(this.station, this.forward);
+                    		}
+                    	} 
+                    	
+                    	// Passenger Train looking for next station on line
+                    	else {
+                    		next = this.trainLine.nextStation(this.station, this.forward);
+                    	}
+                    	
+                    	
+                    	
+                    	if(next != null){
+                    		this.station.depart(this);
+                    		this.station = next;
+                    		this.track.enter(this);
+                    		this.state = State.ON_ROUTE;
+                    	}
+                    	
+                    	// If a Cargo Train could not find another Cargo Station on line, stay in station
+                    	else {
+                    		this.state = State.IN_STATION;
+                    	}
                     } catch (Exception e) {
                         //e.printStackTrace();
                     }
-                    this.track.enter(this);
-                    this.state = State.ON_ROUTE;
                 }
                 break;
             case ON_ROUTE:
@@ -286,5 +333,23 @@ public class Train {
             renderer.setColor(col);
             renderer.circle(this.pos.x, this.pos.y, TRAIN_WIDTH);
         }
+    }
+    
+    public void renderPassengers(SpriteBatch b, BitmapFont header, boolean passengerShow){
+    	if(!this.inStation() && passengerShow){
+    		b.begin();
+    		header.getData().setScale(1f);
+	        header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y-10);
+	        b.end();
+    	}
+    }
+    
+    public void renderName(SpriteBatch b, BitmapFont header, boolean trainShow){
+    	if(trainShow){
+    		b.begin();
+    		header.getData().setScale(1f);
+	        header.draw(b, this.name, this.pos.x-10, this.pos.y-10);
+	        b.end();
+    	}
     }
 }

@@ -44,17 +44,29 @@ public class Simulation {
         }
     }
 
-    public void render(ShapeRenderer renderer, SpriteBatch b, BitmapFont font) {
+    public void render(
+            ShapeRenderer renderer,
+            SpriteBatch b,
+            BitmapFont font,
+            boolean station,
+            boolean passenger,
+            boolean waiting,
+            boolean train) {
+
         for(Line l: this.lines){
             l.render(renderer);
         }
 
         for(Train t: this.trains){
             t.render(renderer);
+            t.renderName(b, font, train);
+            t.renderPassengers(b, font, passenger);
         }
-        
+
         for(Station s: this.stations){
-            s.render(renderer, b, font);
+            s.render(renderer);
+            s.renderName(b, font, station);
+            s.renderWaiting(b, font, waiting);
         }
     }
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
+import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 
 public class Line {
@@ -16,8 +18,15 @@ public class Line {
     public String name;
     // The stations on this line
     public ArrayList<Station> stations;
+    
+    // The cargo stations on this line
+    public ArrayList<Station> cargoStations;
+    
     // The tracks on this line between stations
     public ArrayList<Track> tracks;
+    
+    // Constant variable for checking if there is more than one station in array
+    private static int MULTIPLE_STATIONS = 2;
 
     // Create a line
     public Line(Color stationColour, Color lineColour, String name){
@@ -28,6 +37,7 @@ public class Line {
 
         // Create the data structures
         this.stations = new ArrayList<Station>();
+        this.cargoStations = new ArrayList<Station>();
         this.tracks = new ArrayList<Track>();
     }
 
@@ -51,6 +61,11 @@ public class Line {
         // Add the station
         s.registerLine(this);
         this.stations.add(s);
+        
+         // Check if it is a Cargo Station
+        if(s instanceof CargoStation){
+        	this.cargoStations.add(s);
+        }
     }
 
     @Override
@@ -103,6 +118,32 @@ public class Line {
         } else {
             throw new Exception();
         }
+    }
+    
+    public Station nextCargoStation(Station s, boolean forward) throws Exception{
+        if(this.cargoStations.contains(s)){
+            int curIndex = this.cargoStations.lastIndexOf(s);
+            if(forward){ curIndex+=1;}else{ curIndex -=1;}
+
+            // Check index is within range
+            if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
+                throw new Exception();
+            } else {
+                return this.cargoStations.get(curIndex);
+            }
+        } else {
+            throw new Exception();
+        }
+    }
+    
+    public boolean notSingleCargoStation(){
+    	
+    	if(this.cargoStations.size() >= MULTIPLE_STATIONS){
+    		return true;
+    	}
+    	
+		return false;
+    	
     }
 
     public void render(ShapeRenderer renderer){
