@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.unimelb.swen30006.metromadness.exceptions.StationNotFoundException;
+import com.unimelb.swen30006.metromadness.exceptions.TrackNotFoundException;
 import com.unimelb.swen30006.metromadness.passengers.Passenger.Cargo;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
@@ -73,16 +75,15 @@ public class Line {
         return "Line [lineColour=" + lineColour + ", trackColour=" + trackColour + ", name=" + name + "]";
     }
 
-
     public boolean endOfLine(Station s) throws Exception{
         if(this.stations.contains(s)){
             int index = this.stations.indexOf(s);
             return (index==0 || index==this.stations.size()-1);
         } else {
-            throw new Exception();
+            // Default behaviour
+            throw new StationNotFoundException();
         }
     }
-
 
 
     public Track nextTrack(Station currentStation, boolean forward) throws Exception {
@@ -94,13 +95,14 @@ public class Line {
 
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.tracks.size()-1)){
-                throw new Exception();
+                throw new TrackNotFoundException();
             } else {
                 return this.tracks.get(curIndex);
             }
 
         } else {
-            throw new Exception();
+            // Default behaviour
+            throw new TrackNotFoundException();
         }
     }
 
@@ -111,12 +113,13 @@ public class Line {
 
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.stations.size()-1)){
-                throw new Exception();
+                throw new StationNotFoundException();
             } else {
                 return this.stations.get(curIndex);
             }
         } else {
-            throw new Exception();
+            // Default behaviour
+            throw new StationNotFoundException();
         }
     }
 
@@ -127,12 +130,12 @@ public class Line {
 
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
-                throw new Exception();
+                throw new StationNotFoundException();
             } else {
                 return this.cargoStations.get(curIndex);
             }
         } else {
-            throw new Exception();
+            throw new StationNotFoundException();
         }
     }
 
