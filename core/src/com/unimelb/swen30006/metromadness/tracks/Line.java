@@ -191,8 +191,16 @@ public class Line {
      */
     public boolean earlyEndOfCargoLine(Station s){
         int totalStationsOnLine = this.stations.size();
+        int totalCargoStationsOnLine = this.cargoStations.size();
         
-        if(s != this.stations.get(totalStationsOnLine -1)){
+        int curIndex = this.cargoStations.lastIndexOf(s);
+        boolean endOfCargoLine = false;
+        
+        if(curIndex == totalCargoStationsOnLine -1){
+            endOfCargoLine = true;
+        }
+        
+        if(endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)){
             return true;
         }
         return false;

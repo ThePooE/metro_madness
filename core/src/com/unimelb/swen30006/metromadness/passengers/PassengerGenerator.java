@@ -3,8 +3,6 @@ package com.unimelb.swen30006.metromadness.passengers;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.unimelb.swen30006.metromadness.exceptions.StationNotFoundException;
-import com.unimelb.swen30006.metromadness.stations.ActiveStation;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
