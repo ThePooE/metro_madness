@@ -3,8 +3,6 @@ package com.unimelb.swen30006.metromadness.passengers;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.unimelb.swen30006.metromadness.exceptions.StationNotFoundException;
-import com.unimelb.swen30006.metromadness.stations.ActiveStation;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
@@ -33,33 +31,45 @@ public class PassengerGenerator {
         this.maxVolume = max;
     }
 
+    /**
+     * Generates up to 4 passengers each time a Train enters a station
+     * @return          an array of Passengers
+     * @throws Exception
+     */
     public Passenger[] generatePassengers() throws Exception {
         int count = random.nextInt(4)+1;
         Passenger[] passengers = new Passenger[count];
 
-        // Check is current station is a Cargo Station
-        boolean atCargoStation = s instanceof CargoStation;
-
-        //System.out.println("At station: " + this.s.name + " is a Cargo station?: " + Boolean.toString(atCargoStation));
         for(int i=0; i<count; i++){
-            passengers[i] = generatePassenger(random, atCargoStation);
+            passengers[i] = generatePassenger(random);
         }
         return passengers;
     }
 
-    public Passenger generatePassenger(Random random, boolean atCargoStation) throws Exception {
+    /**
+     * Generate a passenger based on the type of station
+     * @param random    random value for generating a random Line
+     * @return          a randomly generated Passenger
+     * @throws Exception
+     */
+    public Passenger generatePassenger(Random random) throws Exception {
 
         // Pick a random line that the station is part of
         // Note: a station could be part of more than one line
         Line l = this.lines.get(random.nextInt(this.lines.size()));
         ArrayList<Station> stationList;
-
-        // Check if current station is a Cargo Station or Active Station
+        
+     // Check if current station is a Cargo Station or Active Station
+        boolean atCargoStation = s instanceof CargoStation;
         if(atCargoStation){
+            
+            // If current station is a Cargo Station and
+            // there is no other Cargo Station on the Line, do not generate any passengers
             if(!l.notSingleCargoStation()){
                 return null;
             }
             stationList = l.cargoStations;
+            
         } else {
             stationList = l.stations;
         }

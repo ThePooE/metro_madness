@@ -41,6 +41,7 @@ public class Line {
         this.cargoStations = new ArrayList<Station>();
         this.tracks = new ArrayList<Track>();
     }
+    
 
     /**
      * Adds the stations of this Line to the stored variable 'stations'
@@ -161,10 +162,16 @@ public class Line {
      * @throws Exception
      */
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
+        
+        if(!notSingleCargoStation()){
+            throw new StationNotFoundException();
+        }
+
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
+       
             if(forward){ curIndex+=1;}else{ curIndex -=1;}
-
+            
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
                 throw new StationNotFoundException();
@@ -174,6 +181,34 @@ public class Line {
         } else {
             throw new StationNotFoundException();
         }
+    }
+    
+    /** 
+     * Checks if the current Cargo Station is the first/last Cargo Station of the line
+     * but not the first/last Station of the line
+     * (i.e there are other Active Stations)
+     * This method serves as a check whether to switch the train's direction or not
+     * @param s     current station
+     * @return      true if it is at a final Cargo Station, otherwise false
+     */
+    public boolean earlyEndOfCargoLine(Station s){
+        int totalStationsOnLine = this.stations.size();
+        int totalCargoStationsOnLine = this.cargoStations.size();
+        
+        int curIndex = this.cargoStations.lastIndexOf(s);
+        boolean endOfCargoLine = false;
+        boolean startOfCargoLine = false;
+        
+        if(curIndex == totalCargoStationsOnLine -1){
+            endOfCargoLine = true;
+        } else if(curIndex == 0){
+            startOfCargoLine = true;
+        }
+        
+        if( (endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
+            return true;
+        }
+        return false;
     }
 
 
@@ -201,3 +236,5 @@ public class Line {
     }
 
 }
+
+
