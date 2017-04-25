@@ -17,17 +17,17 @@ import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class Station {
 
-    protected static final int PLATFORMS=2;
+    static final int PLATFORMS=2;
 
-    protected Point2D.Float position;
-    protected static final float RADIUS=10;
-    protected static final int NUM_CIRCLE_STATMENTS=100;
-    protected static final int MAX_LINES=3;
-    protected String name;
-    protected ArrayList<Line> lines;
-    protected ArrayList<Train> trains;
-    protected static final float DEPARTURE_TIME = 2;
-    protected PassengerRouter router;
+    Point2D.Float position;
+    static final float RADIUS=10;
+    static final int NUM_CIRCLE_STATMENTS=100;
+    static final int MAX_LINES=3;
+    String name;
+    ArrayList<Line> lines;
+    ArrayList<Train> trains;
+    static final float DEPARTURE_TIME = 2;
+    PassengerRouter router;
 
     public Station(float x, float y, PassengerRouter router, String name){
         this.name = name;
@@ -102,7 +102,7 @@ public class Station {
         }
     }
 
-    public boolean canEnter(Line l) throws Exception {
+    public boolean canEnter() throws Exception {
         return trains.size() < PLATFORMS;
     }
 

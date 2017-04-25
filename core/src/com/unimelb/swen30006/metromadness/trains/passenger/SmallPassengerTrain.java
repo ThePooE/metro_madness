@@ -20,12 +20,12 @@ public class SmallPassengerTrain extends PassengerTrain {
         if(!this.inStation()){
             
             // Train gets slightly bigger when there are more passengers
-            float percentage = this.passengers.size()/10f;
+            float percentage = this.getPassengers().size()/10f;
             float size = TRAIN_WIDTH* (1+percentage);
             
-            Color col = this.forward ? FORWARD_COLOUR : BACKWARD_COLOUR;
+            Color col = this.getForward() ? FORWARD_COLOUR : BACKWARD_COLOUR;
             renderer.setColor(col.cpy().lerp(Color.MAROON, percentage));
-            renderer.circle(this.pos.x, this.pos.y, size);
+            renderer.circle(this.getPos().x, this.getPos().y, size);
         }
     }
 

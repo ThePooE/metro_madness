@@ -7,7 +7,7 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 
 public class Passenger {
 
-    final public int id;
+    private final int id;
     private Station beginning;
     private Station destination;
     private float travelTime;
@@ -29,6 +29,11 @@ public class Passenger {
         }
     }
 
+    public int getID(){
+        return this.id;
+        
+    }
+    
     public void update(float time){
         if(!this.reachedDestination){
             this.travelTime += time;

@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class Track {
-    protected static final float DRAW_RADIUS=10f;
-    protected static final int LINE_WIDTH=6;
-    protected Point2D.Float startPos;
-    protected Point2D.Float endPos;
-    protected Color trackColour;
-    protected boolean occupied;
+    static final float DRAW_RADIUS=10f;
+    static final int LINE_WIDTH=6;
+    Point2D.Float startPos;
+    Point2D.Float endPos;
+    Color trackColour;
+    boolean occupied;
 
     public Track(Point2D.Float start, Point2D.Float end, Color trackCol){
         this.startPos = start;

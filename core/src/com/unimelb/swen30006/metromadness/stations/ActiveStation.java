@@ -55,7 +55,7 @@ public class ActiveStation extends Station {
             Passenger[] ps = this.g.generatePassengers();
             for(Passenger p: ps){
                 try {
-                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
+                    logger.info("Passenger "+p.getID()+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
                     t.embark(p);
                 } catch(Exception e){
                     this.waiting.add(p);
@@ -69,7 +69,7 @@ public class ActiveStation extends Station {
         while(pIter.hasNext()){
             Passenger p = pIter.next();
             try {
-                logger.info("Passenger " + p.id + " carrying " + p.getCargo().getWeight()
+                logger.info("Passenger " + p.getID() + " carrying " + p.getCargo().getWeight()
                         + " kg cargo embarking at " + this.name + " heading to "+p.getDestination().name);
                 t.embark(p);
                 pIter.remove();
