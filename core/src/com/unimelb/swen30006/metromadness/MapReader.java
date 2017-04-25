@@ -28,12 +28,14 @@ import com.unimelb.swen30006.metromadness.trains.Train;
 
 public class MapReader {
 
-    public ArrayList<Train> trains;
-    public HashMap<String, Station> stations;
-    public HashMap<String, Line> lines;
+    private ArrayList<Train> trains;
+    private HashMap<String, Station> stations;
+    private HashMap<String, Line> lines;
 
-    public boolean processed;
-    public String filename;
+    private boolean processed;
+    private String filename = "../core/assets/maps/melbourne_cargo.xml";
+    //private String filename = "../core/assets/maps/melbourne.xml";
+    //private String filename = "../core/assets/maps/world.xml";
 
     public MapReader(String filename){
         this.trains = new ArrayList<Train>();
@@ -57,7 +59,7 @@ public class MapReader {
             Array<Element> stationList = stations.getChildrenByName("station");
             for(Element e : stationList){
                 Station s = processStation(e);
-                this.stations.put(s.name, s);
+                this.stations.put(s.getName(), s);
             }
 
             // Process Lines
@@ -65,7 +67,7 @@ public class MapReader {
             Array<Element> lineList = lines.getChildrenByName("line");
             for(Element e : lineList){
                 Line l = processLine(e);
-                this.lines.put(l.name, l);
+                this.lines.put(l.getName(), l);
             }
 
             // Process Trains

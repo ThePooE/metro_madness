@@ -12,19 +12,19 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 public class Line {
 
     // The colour of this line
-    public Color lineColour;
-    public Color trackColour;
+    private Color lineColour;
+    private Color trackColour;
 
     // The name of this line
-    public String name;
+    private String name;
     // The stations on this line
-    public ArrayList<Station> stations;
+    private ArrayList<Station> stations;
 
     // The cargo stations on this line
-    public ArrayList<Station> cargoStations;
+    private ArrayList<Station> cargoStations;
 
     // The tracks on this line between stations
-    public ArrayList<Track> tracks;
+    private ArrayList<Track> tracks;
 
     // Constant variable for checking if there is more than one station in array
     private static int MULTIPLE_STATIONS = 2;
@@ -42,6 +42,21 @@ public class Line {
         this.tracks = new ArrayList<Track>();
     }
     
+    public Color getLineColor(){
+        return this.lineColour;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public ArrayList<Station> getStations(){
+        return this.stations;
+    }
+    
+    public ArrayList<Station> getCargoStations(){
+        return this.cargoStations;
+    }
 
     /**
      * Adds the stations of this Line to the stored variable 'stations'
@@ -59,9 +74,9 @@ public class Line {
             // Generate a new track
             Track t;
             if(two_way){
-                t = new DualTrack(last.position, s.position, this.trackColour);
+                t = new DualTrack(last.getPosition(), s.getPosition(), this.trackColour);
             } else {
-                t = new Track(last.position, s.position, this.trackColour);
+                t = new Track(last.getPosition(), s.getPosition(), this.trackColour);
             }
             this.tracks.add(t);
         }

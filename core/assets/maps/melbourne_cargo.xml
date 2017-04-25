@@ -274,7 +274,7 @@
 			<max_passengers> 100 </max_passengers>
 		</station>
 		<station>
-			<type>Cargo</type>
+			<type>Active</type>
 			<name>Williamstown</name>
 			<x_loc>1840</x_loc>
 			<y_loc>4200</y_loc>
@@ -282,7 +282,7 @@
 			<max_passengers> 100 </max_passengers>
 		</station>
 		<station>
-			<type>Active</type>
+			<type>Cargo</type>
 			<name>Newport</name>
 			<x_loc>1840</x_loc>
 			<y_loc>4700</y_loc>
@@ -292,8 +292,8 @@
 		<station>
 			<type>Active</type>
 			<name>Seaholme</name>
-			<x_loc>1840</x_loc>
-			<y_loc>4700</y_loc>
+			<x_loc>1000</x_loc>
+			<y_loc>4200</y_loc>
 			<router>simple</router>
 			<max_passengers> 100 </max_passengers>
 		</station>
@@ -981,7 +981,7 @@
 		<train>
 			<type>BigCargo</type>
 			<line>Williamstown</line>
-			<start>Williamstown</start>
+			<start>Newport</start>
 			<name>Amtrak</name>
 			<direction>forward</direction>
 		</train>
