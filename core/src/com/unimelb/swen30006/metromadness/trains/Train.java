@@ -114,6 +114,8 @@ public class Train {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+                
             case IN_STATION:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -141,12 +143,12 @@ public class Train {
                             this.state = State.READY_DEPART;
                             break;
                         } catch (Exception e) {
-                            // Massive error.
-                            return;
+                            e.printStackTrace();
                         }
                     }
                 }
                 break;
+                
             case READY_DEPART:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -157,33 +159,35 @@ public class Train {
                 // so, then occupy it if possible.
                 if (this.track.canEnter(this.forward)) {
                     try {
-                        /** // Find the next
-                        Station next = this.trainLine.nextStation(this.station, this.forward);
-                        // Depart our current station
-                        this.station.depart(this);
-                        this.station = next;*/
-
+                        
                         Station next = null;
-                        Station destination = null;
 
-                        // Cargo Trains looking for next Cargo Station on line
+                        // For the case of a Cargo Train
                         if(this instanceof CargoTrain){
                             
+                            Station destination = null;
+                            
+                            // Switch direction if there are no more Cargo Stations in the current direction we are going
                             if(this.trainLine.earlyEndOfCargoLine(this.station)){
                                 this.forward = !this.forward;
                             }
                             
+                            // Check if there is a valid destination for this Cargo Train to travel to
                             destination = this.trainLine.nextCargoStation(this.station, this.forward);
                             
+                            // If there is a valid destination, find the next station on this line to travel towards 
+                            // Note: This next station may be an Active Station as well
                             if(destination != null){
                                 next = this.trainLine.nextStation(this.station, this.forward);
                             }
                         }
-                        // Passenger Train looking for next station on line
+                        
+                        // For the case of a Passenger Train
                         else {
                             next = this.trainLine.nextStation(this.station, this.forward);
                         }
 
+                        // If there is a valid destination, leave this station
                         if(next != null){
                             this.station.depart(this);
                             this.station = next;
@@ -191,15 +195,13 @@ public class Train {
                             this.state = State.ON_ROUTE;
                         }
 
-                        // If a Cargo Train could not find another Cargo Station on line, stay in station
-                        else {
-                            this.state = State.IN_STATION;
-                        }
+                        
                     } catch (Exception e) {
-                        //e.printStackTrace();
+                        e.printStackTrace();
                     }
                 }
                 break;
+                
             case ON_ROUTE:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -208,6 +210,7 @@ public class Train {
 
                 // Checkout if we have reached the new station
                 // Nate: Simulation smoothness
+                // Distance position switched from 10 to 5
                 if (this.pos.distance(this.station.position) < 5) {
                     this.state = State.WAITING_ENTRY;
                     try {
@@ -221,6 +224,7 @@ public class Train {
                     move(delta);
                 }
                 break;
+                
             case WAITING_ENTRY:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -241,6 +245,7 @@ public class Train {
                     e.printStackTrace();
                 }
                 break;
+                
             case SKIPPING_STATION:
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
@@ -263,8 +268,7 @@ public class Train {
                     this.station = this.trainLine.nextStation(this.station, this.forward);
                     this.state = State.ON_ROUTE;
                 } catch (Exception e) {
-                    // Error
-                    return;
+                    e.printStackTrace();
                 }
                 break;
         }

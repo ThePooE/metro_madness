@@ -184,10 +184,12 @@ public class Line {
     }
     
     /** 
-     * Checks if the current Cargo Station is the last Cargo Station
-     * but not the last Station of the line
+     * Checks if the current Cargo Station is the first/last Cargo Station of the line
+     * but not the first/last Station of the line
+     * (i.e there are other Active Stations)
+     * This method serves as a check whether to switch the train's direction or not
      * @param s     current station
-     * @return
+     * @return      true if it is at a final Cargo Station, otherwise false
      */
     public boolean earlyEndOfCargoLine(Station s){
         int totalStationsOnLine = this.stations.size();
@@ -195,12 +197,15 @@ public class Line {
         
         int curIndex = this.cargoStations.lastIndexOf(s);
         boolean endOfCargoLine = false;
+        boolean startOfCargoLine = false;
         
         if(curIndex == totalCargoStationsOnLine -1){
             endOfCargoLine = true;
+        } else if(curIndex == 0){
+            startOfCargoLine = true;
         }
         
-        if(endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)){
+        if( (endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
             return true;
         }
         return false;
