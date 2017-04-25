@@ -23,9 +23,9 @@ public class CargoStation extends ActiveStation {
     // Logger
     private static Logger logger = LogManager.getLogger();
 
-    public PassengerGenerator g;
-    public ArrayList<Passenger> waiting;
-    public float maxVolume;
+    private PassengerGenerator g;
+    private ArrayList<Passenger> waiting;
+    private float maxVolume;
 
     public CargoStation(float x, float y, PassengerRouter router, String name, float maxPax) {
         super(x, y, router, name, maxPax);
@@ -78,7 +78,7 @@ public class CargoStation extends ActiveStation {
                     if(p==null){
                         return;
                     }
-                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.destination.name);
+                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
                     t.embark(p);
                 } catch(Exception e){
                     this.waiting.add(p);

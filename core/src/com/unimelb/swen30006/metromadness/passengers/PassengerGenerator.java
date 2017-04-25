@@ -68,10 +68,10 @@ public class PassengerGenerator {
             if(!l.notSingleCargoStation()){
                 return null;
             }
-            stationList = l.cargoStations;
+            stationList = l.getCargoStations();
             
         } else {
-            stationList = l.stations;
+            stationList = l.getStations();
         }
 
         int current_station = stationList.indexOf(this.s);

@@ -21,9 +21,9 @@ public class ActiveStation extends Station {
     // Logger
     private static Logger logger = LogManager.getLogger();
 
-    public PassengerGenerator g;
-    public ArrayList<Passenger> waiting;
-    public float maxVolume;
+    private PassengerGenerator g;
+    private ArrayList<Passenger> waiting;
+    private float maxVolume;
 
     public ActiveStation(float x, float y, PassengerRouter router, String name, float maxPax) {
         super(x, y, router, name);
@@ -55,7 +55,7 @@ public class ActiveStation extends Station {
             Passenger[] ps = this.g.generatePassengers();
             for(Passenger p: ps){
                 try {
-                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.destination.name);
+                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
                     t.embark(p);
                 } catch(Exception e){
                     this.waiting.add(p);
@@ -70,7 +70,7 @@ public class ActiveStation extends Station {
             Passenger p = pIter.next();
             try {
                 logger.info("Passenger " + p.id + " carrying " + p.getCargo().getWeight()
-                        + " kg cargo embarking at " + this.name + " heading to "+p.destination.name);
+                        + " kg cargo embarking at " + this.name + " heading to "+p.getDestination().name);
                 t.embark(p);
                 pIter.remove();
             } catch (Exception e){

@@ -20,7 +20,7 @@ public class PassengerTrain extends Train {
 //    public static final float   TRAIN_LENGTH    = 6;
 //    public static final float   TRAIN_SPEED     = 50f;
 
-    public int capacity;
+    private int capacity;
 
     public PassengerTrain(Line trainLine, Station start, boolean forward, String name, int capacity) {
         super(trainLine, start, forward, name);
