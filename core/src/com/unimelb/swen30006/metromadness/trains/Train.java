@@ -19,10 +19,10 @@ import com.unimelb.swen30006.metromadness.tracks.Track;
 public class Train {
 
     // Logger
-    protected static Logger logger = LogManager.getLogger();
+    static Logger logger = LogManager.getLogger();
 
     // The state that a train can be in
-    protected enum State {
+    enum State {
         IN_STATION,
         READY_DEPART,
         ON_ROUTE,
@@ -32,42 +32,42 @@ public class Train {
     }
 
     // Constants
-    protected static final int     MAX_TRIPS       = 4;
+    public static final int     MAX_TRIPS       = 4;
 
-    protected static final Color   FORWARD_COLOUR  = Color.ORANGE;
-    protected static final Color   BACKWARD_COLOUR = Color.VIOLET;
+    public static final Color   FORWARD_COLOUR  = Color.ORANGE;
+    public static final Color   BACKWARD_COLOUR = Color.VIOLET;
 
-    protected static final float   TRAIN_WIDTH     = 4;
-    protected static final float   TRAIN_LENGTH    = 6;
-    protected static final float   TRAIN_SPEED     = 50f;
+    public static final float   TRAIN_WIDTH     = 4;
+    public static final float   TRAIN_LENGTH    = 6;
+    public static final float   TRAIN_SPEED     = 50f;
 
     // The train's name
-    protected String name;
+    String name;
 
     // The line that this is traveling on
-    protected Line trainLine;
-    protected int stationsOnLine;
+    Line trainLine;
+    int stationsOnLine;
 
     // Passenger Information
-    protected ArrayList<Passenger> passengers;
-    protected float departureTimer;
+    ArrayList<Passenger> passengers;
+    float departureTimer;
 
     // Station and track and position information
-    protected Station station;
-    protected Track track;
-    protected Point2D.Float pos;
-    protected Station nextStation;
+    Station station;
+    Track track;
+    Point2D.Float pos;
+    Station nextStation;
 
     // Direction and direction
-    protected boolean forward;
-    protected State state;
+    boolean forward;
+    State state;
 
     // State variables
-    protected int numTrips;
-    protected boolean disembarked;
+    int numTrips;
+    boolean disembarked;
 
 
-    protected State previousState = null;
+    State previousState = null;
 
     /**
      * Constructor
@@ -84,6 +84,15 @@ public class Train {
     
     public boolean getForward(){
         return this.forward;
+    }
+    
+
+    public Point2D.Float getPos(){
+        return this.pos;
+    }
+    
+    public ArrayList<Passenger> getPassengers(){
+        return this.passengers;
     }
 
     public void update(float delta) {
@@ -109,7 +118,7 @@ public class Train {
                 // We have our station initialized we just need to retrieve the next track, enter the
                 // current station officially and mark as in station
                 try {
-                    if (this.station.canEnter(this.trainLine)) {
+                    if (this.station.canEnter()) {
                         this.station.enter(this);
                         this.pos = (Point2D.Float) this.station.getPosition().clone();
                         this.state = State.IN_STATION;
@@ -238,7 +247,7 @@ public class Train {
                 // Waiting to enter, we need to check the station has room and if so
                 // then we need to enter, otherwise we just wait
                 try {
-                    if (this.station.canEnter(this.trainLine) && this.station.compatible(this)) {
+                    if (this.station.canEnter() && this.station.compatible(this)) {
                         this.track.leave(this);
                         this.pos = (Point2D.Float) this.station.getPosition().clone();
                         this.station.enter(this);
@@ -278,6 +287,7 @@ public class Train {
         }
     }
 
+    
     public void move(float delta){
         // Work out where we're going
         float angle = angleAlongLine(
@@ -300,7 +310,7 @@ public class Train {
         while(iterator.hasNext()){
             Passenger p = iterator.next();
             if(this.station.shouldLeave(p)){
-                logger.info("Passenger " + p.id + " is disembarking at " + this.station.getName()
+                logger.info("Passenger " + p.getID() + " is disembarking at " + this.station.getName()
                         + ", travel time = " + p.getTravelTime());
                 disembarking.add(p);
                 iterator.remove();
