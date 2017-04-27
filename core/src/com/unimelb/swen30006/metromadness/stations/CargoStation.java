@@ -1,3 +1,16 @@
+/**
+ * SWEN30006 Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ * 
+ * Group 107
+ * Members:
+ * Nate Wangsutthitham
+ * Kolatat Thangkasemvathana
+ * Khai Mei Chin
+ *  
+ */
+
 package com.unimelb.swen30006.metromadness.stations;
 
 import com.badlogic.gdx.graphics.Color;
@@ -15,11 +28,6 @@ import java.util.Iterator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-/**
- * Nate Bhurinat W. (@natebwangsut | nate.bwangsut@gmail.com)
- * https://github.com/natebwangsut
- */
 
 public class CargoStation extends ActiveStation {
 

@@ -1,3 +1,16 @@
+/**
+ * SWEN30006 Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ * 
+ * Group 107
+ * Members:
+ * Nate Wangsutthitham         [Student ID: 755399]
+ * Kolatat Thangkasemvathana   [Student ID:       ]
+ * Khai Mei Chin               [Student ID: 755332]
+ *  
+ */
+
 package com.unimelb.swen30006.metromadness;
 
 import java.util.ArrayList;
