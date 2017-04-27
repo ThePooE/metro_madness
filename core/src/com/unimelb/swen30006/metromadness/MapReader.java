@@ -5,9 +5,9 @@
  * 
  * Group 107
  * Members:
- * Nate Wangsutthitham         [Student ID: 755399]
- * Kolatat Thangkasemvathana   [Student ID:       ]
- * Khai Mei Chin               [Student ID: 755332]
+ * Nate Wangsutthitham
+ * Kolatat Thangkasemvathana
+ * Khai Mei Chin
  *  
  */
 
