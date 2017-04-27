@@ -5,14 +5,26 @@ import java.util.Random;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class Passenger {
 
-    final public int id;
-    public Station beginning;
-    public Station destination;
-    public float travelTime;
-    public boolean reachedDestination;
-    public Cargo cargo;
+    private final int id;
+    private Station beginning;
+    private Station destination;
+    private float travelTime;
+    private boolean reachedDestination;
+    private Cargo cargo;
 
     public Passenger(int id, Random random, Station start, Station end){
         this.id = id;
@@ -29,20 +41,27 @@ public class Passenger {
         }
     }
 
+
+    public int getID(){
+        return this.id;
+    }
+
+    public Station getDestination(){
+        return this.destination;
+    }
+
+    public float getTravelTime(){
+        return this.travelTime;
+    }
+
     public void update(float time){
         if(!this.reachedDestination){
             this.travelTime += time;
         }
     }
 
-    public Cargo getCargo(){
-        return cargo;
-    }
 
-    public Cargo generateCargo(Random random){
-        return new Cargo(random.nextInt(50) +1);
-    }
-
+    // Encapsulated Cargo class and its methods
     public class Cargo{
         private int weight;
 
@@ -58,4 +77,14 @@ public class Passenger {
             this.weight = weight;
         }
     }
+
+    public Cargo generateCargo(Random random){
+        return new Cargo(random.nextInt(50) +1);
+    }
+
+    public Cargo getCargo(){
+        return cargo;
+    }
+
+
 }

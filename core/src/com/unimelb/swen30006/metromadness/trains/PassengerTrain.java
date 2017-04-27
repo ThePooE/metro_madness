@@ -6,21 +6,20 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 
 /**
- * Nate Bhurinat W. (@natebwangsut | nate.bwangsut@gmail.com)
- * https://github.com/natebwangsut
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
  */
 
 public class PassengerTrain extends Train {
 
-//    Train Rendering Configs
-//    public static final int     MAX_TRIPS       = 4;
-//    public static final Color   FORWARD_COLOUR  = Color.ORANGE;
-//    public static final Color   BACKWARD_COLOUR = Color.VIOLET;
-//    public static final float   TRAIN_WIDTH     = 4;
-//    public static final float   TRAIN_LENGTH    = 6;
-//    public static final float   TRAIN_SPEED     = 50f;
-
-    public int capacity;
+    private int capacity;
 
     public PassengerTrain(Line trainLine, Station start, boolean forward, String name, int capacity) {
         super(trainLine, start, forward, name);

@@ -10,11 +10,23 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class Simulation {
 
-    public ArrayList<Station> stations;
-    public ArrayList<Line> lines;
-    public ArrayList<Train> trains;
+    private ArrayList<Station> stations;
+    private ArrayList<Line> lines;
+    private ArrayList<Train> trains;
 
     public Simulation(String fileName){
         // Create a map reader and read in the file

@@ -17,13 +17,25 @@ import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class ActiveStation extends Station {
     // Logger
     private static Logger logger = LogManager.getLogger();
 
-    public PassengerGenerator g;
-    public ArrayList<Passenger> waiting;
-    public float maxVolume;
+    PassengerGenerator g;
+    ArrayList<Passenger> waiting;
+    float maxVolume;
 
     public ActiveStation(float x, float y, PassengerRouter router, String name, float maxPax) {
         super(x, y, router, name);
@@ -33,11 +45,13 @@ public class ActiveStation extends Station {
     }
 
     @Override
+    // Only PassengerTrains can stop at ActiveStations
     public boolean compatible(Train t) throws Exception {
         return !(t instanceof CargoTrain);
     }
 
     @Override
+    // Generate passengers when a train has entered the station
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
             throw new PlatformFullException();
@@ -55,7 +69,7 @@ public class ActiveStation extends Station {
             Passenger[] ps = this.g.generatePassengers();
             for(Passenger p: ps){
                 try {
-                    logger.info("Passenger "+p.id+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.destination.name);
+                    logger.info("Passenger "+p.getID()+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
                     t.embark(p);
                 } catch(Exception e){
                     this.waiting.add(p);
@@ -64,13 +78,18 @@ public class ActiveStation extends Station {
         }
     }
 
+
+    /**
+     * Embarking passengers onto train
+     * @param t     Train for passengers to get on
+     */
     public void addWaitingPassengers(Train t){
         Iterator<Passenger> pIter = this.waiting.iterator();
         while(pIter.hasNext()){
             Passenger p = pIter.next();
             try {
-                logger.info("Passenger " + p.id + " carrying " + p.getCargo().getWeight()
-                        + " kg cargo embarking at " + this.name + " heading to "+p.destination.name);
+                logger.info("Passenger " + p.getID() + " carrying " + p.getCargo().getWeight()
+                        + " kg cargo embarking at " + this.name + " heading to "+p.getDestination().name);
                 t.embark(p);
                 pIter.remove();
             } catch (Exception e){
@@ -80,6 +99,8 @@ public class ActiveStation extends Station {
         }
     }
 
+
+    @Override
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;

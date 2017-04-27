@@ -7,23 +7,35 @@ import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class PassengerGenerator {
 
+    static final private int SEED = 30006;
     // Random number generator
-    static final private Random random = new Random(30006);
+    static final private Random random = new Random(SEED);
 
     // Passenger id generator
     static private int idGen = 1;
 
-
     // The station that passengers are getting on
-    public Station s;
+    private Station s;
 
     // The line they are travelling on
-    public ArrayList<Line> lines;
+    private ArrayList<Line> lines;
 
     // The max volume
-    public float maxVolume;
+    private float maxVolume;
 
     public PassengerGenerator(Station s, ArrayList<Line> lines, float max){
         this.s = s;
@@ -58,20 +70,20 @@ public class PassengerGenerator {
         // Note: a station could be part of more than one line
         Line l = this.lines.get(random.nextInt(this.lines.size()));
         ArrayList<Station> stationList;
-        
+
      // Check if current station is a Cargo Station or Active Station
         boolean atCargoStation = s instanceof CargoStation;
         if(atCargoStation){
-            
+
             // If current station is a Cargo Station and
             // there is no other Cargo Station on the Line, do not generate any passengers
             if(!l.notSingleCargoStation()){
                 return null;
             }
-            stationList = l.cargoStations;
-            
+            stationList = l.getCargoStations();
+
         } else {
-            stationList = l.stations;
+            stationList = l.getStations();
         }
 
         int current_station = stationList.indexOf(this.s);

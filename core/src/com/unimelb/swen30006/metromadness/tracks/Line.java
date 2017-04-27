@@ -9,22 +9,34 @@ import com.unimelb.swen30006.metromadness.exceptions.TrackNotFoundException;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class Line {
 
     // The colour of this line
-    public Color lineColour;
-    public Color trackColour;
+    private Color lineColour;
+    private Color trackColour;
 
     // The name of this line
-    public String name;
+    private String name;
     // The stations on this line
-    public ArrayList<Station> stations;
+    private ArrayList<Station> stations;
 
     // The cargo stations on this line
-    public ArrayList<Station> cargoStations;
+    private ArrayList<Station> cargoStations;
 
     // The tracks on this line between stations
-    public ArrayList<Track> tracks;
+    private ArrayList<Track> tracks;
 
     // Constant variable for checking if there is more than one station in array
     private static int MULTIPLE_STATIONS = 2;
@@ -41,7 +53,22 @@ public class Line {
         this.cargoStations = new ArrayList<Station>();
         this.tracks = new ArrayList<Track>();
     }
-    
+
+    public Color getLineColor(){
+        return this.lineColour;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public ArrayList<Station> getStations(){
+        return this.stations;
+    }
+
+    public ArrayList<Station> getCargoStations(){
+        return this.cargoStations;
+    }
 
     /**
      * Adds the stations of this Line to the stored variable 'stations'
@@ -59,9 +86,9 @@ public class Line {
             // Generate a new track
             Track t;
             if(two_way){
-                t = new DualTrack(last.position, s.position, this.trackColour);
+                t = new DualTrack(last.getPosition(), s.getPosition(), this.trackColour);
             } else {
-                t = new Track(last.position, s.position, this.trackColour);
+                t = new Track(last.getPosition(), s.getPosition(), this.trackColour);
             }
             this.tracks.add(t);
         }
@@ -162,16 +189,16 @@ public class Line {
      * @throws Exception
      */
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
-        
+
         if(!notSingleCargoStation()){
-            throw new StationNotFoundException();
+            return null;
         }
 
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
-       
+
             if(forward){ curIndex+=1;}else{ curIndex -=1;}
-            
+
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
                 throw new StationNotFoundException();
@@ -182,8 +209,8 @@ public class Line {
             throw new StationNotFoundException();
         }
     }
-    
-    /** 
+
+    /**
      * Checks if the current Cargo Station is the first/last Cargo Station of the line
      * but not the first/last Station of the line
      * (i.e there are other Active Stations)
@@ -194,17 +221,17 @@ public class Line {
     public boolean earlyEndOfCargoLine(Station s){
         int totalStationsOnLine = this.stations.size();
         int totalCargoStationsOnLine = this.cargoStations.size();
-        
+
         int curIndex = this.cargoStations.lastIndexOf(s);
         boolean endOfCargoLine = false;
         boolean startOfCargoLine = false;
-        
+
         if(curIndex == totalCargoStationsOnLine -1){
             endOfCargoLine = true;
         } else if(curIndex == 0){
             startOfCargoLine = true;
         }
-        
+
         if( (endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
             return true;
         }

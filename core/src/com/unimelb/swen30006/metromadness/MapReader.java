@@ -1,3 +1,16 @@
+/**
+ * SWEN30006 Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ * 
+ * Group 107
+ * Members:
+ * Nate Wangsutthitham          
+ * Kolatat Thangkasemvathana    [7
+ * Khai Mei Chin
+ *  
+ */
+
 package com.unimelb.swen30006.metromadness;
 
 import java.util.ArrayList;
@@ -26,14 +39,28 @@ import com.unimelb.swen30006.metromadness.trains.passenger.BigPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.passenger.SmallPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class MapReader {
 
-    public ArrayList<Train> trains;
-    public HashMap<String, Station> stations;
-    public HashMap<String, Line> lines;
+    private ArrayList<Train> trains;
+    private HashMap<String, Station> stations;
+    private HashMap<String, Line> lines;
 
-    public boolean processed;
-    public String filename;
+    private boolean processed;
+    private String filename = "../core/assets/maps/melbourne_cargo.xml";
+    //private String filename = "../core/assets/maps/melbourne.xml";
+    //private String filename = "../core/assets/maps/world.xml";
 
     public MapReader(String filename){
         this.trains = new ArrayList<Train>();
@@ -46,9 +73,9 @@ public class MapReader {
     public void process(){
         try {
             // Build the doc factory
-            FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne_cargo.xml");
+            //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne_cargo.xml");
             //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne.xml");
-            //FileHandle file = Gdx.files.internal("../core/assets/maps/world.xml");
+            FileHandle file = Gdx.files.internal("../core/assets/maps/world.xml");
             XmlReader reader = new XmlReader();
             Element root = reader.parse(file);
 
@@ -57,7 +84,7 @@ public class MapReader {
             Array<Element> stationList = stations.getChildrenByName("station");
             for(Element e : stationList){
                 Station s = processStation(e);
-                this.stations.put(s.name, s);
+                this.stations.put(s.getName(), s);
             }
 
             // Process Lines
@@ -65,7 +92,7 @@ public class MapReader {
             Array<Element> lineList = lines.getChildrenByName("line");
             for(Element e : lineList){
                 Line l = processLine(e);
-                this.lines.put(l.name, l);
+                this.lines.put(l.getName(), l);
             }
 
             // Process Trains
@@ -145,6 +172,11 @@ public class MapReader {
         }
     }
 
+    /**
+     * Parses input document to get information of train Lines
+     * @param e
+     * @return
+     */
     private Line processLine(Element e){
         Color stationCol = extractColour(e.getChildByName("station_colour"));
         Color lineCol = extractColour(e.getChildByName("line_colour"));

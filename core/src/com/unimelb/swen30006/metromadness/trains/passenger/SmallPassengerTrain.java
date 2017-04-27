@@ -6,6 +6,18 @@ import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.PassengerTrain;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class SmallPassengerTrain extends PassengerTrain {
 
     // Different capacity between trains
@@ -18,14 +30,14 @@ public class SmallPassengerTrain extends PassengerTrain {
     @Override
     public void render(ShapeRenderer renderer){
         if(!this.inStation()){
-            
+
             // Train gets slightly bigger when there are more passengers
-            float percentage = this.passengers.size()/10f;
+            float percentage = this.getPassengers().size()/10f;
             float size = TRAIN_WIDTH* (1+percentage);
-            
-            Color col = this.forward ? FORWARD_COLOUR : BACKWARD_COLOUR;
+
+            Color col = this.getForward() ? FORWARD_COLOUR : BACKWARD_COLOUR;
             renderer.setColor(col.cpy().lerp(Color.MAROON, percentage));
-            renderer.circle(this.pos.x, this.pos.y, size);
+            renderer.circle(this.getPos().x, this.getPos().y, size);
         }
     }
 
