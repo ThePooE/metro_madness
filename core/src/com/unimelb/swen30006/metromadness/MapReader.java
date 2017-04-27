@@ -5,8 +5,8 @@
  * 
  * Group 107
  * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
+ * Nate Wangsutthitham          
+ * Kolatat Thangkasemvathana    [7
  * Khai Mei Chin
  *  
  */

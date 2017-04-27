@@ -34,15 +34,9 @@ public class CargoStation extends ActiveStation {
     // Logger
     private static Logger logger = LogManager.getLogger();
 
-    private PassengerGenerator g;
-    private ArrayList<Passenger> waiting;
-    private float maxVolume;
 
     public CargoStation(float x, float y, PassengerRouter router, String name, float maxPax) {
         super(x, y, router, name, maxPax);
-        this.waiting = new ArrayList<Passenger>();
-        this.g = new PassengerGenerator(this, this.lines, maxPax);
-        this.maxVolume = maxPax;
     }
 
     @Override
