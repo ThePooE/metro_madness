@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.tracks;
 
 import java.awt.geom.Point2D;
@@ -18,6 +5,18 @@ import java.awt.geom.Point2D;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.unimelb.swen30006.metromadness.trains.Train;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class Track {
     static final float DRAW_RADIUS=10f;
@@ -47,7 +46,7 @@ public class Track {
         return !this.occupied;
     }
 
-    /** 
+    /**
      * Train entering and occupying this track
      * @param t     current Train
      */

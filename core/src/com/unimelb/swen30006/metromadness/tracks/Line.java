@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.tracks;
 
 import java.util.ArrayList;
@@ -21,6 +8,18 @@ import com.unimelb.swen30006.metromadness.exceptions.StationNotFoundException;
 import com.unimelb.swen30006.metromadness.exceptions.TrackNotFoundException;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class Line {
 
@@ -54,19 +53,19 @@ public class Line {
         this.cargoStations = new ArrayList<Station>();
         this.tracks = new ArrayList<Track>();
     }
-    
+
     public Color getLineColor(){
         return this.lineColour;
     }
-    
+
     public String getName(){
         return this.name;
     }
-    
+
     public ArrayList<Station> getStations(){
         return this.stations;
     }
-    
+
     public ArrayList<Station> getCargoStations(){
         return this.cargoStations;
     }
@@ -190,16 +189,16 @@ public class Line {
      * @throws Exception
      */
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
-        
+
         if(!notSingleCargoStation()){
             return null;
         }
 
         if(this.cargoStations.contains(s)){
             int curIndex = this.cargoStations.lastIndexOf(s);
-       
+
             if(forward){ curIndex+=1;}else{ curIndex -=1;}
-            
+
             // Check index is within range
             if((curIndex < 0) || (curIndex > this.cargoStations.size()-1)){
                 throw new StationNotFoundException();
@@ -210,8 +209,8 @@ public class Line {
             throw new StationNotFoundException();
         }
     }
-    
-    /** 
+
+    /**
      * Checks if the current Cargo Station is the first/last Cargo Station of the line
      * but not the first/last Station of the line
      * (i.e there are other Active Stations)
@@ -222,17 +221,17 @@ public class Line {
     public boolean earlyEndOfCargoLine(Station s){
         int totalStationsOnLine = this.stations.size();
         int totalCargoStationsOnLine = this.cargoStations.size();
-        
+
         int curIndex = this.cargoStations.lastIndexOf(s);
         boolean endOfCargoLine = false;
         boolean startOfCargoLine = false;
-        
+
         if(curIndex == totalCargoStationsOnLine -1){
             endOfCargoLine = true;
         } else if(curIndex == 0){
             startOfCargoLine = true;
         }
-        
+
         if( (endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
             return true;
         }

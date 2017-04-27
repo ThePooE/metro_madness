@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -26,6 +13,18 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class MetroMadness extends ApplicationAdapter {
 

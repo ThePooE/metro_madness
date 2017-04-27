@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.stations;
 
 import java.awt.geom.Point2D;
@@ -27,6 +14,18 @@ import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.trains.Train;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class Station {
 
@@ -53,15 +52,15 @@ public class Station {
     public void registerLine(Line l){
         this.lines.add(l);
     }
-    
+
     public Point2D.Float getPosition(){
         return this.position;
     }
-    
+
     public String getName(){
         return this.name;
     }
-    
+
     // Returns departure time in seconds
     public float getDepartureTime() {
         return DEPARTURE_TIME;
@@ -79,7 +78,7 @@ public class Station {
 
         // Calculate the percentage
         // If there are no train in station, the circle will be white
-        // If there is a train(s) in station, the circle will be 
+        // If there is a train(s) in station, the circle will be
         // an increasing darker shade of gray
         // E.g if there is one train in station, circle = light gray
         //     if two trains in station, circle = dark gray
@@ -89,7 +88,7 @@ public class Station {
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
-    
+
     /**
      * Renders the circles that represents this station on map
      * @param renderer      ShapeRenderer
@@ -97,7 +96,7 @@ public class Station {
      * @return              the modified radius
      */
     public float renderRings(ShapeRenderer renderer, float radius) {
-        
+
         // The number of circles drawn can represent the number of lines
         // that this station is part of (up to three lines can be visualised on map)
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
@@ -109,7 +108,7 @@ public class Station {
         return radius;
     }
 
-    
+
     /**
      * Renders the name of this station on map
      * @param b             SpriteBatch
@@ -125,7 +124,7 @@ public class Station {
         }
     }
 
-    
+
     /**
      * Renders the number of passengers waiting at the station
      * @param b             SpriteBatch
@@ -137,9 +136,9 @@ public class Station {
         // Only show passengers in those stations
     }
 
-    
+
     /**
-     * Entry of a train into this station 
+     * Entry of a train into this station
      * To be overriden in child classes
      * @param t     Train to enter this station
      * @throws Exception
@@ -174,7 +173,7 @@ public class Station {
         return trains.size() < PLATFORMS;
     }
 
-    /** 
+    /**
      * Checker to see if a train is compatible with this type of station
      * (to be overriden in child classes)
      * @param t     Train to check for compatibility
@@ -185,7 +184,7 @@ public class Station {
         return true;
     }
 
-    
+
     /**
      * Checker to see if a particular passenger should disembark at this station
      * @param p     Passenger to be checked
@@ -203,7 +202,7 @@ public class Station {
                 + ", router=" + router + "]";
     }
 
-    
+
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }

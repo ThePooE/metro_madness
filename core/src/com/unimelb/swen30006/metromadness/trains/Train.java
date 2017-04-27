@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.trains;
 
 import java.awt.geom.Point2D;
@@ -28,6 +15,18 @@ import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
 import com.unimelb.swen30006.metromadness.tracks.Track;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class Train {
 
@@ -97,16 +96,16 @@ public class Train {
         this.passengers = new ArrayList<Passenger>();
         this.name = name;
     }
-    
+
     public boolean getForward(){
         return this.forward;
     }
-    
+
 
     public Point2D.Float getPos(){
         return this.pos;
     }
-    
+
     public ArrayList<Passenger> getPassengers(){
         return this.passengers;
     }
@@ -146,7 +145,7 @@ public class Train {
                     e.printStackTrace();
                 }
                 break;
-                
+
             case IN_STATION:
                 // Case when train is currently in a station
                 if (hasChanged) {
@@ -169,55 +168,55 @@ public class Train {
                         // (i.e for a Cargo Train, there is another Cargo Station on Line to travel to)
                         // If there is a valid destination, find the next track and wait until we can enter
                         try {
-                            
+
                             // Check if we are at either ends of the Line,
                             // If so, we need to change direction of Train
                             boolean endOfLine = this.trainLine.endOfLine(this.station);
                             if (endOfLine) {
                                 this.forward = !this.forward;
                             }
-                            
+
                             // For the case of a Cargo Train
                             if(this instanceof CargoTrain){
-                                
+
                                 // Switch direction if there are no more Cargo Stations in the current direction we are going
                                 if(this.trainLine.earlyEndOfCargoLine(this.station)){
                                     this.forward = !this.forward;
                                 }
-                                
+
                                 // Check if there is a valid destination for this Cargo Train to travel to
                                 destination = this.trainLine.nextCargoStation(this.station, this.forward);
-                                
-                               // If there is a valid destination, find the next immediate station 
-                                //on this line to travel towards 
+
+                               // If there is a valid destination, find the next immediate station
+                                //on this line to travel towards
                                 // Note: This next station may not be a Cargo Station
                                 if(destination != null){
                                     next = this.trainLine.nextStation(this.station, this.forward);
                                 }
                             }
-                            
+
                             // For the case of a Passenger Train
                             else {
                                 destination = this.trainLine.nextStation(this.station, this.forward);
                                 next = destination;
                             }
-                            
+
                             // If there is a valid destination, find the next track
                             // Otherwise, stay in station
                             if(next != null){
                                 this.track = this.trainLine.nextTrack(this.station, this.forward);
                                 this.state = State.READY_DEPART;
                             }
-                            
+
                            break;
-                            
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
                 break;
-                
+
             case READY_DEPART:
                 // Case when a train is ready to leave this station
                 if (hasChanged) {
@@ -229,20 +228,20 @@ public class Train {
                 // so, then occupy it if possible.
                 if (this.track.canEnter(this.forward)) {
                     try {
-                        
+
                         // When track is clear, leave the station
                         this.station.depart(this);
                         this.station = this.next;
                         this.track.enter(this);
                         this.state = State.ON_ROUTE;
-                    
-                        
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 break;
-                
+
             case ON_ROUTE:
                 // Case where train is on the journey
                 if (hasChanged) {
@@ -266,7 +265,7 @@ public class Train {
                     move(delta);
                 }
                 break;
-                
+
             case WAITING_ENTRY:
                 // Case where a train is waiting to enter a station
                 if (hasChanged) {
@@ -288,7 +287,7 @@ public class Train {
                     e.printStackTrace();
                 }
                 break;
-                
+
             case SKIPPING_STATION:
                 // Case when a Cargo Station is skipping an Active Station
                 if (hasChanged) {
@@ -318,7 +317,7 @@ public class Train {
         }
     }
 
-    
+
     public void move(float delta){
         // Work out where we're going
         float angle = angleAlongLine(
@@ -373,7 +372,7 @@ public class Train {
         }
     }
 
-    
+
     /**
      * Renders the number of passengers currently on train
      * @param b                 SpriteBatch
@@ -389,7 +388,7 @@ public class Train {
         }
     }
 
-    
+
     /**
      * Renders the name of this train
      * @param b         SpriteBatch

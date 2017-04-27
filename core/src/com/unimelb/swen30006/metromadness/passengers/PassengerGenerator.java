@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.passengers;
 
 import java.util.ArrayList;
@@ -19,6 +6,18 @@ import java.util.Random;
 import com.unimelb.swen30006.metromadness.stations.CargoStation;
 import com.unimelb.swen30006.metromadness.stations.Station;
 import com.unimelb.swen30006.metromadness.tracks.Line;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class PassengerGenerator {
 
@@ -71,18 +70,18 @@ public class PassengerGenerator {
         // Note: a station could be part of more than one line
         Line l = this.lines.get(random.nextInt(this.lines.size()));
         ArrayList<Station> stationList;
-        
+
      // Check if current station is a Cargo Station or Active Station
         boolean atCargoStation = s instanceof CargoStation;
         if(atCargoStation){
-            
+
             // If current station is a Cargo Station and
             // there is no other Cargo Station on the Line, do not generate any passengers
             if(!l.notSingleCargoStation()){
                 return null;
             }
             stationList = l.getCargoStations();
-            
+
         } else {
             stationList = l.getStations();
         }

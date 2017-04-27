@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham
- * Kolatat Thangkasemvathana
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness.stations;
 
 import java.util.ArrayList;
@@ -29,6 +16,18 @@ import com.unimelb.swen30006.metromadness.passengers.Passenger;
 import com.unimelb.swen30006.metromadness.passengers.PassengerGenerator;
 import com.unimelb.swen30006.metromadness.routers.PassengerRouter;
 import com.unimelb.swen30006.metromadness.trains.Train;
+
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
 
 public class ActiveStation extends Station {
     // Logger
@@ -79,7 +78,7 @@ public class ActiveStation extends Station {
         }
     }
 
-    
+
     /**
      * Embarking passengers onto train
      * @param t     Train for passengers to get on
@@ -100,7 +99,7 @@ public class ActiveStation extends Station {
         }
     }
 
-    
+
     @Override
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines

@@ -39,6 +39,18 @@ import com.unimelb.swen30006.metromadness.trains.passenger.BigPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.passenger.SmallPassengerTrain;
 import com.unimelb.swen30006.metromadness.trains.Train;
 
+/**
+ * [SWEN30006] Software Modelling and Design
+ * Semester 1, 2017
+ * Project Part B - Metro Madness
+ *
+ * Group 107:
+ * Nate Wangsutthitham [755399]
+ * Kolatat Thangkasemvathana [780631]
+ * Khai Mei Chin [755332]
+ *
+ */
+
 public class MapReader {
 
     private ArrayList<Train> trains;
@@ -162,8 +174,8 @@ public class MapReader {
 
     /**
      * Parses input document to get information of train Lines
-     * @param e     
-     * @return      
+     * @param e
+     * @return
      */
     private Line processLine(Element e){
         Color stationCol = extractColour(e.getChildByName("station_colour"));
