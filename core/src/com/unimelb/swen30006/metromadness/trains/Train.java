@@ -54,9 +54,10 @@ public class Train {
 
     // Station and track and position information
     Station station;
+    Station destination;
+    Station next;
     Track track;
     Point2D.Float pos;
-    Station nextStation;
 
     // Direction and direction
     boolean forward;
@@ -76,6 +77,8 @@ public class Train {
         this.trainLine = trainLine;
         this.stationsOnLine = trainLine.getStations().size();
         this.station = start;
+        this.destination = null;
+        this.next = null;
         this.state = State.FROM_DEPOT;
         this.forward = forward;
         this.passengers = new ArrayList<Passenger>();
@@ -109,7 +112,7 @@ public class Train {
         // Update the state
         switch (this.state) {
             case FROM_DEPOT:
-
+                // Case at the start of simulation when the Train is starting from its depot station
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
                             +") is travelling from the depot: " + this.station.getName() + " Station...");
@@ -123,6 +126,8 @@ public class Train {
                         this.pos = (Point2D.Float) this.station.getPosition().clone();
                         this.state = State.IN_STATION;
                         this.disembarked = false;
+                        logger.info(this.name + "(" + this.getClass().getSimpleName()
+                                +") is in " + this.station.getName() + " Station.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -130,6 +135,7 @@ public class Train {
                 break;
                 
             case IN_STATION:
+                // Case when train is currently in a station
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
                             +") is in " + this.station.getName() + " Station.");
@@ -146,15 +152,51 @@ public class Train {
                     if (this.departureTimer > 0) {
                         this.departureTimer -= delta;
                     } else {
-                        // We are ready to depart, find the next track and wait until we can enter
+                        // We are ready to depart, find if the train has a valid destination to travel to
+                        // (i.e for a Cargo Train, there is another Cargo Station on Line to travel to)
+                        // If there is a valid destination, find the next track and wait until we can enter
                         try {
+                            
+                            // Check if we are at either ends of the Line,
+                            // If so, we need to change direction of Train
                             boolean endOfLine = this.trainLine.endOfLine(this.station);
                             if (endOfLine) {
                                 this.forward = !this.forward;
                             }
-                            this.track = this.trainLine.nextTrack(this.station, this.forward);
-                            this.state = State.READY_DEPART;
-                            break;
+                            
+                            // For the case of a Cargo Train
+                            if(this instanceof CargoTrain){
+                                
+                                // Switch direction if there are no more Cargo Stations in the current direction we are going
+                                if(this.trainLine.earlyEndOfCargoLine(this.station)){
+                                    this.forward = !this.forward;
+                                }
+                                
+                                // Check if there is a valid destination for this Cargo Train to travel to
+                                destination = this.trainLine.nextCargoStation(this.station, this.forward);
+                                
+                               // If there is a valid destination, find the next immediate station 
+                                //on this line to travel towards 
+                                // Note: This next station may not be a Cargo Station
+                                if(destination != null){
+                                    next = this.trainLine.nextStation(this.station, this.forward);
+                                }
+                            }
+                            
+                            // For the case of a Passenger Train
+                            else {
+                                next = destination;
+                            }
+                            
+                            // If there is a valid destination, find the next track
+                            // Otherwise, stay in station
+                            if(next != null){
+                                this.track = this.trainLine.nextTrack(this.station, this.forward);
+                                this.state = State.READY_DEPART;
+                            }
+                            
+                           break;
+                            
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -163,9 +205,10 @@ public class Train {
                 break;
                 
             case READY_DEPART:
+                // Case when a train is ready to leave this station
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is ready to depart from " + this.station.getName() + " Station!");
+                            +") is ready to depart for " + this.next.getName() + " Station!");
                 }
 
                 // When ready to depart, check that the track is clear and if
@@ -173,41 +216,12 @@ public class Train {
                 if (this.track.canEnter(this.forward)) {
                     try {
                         
-                        Station next = null;
-
-                        // For the case of a Cargo Train
-                        if(this instanceof CargoTrain){
-                            
-                            Station destination = null;
-                            
-                            // Switch direction if there are no more Cargo Stations in the current direction we are going
-                            if(this.trainLine.earlyEndOfCargoLine(this.station)){
-                                this.forward = !this.forward;
-                            }
-                            
-                            // Check if there is a valid destination for this Cargo Train to travel to
-                            destination = this.trainLine.nextCargoStation(this.station, this.forward);
-                            
-                            // If there is a valid destination, find the next station on this line to travel towards 
-                            // Note: This next station may be an Active Station as well
-                            if(destination != null){
-                                next = this.trainLine.nextStation(this.station, this.forward);
-                            }
-                        }
-                        
-                        // For the case of a Passenger Train
-                        else {
-                            next = this.trainLine.nextStation(this.station, this.forward);
-                        }
-
-                        // If there is a valid destination, leave this station
-                        if(next != null){
-                            this.station.depart(this);
-                            this.station = next;
-                            this.track.enter(this);
-                            this.state = State.ON_ROUTE;
-                        }
-
+                        // When track is clear, leave the station
+                        this.station.depart(this);
+                        this.station = this.next;
+                        this.track.enter(this);
+                        this.state = State.ON_ROUTE;
+                    
                         
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -216,6 +230,7 @@ public class Train {
                 break;
                 
             case ON_ROUTE:
+                // Case where train is on the journey
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
                             +") enroute to " + this.station.getName() + " Station!");
@@ -239,6 +254,7 @@ public class Train {
                 break;
                 
             case WAITING_ENTRY:
+                // Case where a train is waiting to enter a station
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
                             +") is awaiting entry " + this.station.getName() + " Station..!");
@@ -260,6 +276,7 @@ public class Train {
                 break;
                 
             case SKIPPING_STATION:
+                // Case when a Cargo Station is skipping an Active Station
                 if (hasChanged) {
                     logger.info(this.name + "(" + this.getClass().getSimpleName()
                             +") is skipping " + this.station.getName() + " Station..!");
@@ -342,6 +359,13 @@ public class Train {
         }
     }
 
+    
+    /**
+     * Renders the number of passengers currently on train
+     * @param b                 SpriteBatch
+     * @param header            font used to render the text
+     * @param passengerShow     toggle between show/hide the number of passengers
+     */
     public void renderPassengers(SpriteBatch b, BitmapFont header, boolean passengerShow){
         if(!this.inStation() && passengerShow){
             b.begin();
@@ -351,6 +375,13 @@ public class Train {
         }
     }
 
+    
+    /**
+     * Renders the name of this train
+     * @param b         SpriteBatch
+     * @param header    font used to render the text
+     * @param train     toggle between show/hide the train name
+     */
     public void renderName(SpriteBatch b, BitmapFont header, boolean train){
         if(train){
             b.begin();

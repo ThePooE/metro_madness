@@ -28,16 +28,9 @@ public class Passenger {
             this.cargo = new Cargo(0);
         }
     }
-
+  
     public int getID(){
         return this.id;
-        
-    }
-    
-    public void update(float time){
-        if(!this.reachedDestination){
-            this.travelTime += time;
-        }
     }
     
     public Station getDestination(){
@@ -46,15 +39,16 @@ public class Passenger {
     
     public float getTravelTime(){
         return this.travelTime;
-    }
 
-    public Cargo getCargo(){
-        return cargo;
     }
-
-    public Cargo generateCargo(Random random){
-        return new Cargo(random.nextInt(50) +1);
+    
+    public void update(float time){
+        if(!this.reachedDestination){
+            this.travelTime += time;
+        }
     }
+    
+    // Encapsulated Cargo class and its methods
 
     public class Cargo{
         private int weight;
@@ -71,4 +65,14 @@ public class Passenger {
             this.weight = weight;
         }
     }
+    
+    public Cargo generateCargo(Random random){
+        return new Cargo(random.nextInt(50) +1);
+    }
+    
+    public Cargo getCargo(){
+        return cargo;
+    }
+
+    
 }
