@@ -33,11 +33,13 @@ public class ActiveStation extends Station {
     }
 
     @Override
+    // Only PassengerTrains can stop at ActiveStations
     public boolean compatible(Train t) throws Exception {
         return !(t instanceof CargoTrain);
     }
 
     @Override
+    // Generate passengers when a train has entered the station
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
             throw new PlatformFullException();
@@ -64,6 +66,11 @@ public class ActiveStation extends Station {
         }
     }
 
+    
+    /**
+     * Embarking passengers onto train
+     * @param t     Train for passengers to get on
+     */
     public void addWaitingPassengers(Train t){
         Iterator<Passenger> pIter = this.waiting.iterator();
         while(pIter.hasNext()){
@@ -80,6 +87,8 @@ public class ActiveStation extends Station {
         }
     }
 
+    
+    @Override
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;

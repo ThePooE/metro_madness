@@ -48,7 +48,16 @@ public class Station {
     public String getName(){
         return this.name;
     }
+    
+    // Returns departure time in seconds
+    public float getDepartureTime() {
+        return DEPARTURE_TIME;
+    }
 
+    /**
+     * Renders the station
+     * @param renderer      ShapeRenderer
+     */
     public void render(ShapeRenderer renderer){
 
         // Render the circle
@@ -56,13 +65,28 @@ public class Station {
         radius = renderRings(renderer, radius);
 
         // Calculate the percentage
+        // If there are no train in station, the circle will be white
+        // If there is a train(s) in station, the circle will be 
+        // an increasing darker shade of gray
+        // E.g if there is one train in station, circle = light gray
+        //     if two trains in station, circle = dark gray
         float t = this.trains.size()/(float)PLATFORMS;
         Color c = Color.WHITE.cpy().lerp(Color.DARK_GRAY, t);
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
+    
+    /**
+     * Renders the circles that represents this station on map
+     * @param renderer      ShapeRenderer
+     * @param radius        radius of the circle
+     * @return              the modified radius
+     */
     public float renderRings(ShapeRenderer renderer, float radius) {
+        
+        // The number of circles drawn can represent the number of lines
+        // that this station is part of (up to three lines can be visualised on map)
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
             Line l = this.lines.get(i);
             renderer.setColor(l.getLineColor());
@@ -72,6 +96,13 @@ public class Station {
         return radius;
     }
 
+    
+    /**
+     * Renders the name of this station on map
+     * @param b             SpriteBatch
+     * @param header        font used for rendered text
+     * @param showStation   toggle to show/hide station name on map
+     */
     public void renderName(SpriteBatch b, BitmapFont header, boolean showStation){
         if(showStation){
             b.begin();
@@ -81,11 +112,25 @@ public class Station {
         }
     }
 
+    
+    /**
+     * Renders the number of passengers waiting at the station
+     * @param b             SpriteBatch
+     * @param header        font used to render the text
+     * @param waitingShow   toggle value to show/hide the number
+     */
     public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
         // To be overwritten by stations that are in use (eg ActiveStation and CargoStation)
         // Only show passengers in those stations
     }
 
+    
+    /**
+     * Entry of a train into this station 
+     * To be overriden in child classes
+     * @param t     Train to enter this station
+     * @throws Exception
+     */
     public void enter(Train t) throws Exception {
         if(trains.size() >= PLATFORMS){
             throw new PlatformFullException();
@@ -94,6 +139,11 @@ public class Station {
         }
     }
 
+    /**
+     * Departure of a train from this station
+     * @param t     Train to leave this station
+     * @throws Exception
+     */
     public void depart(Train t) throws Exception {
         if(this.trains.contains(t)){
             this.trains.remove(t);
@@ -102,19 +152,32 @@ public class Station {
         }
     }
 
+    /**
+     * Checker to see if this station has any free platform
+     * @return      true if there is an unoccupied platform, otherwise false
+     * @throws Exception
+     */
     public boolean canEnter() throws Exception {
         return trains.size() < PLATFORMS;
     }
 
+    /** 
+     * Checker to see if a train is compatible with this type of station
+     * (to be overriden in child classes)
+     * @param t     Train to check for compatibility
+     * @return      true if Train can enter this station, otherwise false
+     * @throws Exception
+     */
     public boolean compatible(Train t) throws Exception {
         return true;
     }
 
-    // Returns departure time in seconds
-    public float getDepartureTime() {
-        return DEPARTURE_TIME;
-    }
-
+    
+    /**
+     * Checker to see if a particular passenger should disembark at this station
+     * @param p     Passenger to be checked
+     * @return
+     */
     public boolean shouldLeave(Passenger p) {
         return this.router.shouldLeave(this, p);
     }
@@ -127,6 +190,7 @@ public class Station {
                 + ", router=" + router + "]";
     }
 
+    
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }

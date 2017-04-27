@@ -29,7 +29,7 @@ public class BigCargoTrain extends CargoTrain {
     public void render(ShapeRenderer renderer){
 
         // Train gets slightly bigger when there are more passengers
-        float percentage = this.getPassengers().size()/10f;
+        float percentage = this.getPassengers().size()/20f;
         float size = TRAIN_WIDTH*(1+percentage);
         
         if(!this.inStation()){

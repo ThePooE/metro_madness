@@ -179,7 +179,7 @@ public class Line {
     public Station nextCargoStation(Station s, boolean forward) throws Exception{
         
         if(!notSingleCargoStation()){
-            throw new StationNotFoundException();
+            return null;
         }
 
         if(this.cargoStations.contains(s)){

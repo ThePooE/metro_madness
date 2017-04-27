@@ -9,12 +9,12 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
 
 public class PassengerGenerator {
 
+    static final private int SEED = 30006;
     // Random number generator
-    static final private Random random = new Random(30006);
+    static final private Random random = new Random(SEED);
 
     // Passenger id generator
     static private int idGen = 1;
-
 
     // The station that passengers are getting on
     private Station s;
