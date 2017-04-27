@@ -23,11 +23,20 @@ import java.util.ArrayList;
 
 public class CargoTrain extends Train {
 
-    // Cargo
+    /* Cargo Systems */
     private ArrayList<Passenger.Cargo> cargo;
     private int weightCapacity;
     private int passengerCapacity;
 
+    /**
+     * Constructor of CargoTrain
+     * @param trainLine     Line which the Train will run
+     * @param start         Station that the Train start
+     * @param forward       Which way the train will wun
+     * @param name          Name of this train
+     * @param capacity      Capacity (passengers) of the train
+     * @param weight        Capacity (cargo) of the train
+     */
     public CargoTrain(Line trainLine, Station start, boolean forward, String name, int capacity, int weight) {
         super(trainLine, start, forward, name);
         this.cargo = new ArrayList<Cargo>();
@@ -35,6 +44,11 @@ public class CargoTrain extends Train {
         this.weightCapacity = weight;
     }
 
+    /**
+     * Try to add Passengers into Train
+     * @param p     Passengers to enter the Train
+     * @throws Exception
+     */
     @Override
     public void embark(Passenger p) throws Exception {
 

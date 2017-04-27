@@ -74,16 +74,19 @@ public class Simulation {
             boolean waiting,
             boolean train) {
 
+        // Renders all the tracks
         for(Line l: this.lines){
             l.render(renderer);
         }
 
+        // Renders all the trains
         for(Train t: this.trains){
             t.render(renderer);
             if (train) {t.renderName(b, font, train);}
             if (passenger) {t.renderPassengers(b, font, passenger);}
         }
 
+        // Renders all the stations
         for(Station s: this.stations){
             s.render(renderer);
             if (station) {s.renderName(b, font, station);}

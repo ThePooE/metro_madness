@@ -79,11 +79,14 @@ public class Train {
     int numTrips;
     boolean disembarked;
 
-
     State previousState = null;
 
     /**
-     * Constructor
+     * Constructor for Train class
+     * @param trainLine     Line which the Train will run
+     * @param start         Station that the Train start
+     * @param forward       Which way the train will wun
+     * @param name          Name of this train
      */
     public Train(Line trainLine, Station start, boolean forward, String name){
         this.trainLine = trainLine;
@@ -101,7 +104,6 @@ public class Train {
         return this.forward;
     }
 
-
     public Point2D.Float getPos(){
         return this.pos;
     }
@@ -110,6 +112,10 @@ public class Train {
         return this.passengers;
     }
 
+    /**
+     * Update the Train which will in terms update passengers
+     * @param delta     How long has the time changed
+     */
     public void update(float delta) {
         // Update all passengers
         for (Passenger p : this.passengers) {
@@ -317,7 +323,10 @@ public class Train {
         }
     }
 
-
+    /**
+     * Move the Train accodingly
+     * @param delta     Time elapsed since last frame has been rendered
+     */
     public void move(float delta){
         // Work out where we're going
         float angle = angleAlongLine(
@@ -330,17 +339,28 @@ public class Train {
         this.pos.setLocation(newX, newY);
     }
 
+    /**
+     * Default behaviour for passengers to enter Train,
+     * will always throw Exception
+     * @param p     Passengers to enter the Train
+     * @throws Exception
+     */
     public void embark(Passenger p) throws Exception {
         throw new Exception();
     }
 
+    /**
+     * Default behaviour for passengers to exit Train
+     * @return      ArrayList of Passengers after the Passengers have disembarked
+     */
     public ArrayList<Passenger> disembark(){
         ArrayList<Passenger> disembarking = new ArrayList<Passenger>();
         Iterator<Passenger> iterator = this.passengers.iterator();
         while(iterator.hasNext()){
             Passenger p = iterator.next();
             if(this.station.shouldLeave(p)){
-                logger.info("Passenger " + p.getID() + " is disembarking at " + this.station.getName()
+                logger.info("Passenger " + p.getID()
+                        + " is disembarking at " + this.station.getName()
                         + ", travel time = " + p.getTravelTime());
                 disembarking.add(p);
                 iterator.remove();
@@ -349,21 +369,41 @@ public class Train {
         return disembarking;
     }
 
+    /**
+     * Converts Train information into String
+     * @return      Train's info
+     */
     @Override
     public String toString() {
-        return "Train [line=" + this.trainLine.getName() +", departureTimer=" + departureTimer
-                + ", pos=" + pos + ", forward=" + forward + ", state=" + state
-                + ", numTrips=" + numTrips + ", disembarked=" + disembarked + "]";
+        return "Train [line=" + this.trainLine.getName()
+                + ", departureTimer=" + departureTimer
+                + ", pos=" + pos
+                + ", forward=" + forward
+                + ", state=" + state
+                + ", numTrips=" + numTrips
+                + ", disembarked=" + disembarked + "]";
     }
 
     public boolean inStation(){
         return (this.state == State.IN_STATION || this.state == State.READY_DEPART);
     }
 
+    /**
+     * Return the angle which the train will be using to change its position
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
     public float angleAlongLine(float x1, float y1, float x2, float y2){
         return (float) Math.atan2((y2-y1),(x2-x1));
     }
 
+    /**
+     * Default render algorithm for Train class
+     * @param renderer      The renderer use to render into Simulation
+     */
     public void render(ShapeRenderer renderer){
         if(!this.inStation()){
             Color col = this.forward ? FORWARD_COLOUR : BACKWARD_COLOUR;
@@ -374,15 +414,15 @@ public class Train {
 
     /**
      * Renders the number of passengers currently on train
-     * @param b                 SpriteBatch
-     * @param header            font used to render the text
-     * @param passengerShow     toggle between show/hide the number of passengers
+     * @param b             SpriteBatch
+     * @param font          font used to render the text
+     * @param passenger     toggle between show/hide the number of passengers
      */
-    public void renderPassengers(SpriteBatch b, BitmapFont header, boolean passengerShow){
-        if(!this.inStation() && passengerShow){
+    public void renderPassengers(SpriteBatch b, BitmapFont font, boolean passenger){
+        if(!this.inStation() && passenger){
             b.begin();
-            header.getData().setScale(1f);
-            header.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y+10);
+            font.getData().setScale(1f);
+            font.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y+10);
             b.end();
         }
     }
@@ -390,14 +430,14 @@ public class Train {
     /**
      * Renders the name of this train
      * @param b         SpriteBatch
-     * @param header    font used to render the text
+     * @param font      font used to render the text
      * @param train     toggle between show/hide the train name
      */
-    public void renderName(SpriteBatch b, BitmapFont header, boolean train){
+    public void renderName(SpriteBatch b, BitmapFont font, boolean train){
         if(train){
             b.begin();
-            header.getData().setScale(1f);
-            header.draw(b, this.name, this.pos.x-10, this.pos.y-10);
+            font.getData().setScale(1f);
+            font.draw(b, this.name, this.pos.x-10, this.pos.y-10);
             b.end();
         }
     }
