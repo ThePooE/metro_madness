@@ -104,7 +104,7 @@ public class ActiveStation extends Station {
 
     /**
      * Embarking passengers onto train
-     * @param t Train for passengers to get on
+     * @param t Train       for passengers to get on
      */
     public void addWaitingPassengers(Train t){
         Iterator<Passenger> pIter = this.waiting.iterator();
@@ -149,8 +149,8 @@ public class ActiveStation extends Station {
 
     /**
      * Renders the number of passengers waiting at the station
-     * @param b             SpriteBatch
-     * @param font          font used to render the text
+     * @param b         SpriteBatch
+     * @param font      font used to render the text
      */
     @Override
     public void renderWaiting(SpriteBatch b, BitmapFont font){

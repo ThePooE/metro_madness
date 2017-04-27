@@ -221,7 +221,7 @@ public class Station {
      * Generate Passenger on the station
      * @param id        Passenger ID
      * @param random    Random class for Passenger's Cargo
-     * @param s         Station that will be the desination
+     * @param s         Station that will be the destination
      * @return          Passenger class
      */
     public Passenger generatePassenger(int id, Random random, Station s) {
