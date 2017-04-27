@@ -185,7 +185,6 @@ public class Train {
                             
                             // For the case of a Passenger Train
                             else {
-                                destination = this.trainLine.nextStation(this.station, this.forward);
                                 next = destination;
                             }
                             

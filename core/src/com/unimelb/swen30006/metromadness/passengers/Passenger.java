@@ -28,8 +28,7 @@ public class Passenger {
             this.cargo = new Cargo(0);
         }
     }
-
-    
+  
     public int getID(){
         return this.id;
     }
@@ -40,6 +39,7 @@ public class Passenger {
     
     public float getTravelTime(){
         return this.travelTime;
+
     }
     
     public void update(float time){
@@ -48,8 +48,8 @@ public class Passenger {
         }
     }
     
-    
     // Encapsulated Cargo class and its methods
+
     public class Cargo{
         private int weight;
 
