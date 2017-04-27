@@ -10,11 +10,11 @@ package com.unimelb.swen30006.metromadness.exceptions;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
- * Cannot find a particular platform
+ * Exception if the Passengers with Cargo tries to enter invalid Train.
  */
 
-public class StationNotFoundException extends Exception{
-    public StationNotFoundException() {
-        super("Error: Station not found.");
+public class TrainNoCargoException extends Exception {
+    public TrainNoCargoException() {
+        super("Error: Passengers with Cargo tries to enter Train that cannot contain Cargo.");
     }
 }

@@ -19,13 +19,22 @@ import com.unimelb.swen30006.metromadness.trains.Train;
  */
 
 public class Track {
+
     static final float DRAW_RADIUS=10f;
     static final int LINE_WIDTH=6;
+
     Point2D.Float startPos;
     Point2D.Float endPos;
+
     Color trackColour;
     boolean occupied;
 
+    /**
+     * Constructor for Track
+     * @param start         Track's starting position
+     * @param end           Track's ending position
+     * @param trackCol      Color of the particular Track
+     */
     public Track(Point2D.Float start, Point2D.Float end, Color trackCol){
         this.startPos = start;
         this.endPos = end;
@@ -33,6 +42,10 @@ public class Track {
         this.occupied = false;
     }
 
+    /**
+     * Render the Track as rectangles
+     * @param renderer      ShapeRenderer to render the Track
+     */
     public void render(ShapeRenderer renderer){
         renderer.rectLine(startPos.x, startPos.y, endPos.x, endPos.y, LINE_WIDTH);
     }
@@ -54,10 +67,16 @@ public class Track {
         this.occupied = true;
     }
 
+    /**
+     * Converts Track's information into String
+     * @return      Track's info
+     */
     @Override
     public String toString() {
-        return "Track [startPos=" + startPos + ", endPos=" + endPos + ", trackColour=" + trackColour + ", occupied="
-                + occupied + "]";
+        return "Track [startPos=" + startPos
+                + ", endPos=" + endPos
+                + ", trackColour=" + trackColour
+                + ", occupied=" + occupied + "]";
     }
 
     /**

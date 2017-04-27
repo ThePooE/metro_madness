@@ -33,18 +33,37 @@ public class CargoStation extends ActiveStation {
     // Logger
     private static Logger logger = LogManager.getLogger();
 
-
+    /**
+     * Constructor for CargoStation.
+     * @param x             x-coordinate of the station
+     * @param y             y-coordinate of the station
+     * @param router        router to be use
+     * @param name          name of the station
+     * @param maxPax        station maximum passenger capacity
+     */
     public CargoStation(float x, float y, PassengerRouter router, String name, float maxPax) {
+        // Use ActiveStation constructor to create CargoStation
         super(x, y, router, name, maxPax);
     }
 
+
+    /**
+     * Checker to see if a train is compatible with this type of station
+     * @param t     Train to check for compatibility
+     * @return      Always true since any train can enter CargoStation
+     * @throws Exception
+     */
     @Override
-    // Any type of train can enter a CargoStation
     public boolean compatible(Train t) throws Exception {
+        // Any type of train can enter a CargoStation
         return true;
     }
 
 
+    /**
+     * Renders the station
+     * @param renderer      ShapeRenderer
+     */
     @Override
     // A cargo station is rendered as an orange circle instead of white
     public void render(ShapeRenderer renderer){
@@ -64,6 +83,12 @@ public class CargoStation extends ActiveStation {
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
+
+    /**
+     * Entry of a train into this station
+     * @param t         Train to enter this station
+     * @throws Exception
+     */
     @Override
     // Generate passengers when a train has entered the station
     public void enter(Train t) throws Exception {
@@ -86,7 +111,10 @@ public class CargoStation extends ActiveStation {
                     if(p==null){
                         return;
                     }
-                    logger.info("Passenger "+p.getID()+" carrying "+p.getCargo().getWeight() +" kg embarking at "+this.name+" heading to "+p.getDestination().name);
+                    logger.info("Passenger " + p.getID()
+                            + " carrying " + p.getCargo().getWeight()
+                            + " kg embarking at " + this.name
+                            + " heading to " + p.getDestination().name);
                     t.embark(p);
                 } catch(Exception e){
                     this.waiting.add(p);

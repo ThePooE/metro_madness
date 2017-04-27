@@ -24,13 +24,21 @@ public class BigCargoTrain extends CargoTrain {
     private static int PASSENGER_CAPACITY   = 80;
     private static int WEIGHT_CAPACITY      = 1000;
 
+    /**
+     * Constructor of BigCargoTrain
+     * @param trainLine     Line which the Train will run
+     * @param start         Station that the Train start
+     * @param forward       Which way the train will wun
+     * @param name          Name of this train
+     */
     public BigCargoTrain(Line trainLine, Station start, boolean forward, String name) {
         super(trainLine, start, forward, name, PASSENGER_CAPACITY, WEIGHT_CAPACITY);
     }
 
+
     /**
-     * Choose to render as square rather than circle for normal trains
-     * @param renderer
+     * Render CargoTrains as square rather than circle for PassengerTrains
+     * @param renderer      ShapeRenderer to render the Train
      */
     @Override
     public void render(ShapeRenderer renderer){

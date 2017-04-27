@@ -13,8 +13,11 @@ import com.unimelb.swen30006.metromadness.stations.Station;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
+ * Router Interface for Passenger
  */
 
 public interface PassengerRouter {
+
     public boolean shouldLeave(Station current, Passenger p);
+
 }

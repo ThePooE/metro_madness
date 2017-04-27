@@ -189,7 +189,12 @@ public class MetroMadness extends ApplicationAdapter {
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
         float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
-        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, WORLD_WIDTH - effectiveViewportWidth / 2f);
-        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, WORLD_HEIGHT - effectiveViewportHeight / 2f);
+        camera.position.x = MathUtils.clamp(
+                camera.position.x,
+                effectiveViewportWidth / 2f,
+                WORLD_WIDTH - effectiveViewportWidth / 2f);
+        camera.position.y = MathUtils.clamp(camera.position.y,
+                effectiveViewportHeight / 2f,
+                WORLD_HEIGHT - effectiveViewportHeight / 2f);
     }
 }

@@ -99,13 +99,19 @@ public class Line {
 
          // Check if it is a Cargo Station then store it
         if(s instanceof CargoStation){
-        	this.cargoStations.add(s);
+            this.cargoStations.add(s);
         }
     }
 
+    /**
+     * Converts Line's information into String
+     * @return      Line's info
+     */
     @Override
     public String toString() {
-        return "Line [lineColour=" + lineColour + ", trackColour=" + trackColour + ", name=" + name + "]";
+        return "Line [lineColour=" + lineColour
+                + ", trackColour=" + trackColour
+                + ", name=" + name + "]";
     }
 
 
@@ -210,6 +216,7 @@ public class Line {
         }
     }
 
+
     /**
      * Checks if the current Cargo Station is the first/last Cargo Station of the line
      * but not the first/last Station of the line
@@ -232,7 +239,7 @@ public class Line {
             startOfCargoLine = true;
         }
 
-        if( (endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
+        if((endOfCargoLine && s != this.stations.get(totalStationsOnLine -1)) || (startOfCargoLine && s != this.stations.get(0)) ){
             return true;
         }
         return false;

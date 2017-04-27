@@ -10,6 +10,7 @@ package com.unimelb.swen30006.metromadness.exceptions;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
+ * Passenger tries to enter the train when the seats are not enough to facilitate
  */
 
 public class TrainPassengerFullException extends Exception {

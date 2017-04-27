@@ -23,10 +23,22 @@ public class SmallPassengerTrain extends PassengerTrain {
     // Different capacity between trains
     private static int PASSENGER_CAPACITY = 10;
 
+    /**
+     * Constructor for SmallPassengerTrain class
+     * @param trainLine     Line which the Train will run
+     * @param start         Station that the Train start
+     * @param forward       Which way the train will wun
+     * @param name          Name of this train
+     */
     public SmallPassengerTrain(Line trainLine, Station start, boolean forward, String name) {
         super(trainLine, start, forward, name, PASSENGER_CAPACITY);
     }
 
+
+    /**
+     * Render algorithm for SmallPassengerTrain class
+     * @param renderer      ShapeRenderer to render the Train
+     */
     @Override
     public void render(ShapeRenderer renderer){
         if(!this.inStation()){
