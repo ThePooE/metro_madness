@@ -48,9 +48,9 @@ public class MapReader {
     public void process(){
         try {
             // Build the doc factory
-            FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne_cargo.xml");
+            //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne_cargo.xml");
             //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne.xml");
-            //FileHandle file = Gdx.files.internal("../core/assets/maps/world.xml");
+            FileHandle file = Gdx.files.internal("../core/assets/maps/world.xml");
             XmlReader reader = new XmlReader();
             Element root = reader.parse(file);
 
@@ -147,6 +147,11 @@ public class MapReader {
         }
     }
 
+    /**
+     * Parses input document to get information of train Lines
+     * @param e     
+     * @return      
+     */
     private Line processLine(Element e){
         Color stationCol = extractColour(e.getChildByName("station_colour"));
         Color lineCol = extractColour(e.getChildByName("line_colour"));
