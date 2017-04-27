@@ -17,6 +17,7 @@ import com.unimelb.swen30006.metromadness.tracks.Line;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
+ * Generator class which generates Passenger
  */
 
 public class PassengerGenerator {

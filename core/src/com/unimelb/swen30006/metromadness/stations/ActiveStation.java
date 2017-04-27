@@ -27,6 +27,7 @@ import com.unimelb.swen30006.metromadness.trains.Train;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
+ * Active Station Class
  */
 
 public class ActiveStation extends Station {
@@ -37,6 +38,14 @@ public class ActiveStation extends Station {
     ArrayList<Passenger> waiting;
     float maxVolume;
 
+    /**
+     * Constructor for ActiveStation.
+     * @param x             x-coordinate of the station
+     * @param y             y-coordinate of the station
+     * @param router        router to be use
+     * @param name          name of the station
+     * @param maxPax        station maximum passenger capacity
+     */
     public ActiveStation(float x, float y, PassengerRouter router, String name, float maxPax) {
         super(x, y, router, name);
         this.waiting = new ArrayList<Passenger>();
@@ -44,9 +53,15 @@ public class ActiveStation extends Station {
         this.maxVolume = maxPax;
     }
 
+    /**
+     * Checker to see if a train is compatible with this type of station
+     * @param t     Train to check for compatibility
+     * @return      True if the Train is not an instance of CargoTrain
+     * @throws Exception
+     */
     @Override
-    // Only PassengerTrains can stop at ActiveStations
     public boolean compatible(Train t) throws Exception {
+        // Only PassengerTrains can stop at ActiveStations
         return !(t instanceof CargoTrain);
     }
 
@@ -78,10 +93,9 @@ public class ActiveStation extends Station {
         }
     }
 
-
     /**
      * Embarking passengers onto train
-     * @param t     Train for passengers to get on
+     * @param t Train for passengers to get on
      */
     public void addWaitingPassengers(Train t){
         Iterator<Passenger> pIter = this.waiting.iterator();
@@ -101,6 +115,7 @@ public class ActiveStation extends Station {
 
 
     @Override
+    // Renderer for the ActiveStation
     public void render(ShapeRenderer renderer){
         // Show a station as a rings of lines
         float radius = RADIUS;
@@ -118,11 +133,11 @@ public class ActiveStation extends Station {
     }
 
     @Override
-    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waiting){
+    public void renderWaiting(SpriteBatch b, BitmapFont font, boolean waiting){
         if(waiting){
             b.begin();
-            header.getData().setScale(1f);
-            header.draw(
+            font.getData().setScale(1f);
+            font.draw(
                     b,
                     Integer.toString(this.waiting.size()),
                     this.position.x-10,

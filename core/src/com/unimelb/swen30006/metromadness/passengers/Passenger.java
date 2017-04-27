@@ -15,6 +15,7 @@ import com.unimelb.swen30006.metromadness.stations.Station;
  * Kolatat Thangkasemvathana [780631]
  * Khai Mei Chin [755332]
  *
+ * Passenger Class
  */
 
 public class Passenger {
@@ -33,14 +34,13 @@ public class Passenger {
         this.reachedDestination = false;
         this.travelTime = 0;
 
-        // Do not generate cargo if not from CargoStation
+        // Do not generate cargo if not from CargoStation class
         if (start instanceof CargoStation) {
             this.cargo = generateCargo(random);
         } else {
             this.cargo = new Cargo(0);
         }
     }
-
 
     public int getID(){
         return this.id;
@@ -60,8 +60,7 @@ public class Passenger {
         }
     }
 
-
-    // Encapsulated Cargo class and its methods
+    // Encapsulated Cargo class and its methods into Passenger
     public class Cargo{
         private int weight;
 
@@ -85,6 +84,4 @@ public class Passenger {
     public Cargo getCargo(){
         return cargo;
     }
-
-
 }

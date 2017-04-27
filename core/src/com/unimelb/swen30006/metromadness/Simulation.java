@@ -55,6 +55,16 @@ public class Simulation {
         }
     }
 
+    /**
+     * Render the Simulation.
+     * @param renderer      Renderer to be use on each seperate class
+     * @param b             Batch to draw the font on
+     * @param font          Font that use to render on the simulation
+     * @param station       Boolean value to show the station or not
+     * @param passenger     Boolean value to show the passengers or not
+     * @param waiting       Boolean value to show the waiting passengers or not
+     * @param train         Boolean value to show the trains or not
+     */
     public void render(
             ShapeRenderer renderer,
             SpriteBatch b,
@@ -70,14 +80,14 @@ public class Simulation {
 
         for(Train t: this.trains){
             t.render(renderer);
-            t.renderName(b, font, train);
-            t.renderPassengers(b, font, passenger);
+            if (train) {t.renderName(b, font, train);}
+            if (passenger) {t.renderPassengers(b, font, passenger);}
         }
 
         for(Station s: this.stations){
             s.render(renderer);
-            s.renderName(b, font, station);
-            s.renderWaiting(b, font, waiting);
+            if (station) {s.renderName(b, font, station);}
+            if (waiting) {s.renderWaiting(b, font, waiting);}
         }
     }
 }

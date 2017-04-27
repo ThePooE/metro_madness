@@ -92,11 +92,10 @@ public class Station {
     /**
      * Renders the circles that represents this station on map
      * @param renderer      ShapeRenderer
-     * @param radius        radius of the circle
-     * @return              the modified radius
+     * @param radius        Radius of the circle
+     * @return              Modified radius
      */
     public float renderRings(ShapeRenderer renderer, float radius) {
-
         // The number of circles drawn can represent the number of lines
         // that this station is part of (up to three lines can be visualised on map)
         for(int i=0; (i<this.lines.size() && i<MAX_LINES); i++){
@@ -112,14 +111,14 @@ public class Station {
     /**
      * Renders the name of this station on map
      * @param b             SpriteBatch
-     * @param header        font used for rendered text
-     * @param showStation   toggle to show/hide station name on map
+     * @param font          font used for rendered text
+     * @param station       toggle to show/hide station name on map
      */
-    public void renderName(SpriteBatch b, BitmapFont header, boolean showStation){
-        if(showStation){
+    public void renderName(SpriteBatch b, BitmapFont font, boolean station){
+        if(station){
             b.begin();
-            header.getData().setScale(1f);
-            header.draw(b, this.name, this.position.x+10, this.position.y+10);
+            font.getData().setScale(1f);
+            font.draw(b, this.name, this.position.x+10, this.position.y+10);
             b.end();
         }
     }
@@ -128,10 +127,10 @@ public class Station {
     /**
      * Renders the number of passengers waiting at the station
      * @param b             SpriteBatch
-     * @param header        font used to render the text
-     * @param waitingShow   toggle value to show/hide the number
+     * @param font          font used to render the text
+     * @param waiting       toggle to show/hide the waiting passengers on map
      */
-    public void renderWaiting(SpriteBatch b, BitmapFont header, boolean waitingShow){
+    public void renderWaiting(SpriteBatch b, BitmapFont font, boolean waiting) {
         // To be overwritten by stations that are in use (eg ActiveStation and CargoStation)
         // Only show passengers in those stations
     }
@@ -139,8 +138,7 @@ public class Station {
 
     /**
      * Entry of a train into this station
-     * To be overriden in child classes
-     * @param t     Train to enter this station
+     * @param t         Train to enter this station
      * @throws Exception
      */
     public void enter(Train t) throws Exception {
@@ -153,7 +151,7 @@ public class Station {
 
     /**
      * Departure of a train from this station
-     * @param t     Train to leave this station
+     * @param t         Train to leave this station
      * @throws Exception
      */
     public void depart(Train t) throws Exception {
@@ -166,7 +164,7 @@ public class Station {
 
     /**
      * Checker to see if this station has any free platform
-     * @return      true if there is an unoccupied platform, otherwise false
+     * @return          true if there is an unoccupied platform, otherwise false
      * @throws Exception
      */
     public boolean canEnter() throws Exception {
@@ -175,7 +173,6 @@ public class Station {
 
     /**
      * Checker to see if a train is compatible with this type of station
-     * (to be overriden in child classes)
      * @param t     Train to check for compatibility
      * @return      true if Train can enter this station, otherwise false
      * @throws Exception
@@ -184,16 +181,19 @@ public class Station {
         return true;
     }
 
-
     /**
      * Checker to see if a particular passenger should disembark at this station
      * @param p     Passenger to be checked
-     * @return
+     * @return      true if the Passenger should disembark at this station, otherwise false
      */
     public boolean shouldLeave(Passenger p) {
         return this.router.shouldLeave(this, p);
     }
 
+    /**
+     * Converts Station information into String
+     * @return      Station's info
+     */
     @Override
     public String toString() {
         return "Station [position=" + position
@@ -202,7 +202,13 @@ public class Station {
                 + ", router=" + router + "]";
     }
 
-
+    /**
+     * Generate Passenger on the station
+     * @param id        Passenger ID
+     * @param random    Random class for Passenger's Cargo
+     * @param s         Station that will be the desination
+     * @return          Passenger class
+     */
     public Passenger generatePassenger(int id, Random random, Station s) {
         return new Passenger(id, random, this, s);
     }

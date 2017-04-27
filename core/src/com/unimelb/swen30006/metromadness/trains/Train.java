@@ -372,7 +372,6 @@ public class Train {
         }
     }
 
-
     /**
      * Renders the number of passengers currently on train
      * @param b                 SpriteBatch
@@ -387,7 +386,6 @@ public class Train {
             b.end();
         }
     }
-
 
     /**
      * Renders the name of this train
