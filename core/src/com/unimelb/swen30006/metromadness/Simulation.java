@@ -82,15 +82,15 @@ public class Simulation {
         // Renders all the trains
         for(Train t: this.trains){
             t.render(renderer);
-            if (train) {t.renderName(b, font, train);}
-            if (passenger) {t.renderPassengers(b, font, passenger);}
+            if (train) {t.renderName(b, font);}
+            if (passenger) {t.renderPassengers(b, font);}
         }
 
         // Renders all the stations
         for(Station s: this.stations){
             s.render(renderer);
-            if (station) {s.renderName(b, font, station);}
-            if (waiting) {s.renderWaiting(b, font, waiting);}
+            if (station) {s.renderName(b, font);}
+            if (waiting) {s.renderWaiting(b, font);}
         }
     }
 }

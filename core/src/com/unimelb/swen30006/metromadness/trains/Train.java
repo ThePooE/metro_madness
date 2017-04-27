@@ -100,17 +100,21 @@ public class Train {
         this.name = name;
     }
 
+
     public boolean getForward(){
         return this.forward;
     }
+
 
     public Point2D.Float getPos(){
         return this.pos;
     }
 
+
     public ArrayList<Passenger> getPassengers(){
         return this.passengers;
     }
+
 
     /**
      * Update the Train which will in terms update passengers
@@ -132,8 +136,9 @@ public class Train {
             case FROM_DEPOT:
                 // Case at the start of simulation when the Train is starting from its depot station
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is travelling from the depot: " + this.station.getName() + " Station...");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") is travelling from the depot: "
+                            + this.station.getName() + " Station...");
                 }
 
                 // We have our station initialized we just need to retrieve the next track, enter the
@@ -144,8 +149,9 @@ public class Train {
                         this.pos = (Point2D.Float) this.station.getPosition().clone();
                         this.state = State.IN_STATION;
                         this.disembarked = false;
-                        logger.info(this.name + "(" + this.getClass().getSimpleName()
-                                +") is in " + this.station.getName() + " Station.");
+                        logger.info(this.name + "("
+                                + this.getClass().getSimpleName() + ") is in "
+                                + this.station.getName() + " Station.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -155,8 +161,9 @@ public class Train {
             case IN_STATION:
                 // Case when train is currently in a station
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is in " + this.station.getName() + " Station.");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") is in "
+                            + this.station.getName() + " Station.");
                 }
 
                 // When in station we want to disembark passengers
@@ -226,8 +233,9 @@ public class Train {
             case READY_DEPART:
                 // Case when a train is ready to leave this station
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is ready to depart for " + this.next.getName() + " Station!");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") is ready to depart for "
+                            + this.next.getName() + " Station!");
                 }
 
                 // When ready to depart, check that the track is clear and if
@@ -251,8 +259,9 @@ public class Train {
             case ON_ROUTE:
                 // Case where train is on the journey
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") enroute to " + this.station.getName() + " Station!");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") enroute to "
+                            + this.station.getName() + " Station!");
                 }
 
                 // Checkout if we have reached the new station
@@ -275,8 +284,9 @@ public class Train {
             case WAITING_ENTRY:
                 // Case where a train is waiting to enter a station
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is awaiting entry " + this.station.getName() + " Station..!");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") is awaiting entry "
+                            + this.station.getName() + " Station..!");
                 }
 
                 // Waiting to enter, we need to check the station has room and if so
@@ -297,8 +307,9 @@ public class Train {
             case SKIPPING_STATION:
                 // Case when a Cargo Station is skipping an Active Station
                 if (hasChanged) {
-                    logger.info(this.name + "(" + this.getClass().getSimpleName()
-                            +") is skipping " + this.station.getName() + " Station..!");
+                    logger.info(this.name + "("
+                            + this.getClass().getSimpleName() + ") is skipping "
+                            + this.station.getName() + " Station..!");
                 }
 
                 this.track.leave(this);
@@ -323,8 +334,9 @@ public class Train {
         }
     }
 
+
     /**
-     * Move the Train accodingly
+     * Move the Train accordingly
      * @param delta     Time elapsed since last frame has been rendered
      */
     public void move(float delta){
@@ -339,6 +351,7 @@ public class Train {
         this.pos.setLocation(newX, newY);
     }
 
+
     /**
      * Default behaviour for passengers to enter Train,
      * will always throw Exception
@@ -348,6 +361,7 @@ public class Train {
     public void embark(Passenger p) throws Exception {
         throw new Exception();
     }
+
 
     /**
      * Default behaviour for passengers to exit Train
@@ -369,6 +383,7 @@ public class Train {
         return disembarking;
     }
 
+
     /**
      * Converts Train information into String
      * @return      Train's info
@@ -384,21 +399,20 @@ public class Train {
                 + ", disembarked=" + disembarked + "]";
     }
 
+
     public boolean inStation(){
         return (this.state == State.IN_STATION || this.state == State.READY_DEPART);
     }
 
+
     /**
      * Return the angle which the train will be using to change its position
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
      * @return
      */
     public float angleAlongLine(float x1, float y1, float x2, float y2){
         return (float) Math.atan2((y2-y1),(x2-x1));
     }
+
 
     /**
      * Default render algorithm for Train class
@@ -412,14 +426,14 @@ public class Train {
         }
     }
 
+
     /**
      * Renders the number of passengers currently on train
      * @param b             SpriteBatch
      * @param font          font used to render the text
-     * @param passenger     toggle between show/hide the number of passengers
      */
-    public void renderPassengers(SpriteBatch b, BitmapFont font, boolean passenger){
-        if(!this.inStation() && passenger){
+    public void renderPassengers(SpriteBatch b, BitmapFont font){
+        if(!this.inStation()){
             b.begin();
             font.getData().setScale(1f);
             font.draw(b, Integer.toString(this.passengers.size()), this.pos.x+10, this.pos.y+10);
@@ -427,18 +441,16 @@ public class Train {
         }
     }
 
+
     /**
      * Renders the name of this train
      * @param b         SpriteBatch
      * @param font      font used to render the text
-     * @param train     toggle between show/hide the train name
      */
-    public void renderName(SpriteBatch b, BitmapFont font, boolean train){
-        if(train){
-            b.begin();
-            font.getData().setScale(1f);
-            font.draw(b, this.name, this.pos.x-10, this.pos.y-10);
-            b.end();
-        }
+    public void renderName(SpriteBatch b, BitmapFont font){
+        b.begin();
+        font.getData().setScale(1f);
+        font.draw(b, this.name, this.pos.x-10, this.pos.y-10);
+        b.end();
     }
 }

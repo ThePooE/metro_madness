@@ -17,5 +17,7 @@ import com.unimelb.swen30006.metromadness.stations.Station;
  */
 
 public interface PassengerRouter {
+
     public boolean shouldLeave(Station current, Passenger p);
+
 }

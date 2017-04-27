@@ -46,6 +46,7 @@ public class CargoStation extends ActiveStation {
         super(x, y, router, name, maxPax);
     }
 
+
     /**
      * Checker to see if a train is compatible with this type of station
      * @param t     Train to check for compatibility
@@ -58,6 +59,11 @@ public class CargoStation extends ActiveStation {
         return true;
     }
 
+
+    /**
+     * Renders the station
+     * @param renderer      ShapeRenderer
+     */
     @Override
     // A cargo station is rendered as an orange circle instead of white
     public void render(ShapeRenderer renderer){
@@ -77,6 +83,12 @@ public class CargoStation extends ActiveStation {
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
+
+    /**
+     * Entry of a train into this station
+     * @param t         Train to enter this station
+     * @throws Exception
+     */
     @Override
     // Generate passengers when a train has entered the station
     public void enter(Train t) throws Exception {

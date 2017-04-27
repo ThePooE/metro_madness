@@ -35,6 +35,7 @@ public class PassengerTrain extends Train {
         this.capacity = capacity;
     }
 
+
     /**
      * Try to add Passenger into Train
      * @param p     Passengers to enter the Train

@@ -32,15 +32,28 @@ public class Station {
     static final int PLATFORMS=2;
 
     Point2D.Float position;
+
     static final float RADIUS=10;
+
     static final int NUM_CIRCLE_STATMENTS=100;
     static final int MAX_LINES=3;
+
     String name;
+
     ArrayList<Line> lines;
     ArrayList<Train> trains;
+
     static final float DEPARTURE_TIME = 2;
+
     PassengerRouter router;
 
+    /**
+     * Constructor for Station.
+     * @param x             x-coordinate of the station
+     * @param y             y-coordinate of the station
+     * @param router        router to be use
+     * @param name          name of the station
+     */
     public Station(float x, float y, PassengerRouter router, String name){
         this.name = name;
         this.router = router;
@@ -65,6 +78,7 @@ public class Station {
     public float getDepartureTime() {
         return DEPARTURE_TIME;
     }
+
 
     /**
      * Renders the station
@@ -112,15 +126,12 @@ public class Station {
      * Renders the name of this station on map
      * @param b             SpriteBatch
      * @param font          font used for rendered text
-     * @param station       toggle to show/hide station name on map
      */
-    public void renderName(SpriteBatch b, BitmapFont font, boolean station){
-        if(station){
-            b.begin();
-            font.getData().setScale(1f);
-            font.draw(b, this.name, this.position.x+10, this.position.y+10);
-            b.end();
-        }
+    public void renderName(SpriteBatch b, BitmapFont font){
+        b.begin();
+        font.getData().setScale(1f);
+        font.draw(b, this.name, this.position.x+10, this.position.y+10);
+        b.end();
     }
 
 
@@ -128,9 +139,8 @@ public class Station {
      * Renders the number of passengers waiting at the station
      * @param b             SpriteBatch
      * @param font          font used to render the text
-     * @param waiting       toggle to show/hide the waiting passengers on map
      */
-    public void renderWaiting(SpriteBatch b, BitmapFont font, boolean waiting) {
+    public void renderWaiting(SpriteBatch b, BitmapFont font) {
         // To be overwritten by stations that are in use (eg ActiveStation and CargoStation)
         // Only show passengers in those stations
     }
@@ -149,6 +159,7 @@ public class Station {
         }
     }
 
+
     /**
      * Departure of a train from this station
      * @param t         Train to leave this station
@@ -162,6 +173,7 @@ public class Station {
         }
     }
 
+
     /**
      * Checker to see if this station has any free platform
      * @return          true if there is an unoccupied platform, otherwise false
@@ -170,6 +182,7 @@ public class Station {
     public boolean canEnter() throws Exception {
         return trains.size() < PLATFORMS;
     }
+
 
     /**
      * Checker to see if a train is compatible with this type of station
@@ -180,6 +193,7 @@ public class Station {
     public boolean compatible(Train t) throws Exception {
         return true;
     }
+
 
     /**
      * Checker to see if a particular passenger should disembark at this station
@@ -201,6 +215,7 @@ public class Station {
                 + ", trains=" + trains.size()
                 + ", router=" + router + "]";
     }
+
 
     /**
      * Generate Passenger on the station

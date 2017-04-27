@@ -44,6 +44,7 @@ public class CargoTrain extends Train {
         this.weightCapacity = weight;
     }
 
+
     /**
      * Try to add Passengers into Train
      * @param p     Passengers to enter the Train
@@ -65,9 +66,7 @@ public class CargoTrain extends Train {
         if (p.getCargo().getWeight() + weight > this.weightCapacity) {
             throw new TrainCargoFullException();
         }
+
         this.passengers.add(p);
     }
-
-
-
 }

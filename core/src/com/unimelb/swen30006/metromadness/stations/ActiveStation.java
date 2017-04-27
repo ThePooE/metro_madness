@@ -31,6 +31,7 @@ import com.unimelb.swen30006.metromadness.trains.Train;
  */
 
 public class ActiveStation extends Station {
+
     // Logger
     private static Logger logger = LogManager.getLogger();
 
@@ -53,6 +54,7 @@ public class ActiveStation extends Station {
         this.maxVolume = maxPax;
     }
 
+
     /**
      * Checker to see if a train is compatible with this type of station
      * @param t     Train to check for compatibility
@@ -65,6 +67,12 @@ public class ActiveStation extends Station {
         return !(t instanceof CargoTrain);
     }
 
+
+    /**
+     * Entry of a train into this station
+     * @param t         Train to enter this station
+     * @throws Exception
+     */
     @Override
     // Generate passengers when a train has entered the station
     public void enter(Train t) throws Exception {
@@ -93,6 +101,7 @@ public class ActiveStation extends Station {
         }
     }
 
+
     /**
      * Embarking passengers onto train
      * @param t Train for passengers to get on
@@ -102,8 +111,10 @@ public class ActiveStation extends Station {
         while(pIter.hasNext()){
             Passenger p = pIter.next();
             try {
-                logger.info("Passenger " + p.getID() + " carrying " + p.getCargo().getWeight()
-                        + " kg cargo embarking at " + this.name + " heading to "+p.getDestination().name);
+                logger.info("Passenger " + p.getID()
+                        + " carrying " + p.getCargo().getWeight()
+                        + " kg cargo embarking at " + this.name
+                        + " heading to " + p.getDestination().name);
                 t.embark(p);
                 pIter.remove();
             } catch (Exception e){
@@ -114,6 +125,10 @@ public class ActiveStation extends Station {
     }
 
 
+    /**
+     * Renders the station
+     * @param renderer      ShapeRenderer
+     */
     @Override
     // Renderer for the ActiveStation
     public void render(ShapeRenderer renderer){
@@ -127,22 +142,25 @@ public class ActiveStation extends Station {
         if(this.waiting.size() > 0){
             c = Color.RED;
         }
-
         renderer.setColor(c);
         renderer.circle(this.position.x, this.position.y, radius, NUM_CIRCLE_STATMENTS);
     }
 
+
+    /**
+     * Renders the number of passengers waiting at the station
+     * @param b             SpriteBatch
+     * @param font          font used to render the text
+     */
     @Override
-    public void renderWaiting(SpriteBatch b, BitmapFont font, boolean waiting){
-        if(waiting){
-            b.begin();
-            font.getData().setScale(1f);
-            font.draw(
-                    b,
-                    Integer.toString(this.waiting.size()),
-                    this.position.x-10,
-                    this.position.y-10);
-            b.end();
-        }
+    public void renderWaiting(SpriteBatch b, BitmapFont font){
+        b.begin();
+        font.getData().setScale(1f);
+        font.draw(
+                b,
+                Integer.toString(this.waiting.size()),
+                this.position.x-10,
+                this.position.y-10);
+        b.end();
     }
 }
