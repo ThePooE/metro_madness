@@ -9,11 +9,15 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 script:
-  - ./gradlew check
-  - ./gradlew run
+- "./gradlew check"
+- "./gradlew run"
 dist: trusty
 sudo: false
 addons:
   apt:
     packages:
     - oracle-java8-installer
+notifications:
+  email: false
+  slack:
+    secure: cYwxXf/WNRnaldov1g/iQmJa3fhNW+9RI24xzOhf5i0zVRtA3s+KUZdgV5La1lVnGdAThQDWIZ4iEA9MX0Tx/iemgFIev5Iy6YOdg6uZGlbzd8tCTRWjEkHPLrHW2BN4il7PupcvJUT0ySuaASDFo0/jTiqfqcV2IaDV9fZzGVIwVlItIC50vxXqPzS+2z7kN271LLpq0rZAvRyEwqq2CFBJWFoHT/8QVl1DOjF6bZ7bnBYkRInPF/VjyHayLKQJKUOU8hTnw+FH/dKg7KEVjyMoeBS+AL2ZZ2EE0E5Uhm2C2K2MPHUllrc0Gdj1hLnjB5k9Pw+QeyII3FWilhyucyNorvgqRqW4NXl+VHTC159oa6n7saS+pAYBrAxTkelRZWgjD+0q+4y0QKCegYwPKrewKirvH8boe+oQm/yYLyiE4ugc6Tgjz7Q8R6SdwjFYE6RuTp//bhf8HhRJ2Oog6XFtyeOwuB1sutAqzKTFKPn3aA7q/yZw8apeH+rwQkFVU4WlakRSRhyXmSEMN0S+gq42uVqcF37yYSuw0/cdy2jerLpLXgt208hvrRtTGUCECMWacfwp9V13Sj5fXxtsm5kgSWGFRG/gZg5q6VtKWPlCwnLPtEdw2ntzE54FWun9lLLMwRLipreH0sVw/DTJM5r46ei+2LZPbRckQnnFvHE=
