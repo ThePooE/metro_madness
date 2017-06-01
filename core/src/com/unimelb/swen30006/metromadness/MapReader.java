@@ -1,16 +1,3 @@
-/**
- * SWEN30006 Software Modelling and Design
- * Semester 1, 2017
- * Project Part B - Metro Madness
- * 
- * Group 107
- * Members:
- * Nate Wangsutthitham          
- * Kolatat Thangkasemvathana    [7
- * Khai Mei Chin
- *  
- */
-
 package com.unimelb.swen30006.metromadness;
 
 import java.util.ArrayList;
@@ -58,7 +45,9 @@ public class MapReader {
     private HashMap<String, Line> lines;
 
     private boolean processed;
-    private String filename = "../core/assets/maps/melbourne_cargo.xml";
+    private final String filename;
+
+    //private String filename = "../core/assets/maps/melbourne_cargo.xml";
     //private String filename = "../core/assets/maps/melbourne.xml";
     //private String filename = "../core/assets/maps/world.xml";
 
@@ -73,9 +62,7 @@ public class MapReader {
     public void process(){
         try {
             // Build the doc factory
-            //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne_cargo.xml");
-            //FileHandle file = Gdx.files.internal("../core/assets/maps/melbourne.xml");
-            FileHandle file = Gdx.files.internal("../core/assets/maps/world.xml");
+            FileHandle file = Gdx.files.internal(filename);
             XmlReader reader = new XmlReader();
             Element root = reader.parse(file);
 

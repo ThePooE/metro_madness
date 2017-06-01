@@ -65,7 +65,10 @@ public class MetroMadness extends ApplicationAdapter {
     @Override
     public void create() {
         // Create the simulation
-        sim = new Simulation("filename");
+        String fileName = "maps/melbourne_cargo.xml";
+        //String fileName = "maps/melbourne.xml";
+        //String fileName = "maps/world.xml";
+        sim = new Simulation(fileName);
 
         // Setup our 2D Camera
         float w = Gdx.graphics.getWidth();
@@ -79,13 +82,15 @@ public class MetroMadness extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
         // Create our font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/London-Tube.ttf"));
+        //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = 16;
         smaller = generator.generateFont(parameter); // font size 12 pixels
         generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
-        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
+        FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("fonts/London-Tube.ttf"));
+        //FreeTypeFontGenerator headlineGen = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/London-Tube.ttf"));
         FreeTypeFontParameter headlineParam = new FreeTypeFontParameter();
         headlineParam.size = 50;
         header = headlineGen.generateFont(headlineParam); // font size 50 pixels

@@ -1,19 +1,19 @@
-# Metro Madness
+# Metro Madness ![IMG](https://img.shields.io/travis/natebwangsut/metro_madness.svg "Travis Badge")
 
-## Importing (IntelliJ)
+# Importing (IntelliJ) - Gradle!
 
-### Importing
+- Clone the repository
+- Import project > choose the root folder
+- Choose import project from external model
+  - Select `gradle`s
+  - Tick only create seperate module per source set and use default wrapper
+- Click finish
+- Then the project config will pop-up, select add all
 
-Go to `Import Project`, navigate to your project folder and select the `build.gradle` file. Hit OK. In the next dialog, uncheck `Create separate module per source set`.
+## Running Instruction
 
-### Running
-
-- `Run -> Edit Configurations...`, click the plus (+) button and select Application. Set the `Name` to `Madness`.
-
-- Set the field Use classpath of module to desktop, then click on the button of the `Main` class field and select the `DesktopLauncher` class.
-
-- Add `-Dlog4j.configurationFile=../core/src/log4j2.xml` argument into VM Options
-
-- Set the Working directory to `madness/desktop` folder.
-
-- Click Apply and then OK.
+- Edit configuration
+- Then add new gradle config
+  - On gradle project field: select `metro_madness`
+  - On tasks field: select `run`
+- Click ok

@@ -19,6 +19,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        loggerVersion = '2.8.2'
     }
 
     repositories {
@@ -37,8 +38,8 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.1'
-  		compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.1'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "$loggerVersion"
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "$loggerVersion"
     }
 }
 
@@ -49,8 +50,8 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.1'
-  		compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.1'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "$loggerVersion"
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "$loggerVersion"
     }
 }
 
